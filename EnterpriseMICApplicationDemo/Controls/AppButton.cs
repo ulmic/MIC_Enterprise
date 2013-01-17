@@ -5,9 +5,12 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace EnterpriseMICApplicationDemo {
-  public class AppButton : Button {
-    public AppButton() {
-      this.Dock = DockStyle.Fill;
-    }
-  }
+	/// <summary>
+	/// Stylized buttons
+	/// </summary>
+	public class AppButton : Button {
+		public AppButton() {
+			this.Dock = DockStyle.Fill;
+		}
+	}
 }
