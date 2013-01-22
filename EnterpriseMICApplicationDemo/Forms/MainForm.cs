@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using YO_APP_FULL;
-using serializ2;
+using System.Data.SQLite;
 
 namespace EnterpriseMICApplicationDemo {
 	public partial class MainForm : Form {
@@ -771,8 +771,7 @@ namespace EnterpriseMICApplicationDemo {
 		}
 
 		private void initializeOnlineConferenceInterface() {
-			serializ2.Form1 form1 = new serializ2.Form1();
-			form1.Show();
+            ( new FormJabberStart() ).Show(); 
 		}
 
 		#endregion

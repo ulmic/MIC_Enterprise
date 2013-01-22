@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EnterpriseMICApplicationDemo</RootNamespace>
     <AssemblyName>EnterpriseMICApplicationDemo</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ManifestCertificateThumbprint>54EF196C532ED4D095FDF629A66881AD51D4986C</ManifestCertificateThumbprint>
     <ManifestKeyFile>EnterpriseMICApplicationDemo_TemporaryKey.pfx</ManifestKeyFile>
@@ -38,6 +38,7 @@
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <BootstrapperComponentsLocation>Relative</BootstrapperComponentsLocation>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -66,11 +67,11 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="agsXMPP">
-      <HintPath>C:\Users\Павел\Desktop\serializ2\serializ2\bin\Debug\agsXMPP.dll</HintPath>
+      <HintPath>..\MIC_Enterprise_DLLs\agsXMPP.dll</HintPath>
     </Reference>
     <Reference Include="CG.FontCombo, Version=1.0.1889.23263, Culture=neutral, PublicKeyToken=64111b7f946faace">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Павел\Desktop\WindowsFormsPressRelease\WindowsFormsPressRelease\WindowsFormsApplication\MyPressReleaseControl_Class\MyPressReleaseControl_Class\bin\Debug\CG.FontCombo.dll</HintPath>
+      <HintPath>..\MIC_Enterprise_DLLs\CG.FontCombo.dll</HintPath>
     </Reference>
     <Reference Include="CustomMarshalers" />
     <Reference Include="Microsoft.CSharp">
@@ -82,14 +83,14 @@
     </Reference>
     <Reference Include="MySql.Data, Version=5.2.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Павел\Desktop\Confined Space\MySql.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="serializ2">
-      <HintPath>C:\Users\Павел\Desktop\Корпоративное приложение Back-Ups\serializ2\serializ2\bin\Debug\serializ2.dll</HintPath>
+      <HintPath>..\MIC_Enterprise_DLLs\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.SQLite, Version=1.0.84.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <HintPath>..\MIC_Enterprise_DLLs\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xml.Linq">
@@ -104,7 +105,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="YO_APP_FULL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\YO_APP_FULL\YO_APP_FULL\bin\Debug\YO_APP_FULL.dll</HintPath>
+      <HintPath>..\MIC_Enterprise_DLLs\YO_APP_FULL.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -114,6 +115,49 @@
     <Compile Include="Delivery\AddToSendListNewItem.Designer.cs">
       <DependentUpon>AddToSendListNewItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Jabber\FormAddUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Jabber\FormAddUser.Designer.cs">
+      <DependentUpon>FormAddUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Jabber\FormConferention.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Jabber\FormConferention.Designer.cs">
+      <DependentUpon>FormConferention.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Jabber\FormCreateConferention.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Jabber\FormCreateConferention.Designer.cs">
+      <DependentUpon>FormCreateConferention.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Jabber\FormDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Jabber\FormDialog.Designer.cs">
+      <DependentUpon>FormDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Jabber\FormJabberStart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Jabber\FormJabberStart.Designer.cs">
+      <DependentUpon>FormJabberStart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Jabber\FormJoinConferention.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Jabber\FormJoinConferention.Designer.cs">
+      <DependentUpon>FormJoinConferention.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Jabber\FormSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Jabber\FormSettings.designer.cs">
+      <DependentUpon>FormSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Jabber\Settings.cs" />
     <Compile Include="SetMembersToList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,26 +206,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\ImprovedLabel.cs" />
-    <Compile Include="jabr\ClientSide.cs" />
-    <Compile Include="jabr\Conferentions.cs" />
-    <Compile Include="jabr\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="jabr\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="jabr\Form2.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="jabr\Form2.Designer.cs">
-      <DependentUpon>Form2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="jabr\Form3.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="jabr\Form3.Designer.cs">
-      <DependentUpon>Form3.cs</DependentUpon>
-    </Compile>
     <Compile Include="Login\Login.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -216,6 +240,27 @@
     <EmbeddedResource Include="Delivery\AddToSendListNewItem.resx">
       <DependentUpon>AddToSendListNewItem.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Jabber\FormAddUser.resx">
+      <DependentUpon>FormAddUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Jabber\FormConferention.resx">
+      <DependentUpon>FormConferention.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Jabber\FormCreateConferention.resx">
+      <DependentUpon>FormCreateConferention.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Jabber\FormDialog.resx">
+      <DependentUpon>FormDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Jabber\FormJabberStart.resx">
+      <DependentUpon>FormJabberStart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Jabber\FormJoinConferention.resx">
+      <DependentUpon>FormJoinConferention.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Jabber\FormSettings.resx">
+      <DependentUpon>FormSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SetMembersToList.resx">
       <DependentUpon>SetMembersToList.cs</DependentUpon>
     </EmbeddedResource>
@@ -232,15 +277,6 @@
     <EmbeddedResource Include="Login\ForgotPasswordForm.resx">
       <DependentUpon>ForgotPasswordForm.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="jabr\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="jabr\Form2.resx">
-      <DependentUpon>Form2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="jabr\Form3.resx">
-      <DependentUpon>Form3.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -266,6 +302,8 @@
     <EmbeddedResource Include="Controls\TableOption.resx">
       <DependentUpon>TableOption.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Jabber\db\xmpp_db" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -24,7 +24,7 @@ namespace EnterpriseMICApplicationDemo {
 			} catch {
 				Console.WriteLine("ЖОПА!");
 				myConnection.Close();
-				Console.ReadKey();
+                //Console.ReadKey();  Невозможно считывать клавиши, когда любое приложение не имеет консоли или ввод данных на консоли был переадресован из файла
 				return;
 			}
 			string strSQL = "SELECT title FROM " + TABLE_NAME;
