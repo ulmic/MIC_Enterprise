@@ -10,6 +10,7 @@ namespace EnterpriseMICApplicationDemo {
 	/// Class to work with sendlists
 	/// </summary>
 	public class SendingLists {
+		const string TABLE_NAME = "sendlists";
 		List<SendingList> lists = new List<SendingList>();
 		string connectionString = "Database=entermic;Data Source=localhost;User Id=root;Password=";
 		/// <summary>
@@ -26,7 +27,7 @@ namespace EnterpriseMICApplicationDemo {
 				Console.ReadKey();
 				return;
 			}
-			string strSQL = "SELECT title FROM lists";
+			string strSQL = "SELECT title FROM " + TABLE_NAME;
 			MySqlCommand command = new MySqlCommand(strSQL, myConnection);
 			MySqlDataReader reader = command.ExecuteReader();
 			while (reader.Read()) {

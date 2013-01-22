@@ -290,7 +290,7 @@
       <DependentUpon>TableOption.cs</DependentUpon>
     </Compile>
     <Compile Include="UserData\User.cs" />
-    <Compile Include="UserData\UserCard.cs">
+    <Compile Include="UserData\MemberCard.cs">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
