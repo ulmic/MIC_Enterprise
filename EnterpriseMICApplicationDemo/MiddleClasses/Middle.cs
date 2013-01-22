@@ -166,7 +166,6 @@ namespace EnterpriseMICApplicationDemo {
 		}
 
 		public string[] GetSendList(string title) {
-			/* ХУЙНЯ */
 			throw new NotImplementedException();
 		}
 
