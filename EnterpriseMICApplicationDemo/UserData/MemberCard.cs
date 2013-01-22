@@ -52,6 +52,21 @@ namespace EnterpriseMICApplicationDemo {
 			this.Controls.Clear();
 		}
 
+        public void ChangeMember(Member m) {
+            member = m;
+            number.Text = "№" + member.Number.ToString();
+            fullName.Text = member.FirstName + " " + member.LastName + " " + member.Family;
+            birthDay.Text = ifThereIsNotDate(member.BDate);
+            enterDate.Text = ifThereIsNotDate(member.EnterDate);
+            email.Text = member.Email;
+            local.Text = member.Local;
+            city.Text = member.City;            
+            if ( member.Area != "" ) {
+                area.Text = member.Area;
+            }
+            godFather.Text = Program.Data.GetMICGodFather(member).Family + " " + Program.Data.GetMICGodFather(member).FirstName + " " + Program.Data.GetMICGodFather(member).LastName;            
+        }
+
 		public void PutMember(Member m) {
 			member = m;
 			number = new OpacityLabel();
