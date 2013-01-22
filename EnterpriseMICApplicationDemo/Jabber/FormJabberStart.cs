@@ -78,7 +78,6 @@ namespace EnterpriseMICApplicationDemo {
             }
         }
 #endif
-
         private void createTabPage(string tabName, string key = "", string insideText = null) {
             TabPage p = new TabPage(tabName);
             p.Name = key;
@@ -122,12 +121,24 @@ namespace EnterpriseMICApplicationDemo {
             tabsDialog.TabPages.Add(p);
         }
 
-
         private void SendTextMessage(string toJid, TextBox dialog, string message) {
             agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message(new Jid(toJid), MessageType.chat, message);
             xmpp.Send(msg);
             dialog.AppendText(formateString(nickname, message));
             addMessageToDB(mainJid.Bare, toJid, message);
+        }
+
+        private void tabsDialogSelectedIndexChangedOrFormDialogFocused(object sender, EventArgs e) {//длинное мнемоническое имя
+            if ( tabsDialog.SelectedTab == null )
+                return;
+            ListViewItem it = getListViewItem(tabsDialog.SelectedTab.Name);
+            if ( it == null ) {
+                return;
+            }
+            if ( it.BackColor != Color.Orange ) {
+                return;
+            }
+            it.BackColor = Color.Transparent;
         }
 
         private int findTagPage(string name) {
@@ -246,23 +257,6 @@ namespace EnterpriseMICApplicationDemo {
             }));
         }
 
-        void formDialog_FormClosing(object sender, FormClosingEventArgs e) {
-            tabsDialog.TabPages.Clear();
-        }
-
-        private void tabsDialogSelectedIndexChangedOrFormDialogFocused(object sender, EventArgs e) {//длинное мнемоническое имя
-            if ( tabsDialog.SelectedTab == null )
-                return;
-            ListViewItem it = getListViewItem(tabsDialog.SelectedTab.Name);
-            if ( it == null ) {
-                return;
-            }
-            if ( it.BackColor != Color.Orange ) {
-                return;
-            }
-            it.BackColor = Color.Transparent;
-        }
-
         private void HandlerOnRosterStart(object o) {
             BeginInvoke(new MethodInvoker(delegate() {
                 listUsers.BeginUpdate();
@@ -294,20 +288,14 @@ namespace EnterpriseMICApplicationDemo {
             }));
         }
 
+        private void HandlerOnAuthError(object sender, agsXMPP.Xml.Dom.Element e) {
+            throw new NotImplementedException();
+        }
+
         private void setStatus(string status) {
             Presence p = new Presence(ShowType.chat, status);
             xmpp.Send(p);
             textBoxStatus.Clear();
-        }
-
-        private void textBoxStatus_KeyDown(object sender, KeyEventArgs e) {
-            if ( e.KeyCode == Keys.Enter ) {
-                setStatus(textBoxStatus.Text);
-            }
-        }
-
-        private void button4_Click(object sender, EventArgs e) {
-            setStatus(textBoxStatus.Text);
         }
 
         private void initFormDialog() {
@@ -316,29 +304,6 @@ namespace EnterpriseMICApplicationDemo {
             } else {
                 formDialog.Focus();
             }
-        }
-
-        private void listUsers_MouseDoubleClick(object sender, MouseEventArgs e) {
-            if ( listUsers.SelectedItems.Count > 0 && listUsers.SelectedItems[0] != null ) {
-                initFormDialog();
-                string name = listUsers.SelectedItems[0].Text;
-                string jid = listUsers.SelectedItems[0].Name;
-                int index = findTagPage(jid);
-                if ( index == -1 ) {
-                    createTabPage(name, jid, getHistoryFromDB(jid));
-                    tabsDialog.SelectedIndex = tabsDialog.TabPages.Count - 1;
-                } else {
-                    tabsDialog.SelectedIndex = index;
-                }
-            }
-        }
-
-        private void login_MouseClick(object sender, MouseEventArgs e) {
-            //login.Clear();
-        }
-
-        private void password_MouseClick(object sender, MouseEventArgs e) {
-            //password.Clear();
         }
 
         private string getHistoryFromDB(string jidTo) {
@@ -375,10 +340,6 @@ namespace EnterpriseMICApplicationDemo {
             sql_cmd = sql_con.CreateCommand();
         }
 
-        void HandlerOnAuthError(object sender, agsXMPP.Xml.Dom.Element e) {
-            throw new NotImplementedException();
-        }
-
         private void connectXmpp(string server, string connserver, string username, string password) {
             xmpp = new XmppClientConnection();
             xmpp.Server = server;//"jabberd.eu";
@@ -395,6 +356,18 @@ namespace EnterpriseMICApplicationDemo {
             xmpp.OnLogin += HandlerOnLogin;
             xmpp.OnPresence += HandlerOnPresence;
             xmpp.OnAuthError += HandlerOnAuthError;
+        }      
+        
+        private void listUsers_KeyDown(object sender, KeyEventArgs e) {
+            if ( e.KeyCode == Keys.Enter ) {
+                listUsers_MouseDoubleClick(sender, null);
+            }
+        }
+
+        private void textBoxStatus_KeyDown(object sender, KeyEventArgs e) {
+            if ( e.KeyCode == Keys.Enter ) {
+                setStatus(textBoxStatus.Text);
+            }
         }
 
         private void Login_Button_Click(object sender, EventArgs e) {
@@ -432,29 +405,6 @@ namespace EnterpriseMICApplicationDemo {
             checkBoxConnected.Checked = false;
         }
 
-        private void Add_Users_Click(object sender, EventArgs e) {
-            FormAddUser add_us = new FormAddUser();//никак не работает
-            add_us.Show();//ничего не делает
-        }
-
-        private void createConference_Click(object sender, EventArgs e) {
-            List<string> users = new List<string>();
-            foreach ( ListViewItem it in listUsers.Items )
-                users.Add(it.Text);
-            FormCreateConferention fCreate = new FormCreateConferention(xmpp, mainJid, users);
-            fCreate.Show();
-        }
-
-        private void buttonJoinConf_Click(object sender, EventArgs e) {
-            FormJoinConferention fJoinConf = new FormJoinConferention(xmpp, mainJid);
-            fJoinConf.Show();
-        }
-
-        private void FormJabberStart_FormClosing(object sender, FormClosingEventArgs e) {
-            if ( xmpp != null )
-                xmpp.Close();
-        }
-
         private void buttonShowHideContacts_Click(object sender, EventArgs e) {
             listUsers.BeginUpdate();
             if ( offlineContactsHidden ) {
@@ -475,21 +425,67 @@ namespace EnterpriseMICApplicationDemo {
             listUsers.EndUpdate();
         }
 
-        private void listUsers_KeyDown(object sender, KeyEventArgs e) {
-            if ( e.KeyCode == Keys.Enter ) {
-                listUsers_MouseDoubleClick(sender, null);
+        private void Add_Users_Click(object sender, EventArgs e) {
+            FormAddUser add_us = new FormAddUser();//никак не работает
+            add_us.Show();//ничего не делает
+        }
+
+        private void createConference_Click(object sender, EventArgs e) {
+            List<string> users = new List<string>();
+            foreach ( ListViewItem it in listUsers.Items )
+                users.Add(it.Text);
+            FormCreateConferention fCreate = new FormCreateConferention(xmpp, mainJid, users);
+            fCreate.Show();
+        }
+
+        private void buttonJoinConf_Click(object sender, EventArgs e) {
+            FormJoinConferention fJoinConf = new FormJoinConferention(xmpp, mainJid);
+            fJoinConf.Show();
+        }
+        
+        private void buttonSettings_Click(object sender, EventArgs e) {
+            ( new FormSettings() ).Show();
+        }
+
+        private void button4_Click(object sender, EventArgs e) {
+            setStatus(textBoxStatus.Text);
+        }
+
+        private void listUsers_MouseDoubleClick(object sender, MouseEventArgs e) {
+            if ( listUsers.SelectedItems.Count > 0 && listUsers.SelectedItems[0] != null ) {
+                initFormDialog();
+                string name = listUsers.SelectedItems[0].Text;
+                string jid = listUsers.SelectedItems[0].Name;
+                int index = findTagPage(jid);
+                if ( index == -1 ) {
+                    createTabPage(name, jid, getHistoryFromDB(jid));
+                    tabsDialog.SelectedIndex = tabsDialog.TabPages.Count - 1;
+                } else {
+                    tabsDialog.SelectedIndex = index;
+                }
             }
+        }
+
+        private void login_MouseClick(object sender, MouseEventArgs e) {
+            //login.Clear();
+        }
+
+        private void password_MouseClick(object sender, MouseEventArgs e) {
+            //password.Clear();
         }
 
         private void FormJabberStart_Load(object sender, EventArgs e) {
             connectDb();
         }
 
-        private void buttonSettings_Click(object sender, EventArgs e) {
-            ( new FormSettings() ).Show(); 
+        private void FormJabberStart_FormClosing(object sender, FormClosingEventArgs e) {
+            if ( xmpp != null )
+                xmpp.Close();
         }
-
-
+                
+        private void formDialog_FormClosing(object sender, FormClosingEventArgs e) {
+            tabsDialog.TabPages.Clear();
+        }
 
     }
 }
