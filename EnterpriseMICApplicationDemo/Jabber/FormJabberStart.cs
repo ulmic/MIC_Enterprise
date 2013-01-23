@@ -23,6 +23,7 @@ namespace EnterpriseMICApplicationDemo {
         private string nickname = "we";
         private List<string> onlineUsers = new List<string>();//хранятся контакты, которые в онлайне на момент загрузки списка контактов; затем отмечаются в списке как онлайн и удаляются
         private List<ListViewItem> offlineUsers = new List<ListViewItem>();
+        private List<agsXMPP.protocol.client.Message> waitList = new List<agsXMPP.protocol.client.Message>();
         bool offlineContactsHidden = false;
         private SQLiteConnection sql_con;
         private SQLiteCommand sql_cmd;
@@ -30,25 +31,9 @@ namespace EnterpriseMICApplicationDemo {
 
         public FormJabberStart() {
             InitializeComponent();
+            loginBox.Text = "khelek@jabberd.eu";
+            passwordBox.Text = "abe2b33519";
             this.Paint += new PaintEventHandler(FormJabberStart_Paint);
-        }
-
-        void FormJabberStart_Paint(object sender, PaintEventArgs e) {
-            Graphics g = e.Graphics;
-            DrawRectangle(g, 0, 0, this.Width, this.Height);
-        }
-
-        private void DrawRectangle(Graphics g, int x, int y, int widht, int height) {
-            Rectangle rec = new Rectangle(x, y, widht, height);
-            if ( ( widht != 0 ) && ( height != 0 ) ) {
-                System.Drawing.Drawing2D.LinearGradientBrush gradient;
-                gradient = new System.Drawing.Drawing2D.LinearGradientBrush(rec, Color.FromArgb(251, 188, 59), Color.White, System.Drawing.Drawing2D.LinearGradientMode.Horizontal);
-
-                g.FillRectangle(gradient, rec);
-                return;
-            }
-            Brush brush = new SolidBrush(Color.FromArgb(251, 188, 59));
-            g.FillRectangle(brush, rec);
         }
 #if DEBUG
         public FormJabberStart(int i) {
@@ -78,6 +63,29 @@ namespace EnterpriseMICApplicationDemo {
             }
         }
 #endif
+        private void initSettings(string ip, string nickname, string jid) {
+            Settings.serverIp = ip;
+            Settings.nickname = nickname;
+            Settings.jid = jid;
+        }
+        private void FormJabberStart_Paint(object sender, PaintEventArgs e) {
+            Graphics g = e.Graphics;
+            DrawRectangle(g, 0, 0, this.Width, this.Height);
+        }
+
+        private void DrawRectangle(Graphics g, int x, int y, int widht, int height) {
+            Rectangle rec = new Rectangle(x, y, widht, height);
+            if ( ( widht != 0 ) && ( height != 0 ) ) {
+                System.Drawing.Drawing2D.LinearGradientBrush gradient;
+                gradient = new System.Drawing.Drawing2D.LinearGradientBrush(rec, Color.FromArgb(251, 188, 59), Color.White, System.Drawing.Drawing2D.LinearGradientMode.Horizontal);
+
+                g.FillRectangle(gradient, rec);
+                return;
+            }
+            Brush brush = new SolidBrush(Color.FromArgb(251, 188, 59));
+            g.FillRectangle(brush, rec);
+        }
+
         private void createTabPage(string tabName, string key = "", string insideText = null) {
             TabPage p = new TabPage(tabName);
             p.Name = key;
@@ -125,7 +133,7 @@ namespace EnterpriseMICApplicationDemo {
             agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message(new Jid(toJid), MessageType.chat, message);
             xmpp.Send(msg);
             dialog.AppendText(formateString(nickname, message));
-            addMessageToDB(mainJid.Bare, toJid, message);
+            addMessageToHistoryDB(mainJid.Bare, toJid, message);
         }
 
         private void tabsDialogSelectedIndexChangedOrFormDialogFocused(object sender, EventArgs e) {//длинное мнемоническое имя
@@ -167,28 +175,26 @@ namespace EnterpriseMICApplicationDemo {
             ListViewItem item = new ListViewItem();
             item.Name = jid;
             item.Text = name;
-            item.ForeColor = color;
+            item.ForeColor = color;            
             return item;
         }
 
         private void HandlerOnMessage(object o, agsXMPP.protocol.client.Message msg) {
             BeginInvoke(new MethodInvoker(delegate {
                 string from = msg.From.Bare;
-                int indexTab;
                 switch ( msg.Type ) {
                     case MessageType.chat: //простое сообщение			
                         //initFormDialog();
-                        indexTab = findTagPage(from);
+                        int indexTab = findTagPage(from);
                         if ( indexTab != -1 ) {//если уже существует вкладка для него 
                             ( (TextBox)tabsDialog.TabPages[indexTab].Controls[0] ).AppendText(formateString(from, msg.Body));
                         } else {
-                            //createTabPage(from, formateString(from, msg.Body));
+                            waitList.Add(msg);
                         }
-                        indexTab = findTagPage(from);
                         if ( !( formDialog.Focused && tabsDialog.SelectedIndex == indexTab ) ) {
                             getListViewItem(from).BackColor = Color.Orange;
                         }
-                        //addMessageToDB(msg.From.Bare, msg.To.Bare, msg.Body);
+                        addMessageToHistoryDB(msg.From.Bare, msg.To.Bare, msg.Body);
                         break;
                     case MessageType.groupchat:
                         //конференции сами ловят сообщения в своей форме
@@ -254,6 +260,7 @@ namespace EnterpriseMICApplicationDemo {
                 buttonJoinConf.Show();
                 buttonShowHideContacts.Show();
                 checkBoxConnected.Checked = true;
+                Settings.xmpp = xmpp;
             }));
         }
 
@@ -306,10 +313,21 @@ namespace EnterpriseMICApplicationDemo {
             }
         }
 
+        private void createTableInDB(string tablename) {
+            sql_cmd.CommandText = @"CREATE TABLE IF NOT EXISTS" + tablename + @" 
+                    (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            from_jid TEXT,
+                            data_time TEXT,
+                            message TEXT
+                    )";
+            int res = sql_cmd.ExecuteNonQuery();
+        }
+
         private string getHistoryFromDB(string jidTo) {
             string res = "";
             int limit = 2;
-            Stack<string> lastMessages = new Stack<string>();            
+            Stack<string> lastMessages = new Stack<string>();
             sql_cmd.CommandText = @"SELECT * FROM chat_history WHERE user_from ='" + jidTo + "' OR user_to ='" + jidTo + "' ORDER BY date_time DESC LIMIT " + limit;
             using ( SQLiteDataReader reader = sql_cmd.ExecuteReader() ) {
                 if ( reader.HasRows ) {
@@ -324,12 +342,12 @@ namespace EnterpriseMICApplicationDemo {
             while ( lastMessages.Count != 0 ) {
                 res += lastMessages.Pop();
             }
-            if (res != "")
+            if ( res != "" )
                 res += "_________________________________________________________________" + Environment.NewLine + Environment.NewLine;
             return res;
         }
 
-        private void addMessageToDB(string from, string to, string message) {
+        private void addMessageToHistoryDB(string from, string to, string message) {
             sql_cmd.CommandText = @"INSERT INTO chat_history (user_from,user_to,date_time,message) VALUES('" + from + "','" + to + "','" + DateTime.Now.ToString() + "', '" + message + "');";
             int res = sql_cmd.ExecuteNonQuery();
         }
@@ -356,8 +374,8 @@ namespace EnterpriseMICApplicationDemo {
             xmpp.OnLogin += HandlerOnLogin;
             xmpp.OnPresence += HandlerOnPresence;
             xmpp.OnAuthError += HandlerOnAuthError;
-        }      
-        
+        }
+
         private void listUsers_KeyDown(object sender, KeyEventArgs e) {
             if ( e.KeyCode == Keys.Enter ) {
                 listUsers_MouseDoubleClick(sender, null);
@@ -370,23 +388,28 @@ namespace EnterpriseMICApplicationDemo {
             }
         }
 
-        private void Login_Button_Click(object sender, EventArgs e) {
+        private void buttonLogin_Click(object sender, EventArgs e) {
             try {
                 string nickname = loginBox.Text.Substring(0, loginBox.Text.IndexOf("@"));
                 string server = loginBox.Text.Substring(loginBox.Text.IndexOf("@") + 1);
-                string connserver = ( server == "gmail.com" ) ? "talk.google.com" : ( ( server ) );// == "haupc" ) ? "192.168.1.3" : server );
+#if DEBUG
+                Settings.serverIp = "192.168.1.3";
+#endif
+                Settings.jid = loginBox.Text;
+                string connserver = ( server == "gmail.com" ) ? "talk.google.com" : ( ( server == "haupc" ) ? Settings.serverIp : server );
                 mainJid = new Jid(loginBox.Text);
                 Exit.Show();
                 loginBox.Hide();
                 passwordBox.Hide();
-                Login_Button.Hide();
+                buttonLogin.Hide();
+                listUsers.TileSize = new Size(listUsers.Width, (int)(listUsers.Font.Size + listUsers.Font.Height/1.4));
                 connectXmpp(server, connserver, nickname, passwordBox.Text);
                 //Add_Users.Hide();
             } catch {
                 MessageBox.Show("Неверный логин или пароль, попробуйте еще раз");
                 loginBox.Show();
                 passwordBox.Show();
-                Login_Button.Show();
+                buttonLogin.Show();
                 passwordBox.Clear();
             }
         }
@@ -397,7 +420,7 @@ namespace EnterpriseMICApplicationDemo {
             Exit.Hide();
             loginBox.Show();
             passwordBox.Show();
-            Login_Button.Show();
+            buttonLogin.Show();
             //Add_Users.Show();
             buttonCreateConf.Hide();
             buttonJoinConf.Hide();
@@ -434,15 +457,15 @@ namespace EnterpriseMICApplicationDemo {
             List<string> users = new List<string>();
             foreach ( ListViewItem it in listUsers.Items )
                 users.Add(it.Text);
-            FormCreateConferention fCreate = new FormCreateConferention(xmpp, mainJid, users);
+            FormCreateConferention fCreate = new FormCreateConferention(users);
             fCreate.Show();
         }
 
         private void buttonJoinConf_Click(object sender, EventArgs e) {
-            FormJoinConferention fJoinConf = new FormJoinConferention(xmpp, mainJid);
+            FormJoinConferention fJoinConf = new FormJoinConferention();
             fJoinConf.Show();
         }
-        
+
         private void buttonSettings_Click(object sender, EventArgs e) {
             ( new FormSettings() ).Show();
         }
@@ -456,12 +479,19 @@ namespace EnterpriseMICApplicationDemo {
                 initFormDialog();
                 string name = listUsers.SelectedItems[0].Text;
                 string jid = listUsers.SelectedItems[0].Name;
-                int index = findTagPage(jid);
-                if ( index == -1 ) {
+                int indexTab = findTagPage(jid);
+                agsXMPP.protocol.client.Message msgWait = waitList.Find(item => item.From.Bare == jid);
+                if ( indexTab == -1 ) {
                     createTabPage(name, jid, getHistoryFromDB(jid));
                     tabsDialog.SelectedIndex = tabsDialog.TabPages.Count - 1;
                 } else {
-                    tabsDialog.SelectedIndex = index;
+                    tabsDialog.SelectedIndex = indexTab;
+                }
+                indexTab = tabsDialog.SelectedIndex;
+                while ( msgWait != null ) {
+                    ( (TextBox)tabsDialog.TabPages[indexTab].Controls[0] ).AppendText(formateString(msgWait.From.Bare, msgWait.Body));
+                    waitList.Remove(msgWait);
+                    msgWait = waitList.Find(item => item.From.Bare == jid);
                 }
             }
         }
@@ -482,10 +512,11 @@ namespace EnterpriseMICApplicationDemo {
             if ( xmpp != null )
                 xmpp.Close();
         }
-                
+
         private void formDialog_FormClosing(object sender, FormClosingEventArgs e) {
             tabsDialog.TabPages.Clear();
         }
+
 
     }
 }

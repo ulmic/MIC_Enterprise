@@ -110,6 +110,7 @@
             // 
             // rtfChat
             // 
+            this.rtfChat.BackColor = System.Drawing.SystemColors.Window;
             this.rtfChat.Location = new System.Drawing.Point(12, 30);
             this.rtfChat.Name = "rtfChat";
             this.rtfChat.ReadOnly = true;

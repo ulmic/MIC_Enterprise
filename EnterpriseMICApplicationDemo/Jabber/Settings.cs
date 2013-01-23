@@ -8,7 +8,7 @@ namespace EnterpriseMICApplicationDemo {
     class Settings {
         public static string jid;
         public static XmppClientConnection xmpp;
-        public static string nickname;
+        public static string nickname = "haukot";
         public static string serverIp;
     }
 }

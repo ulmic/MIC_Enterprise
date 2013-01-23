@@ -15,28 +15,37 @@ using agsXMPP.protocol.x.muc;
 namespace EnterpriseMICApplicationDemo {
     public partial class FormConferention : Form {
         private Jid roomJid;
-        private Jid mainJid;
+        private string mainJid;
         private string nickname;
         private string roomName;
-        private List<string> users;
-        private XmppClientConnection m_XmppCon;
+        private XmppClientConnection xmpp;
         private MucManager muc;
 
-        public FormConferention(XmppClientConnection xmpp, Jid jid, string _nickname, string _roomJid, List<string> _users) {
+        public FormConferention(string _roomJid) {
             InitializeComponent();
             roomJid = new Jid(_roomJid);
-            users = _users;
-            m_XmppCon = xmpp;
-            mainJid = jid;
-            nickname = _nickname;
+            xmpp = Settings.xmpp;
+            mainJid = Settings.jid;
+            nickname = Settings.nickname;
+            muc = new MucManager(xmpp);
+            xmpp.MesagageGrabber.Add(roomJid, new BareJidComparer(), new MessageCB(MessageCallback), null);
+            xmpp.PresenceGrabber.Add(roomJid, new BareJidComparer(), new PresenceCB(PresenceCallback), null);
+        }
 
-            muc = new MucManager(m_XmppCon);
-
-            // Setup new Message Callback
-            m_XmppCon.MesagageGrabber.Add(roomJid, new BareJidComparer(), new MessageCB(MessageCallback), null);
-
-            // Setup new Presence Callback
-            m_XmppCon.PresenceGrabber.Add(roomJid, new BareJidComparer(), new PresenceCB(PresenceCallback), null);				
+        public FormConferention(string _roomJid, List<string> users) {
+            InitializeComponent();
+            roomJid = new Jid(_roomJid);
+            xmpp = Settings.xmpp;
+            mainJid = Settings.jid;
+            nickname = Settings.nickname;
+            muc = new MucManager(xmpp);
+            xmpp.MesagageGrabber.Add(roomJid, new BareJidComparer(), new MessageCB(MessageCallback), null);
+            xmpp.PresenceGrabber.Add(roomJid, new BareJidComparer(), new PresenceCB(PresenceCallback), null);
+            muc.Invite(users.ConvertAll<Jid>(
+                delegate(string jid) {
+                    return new Jid(jid);
+                }
+            ).ToArray(), roomJid, "Вы приглашены в конференцию Конф.");
         }
 
         private void textBoxMessage_KeyDown(object sender, KeyEventArgs e) {
@@ -55,7 +64,7 @@ namespace EnterpriseMICApplicationDemo {
                 msg.Type = MessageType.groupchat;
                 msg.To = roomJid;
                 msg.Body = message;
-                m_XmppCon.Send(msg);
+                xmpp.Send(msg);
                 textBoxSend.Clear();
             }
         }
@@ -163,7 +172,7 @@ namespace EnterpriseMICApplicationDemo {
                 msg.To = roomJid;
                 msg.Body = textBoxSend.Text;
 
-                m_XmppCon.Send(msg);
+                xmpp.Send(msg);
 
                 textBoxSend.Text = "";
             }
@@ -183,7 +192,7 @@ namespace EnterpriseMICApplicationDemo {
             msg.To = roomJid;
             msg.Subject = txtSubject.Text;
 
-            m_XmppCon.Send(msg);
+            xmpp.Send(msg);
         }
 
     }
