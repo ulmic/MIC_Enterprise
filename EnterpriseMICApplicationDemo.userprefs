@@ -1,0 +1,14 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="EnterpriseMICApplicationDemo/Controls/MyPressReleaseControl.cs">
+    <Files>
+      <File FileName="EnterpriseMICApplicationDemo/Jabber/FormConferention.cs" Line="102" Column="73" />
+      <File FileName="EnterpriseMICApplicationDemo/Properties/Resources.resx" Line="1" Column="1" />
+      <File FileName="EnterpriseMICApplicationDemo/Controls/MyPressReleaseControl.cs" Line="37" Column="65" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

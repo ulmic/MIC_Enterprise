@@ -11,6 +11,8 @@ using agsXMPP.Collections;
 using agsXMPP.protocol;
 using agsXMPP.protocol.client;
 using agsXMPP.protocol.x.muc;
+using agsXMPP.protocol.x.muc.iq;
+using agsXMPP.protocol.x.data;
 
 namespace EnterpriseMICApplicationDemo {
     public partial class FormConferention : Form {
@@ -18,6 +20,8 @@ namespace EnterpriseMICApplicationDemo {
         private string mainJid;
         private string nickname;
         private string roomName;
+        private string roomDesc = "";
+		private string password = "";
         private XmppClientConnection xmpp;
         private MucManager muc;
 
@@ -32,13 +36,20 @@ namespace EnterpriseMICApplicationDemo {
             xmpp.PresenceGrabber.Add(roomJid, new BareJidComparer(), new PresenceCB(PresenceCallback), null);
         }
 
-        public FormConferention(string _roomJid, List<string> users) {
+        public FormConferention(string _roomJid, List<string> users, string _roomName, bool savingHistory) {
             InitializeComponent();
             roomJid = new Jid(_roomJid);
+			roomName = _roomName;
             xmpp = Settings.xmpp;
             mainJid = Settings.jid;
             nickname = Settings.nickname;
             muc = new MucManager(xmpp);
+            muc.CreateReservedRoom(roomJid);
+            muc.GrantOwnershipPrivileges(roomJid, new Jid(mainJid));
+            muc.JoinRoom(roomJid, nickname);
+            if ( savingHistory ) {
+                initMucConfigFromSavingHistory();
+            }
             xmpp.MesagageGrabber.Add(roomJid, new BareJidComparer(), new MessageCB(MessageCallback), null);
             xmpp.PresenceGrabber.Add(roomJid, new BareJidComparer(), new PresenceCB(PresenceCallback), null);
             muc.Invite(users.ConvertAll<Jid>(
@@ -48,6 +59,66 @@ namespace EnterpriseMICApplicationDemo {
             ).ToArray(), roomJid, "Вы приглашены в конференцию Конф.");
         }
 
+        private void initMucConfigFromSavingHistory() {
+            muc.RequestConfigurationForm(roomJid, new IqCB(OnRequestConfiguration));
+        }
+
+        private void addFieldInDataIQ(agsXMPP.protocol.x.data.Data data, string fieldtype, string fieldname, string value) {
+			Field field;
+			switch(fieldtype) {
+				case "boolean":
+            		field = new Field(FieldType.Boolean);
+					break;
+				case "text":
+            		field = new Field(FieldType.Text_Single);
+					break;
+			}
+            field.Var = fieldname;
+            field.Value = value;
+            data.AddChild(field);
+        }
+
+        private void OnRequestConfiguration(object sender, IQ iq, object obj) {
+            agsXMPP.protocol.x.muc.iq.owner.OwnerIq oIq = new agsXMPP.protocol.x.muc.iq.owner.OwnerIq();
+            oIq.Type = IqType.set;
+            oIq.To = iq.From;
+
+            agsXMPP.protocol.x.data.Data data = new agsXMPP.protocol.x.data.Data(XDataFormType.form);
+
+            addFieldInDataIQ(data, "muc#roomconfig_roomname", roomName, "text");
+            addFieldInDataIQ(data, "muc#roomconfig_roomdesc", roomDesc, "text");
+            addFieldInDataIQ(data, "muc#roomconfig_persistentroom", "1", "boolean");
+            addFieldInDataIQ(data, "muc#roomconfig_publicroom", "1", "boolean");
+            addFieldInDataIQ(data, "public_list", "1", "boolean");
+            addFieldInDataIQ(data, "muc#roomconfig_passwordprotectedroom", (password == "") ? "0" : "1", "boolean");
+            addFieldInDataIQ(data, "muc#roomconfig_roomsecret", "", "boolean");
+            addFieldInDataIQ(data, "muc#roomconfig_maxusers", "200","text");
+            addFieldInDataIQ(data, "muc#roomconfig_whois", "moderators", "text");
+            addFieldInDataIQ(data, "muc#roomconfig_membersonly", "0", "boolean");
+            addFieldInDataIQ(data, "muc#roomconfig_moderatedroom", "1", "boolean");
+            addFieldInDataIQ(data, "members_by_default", "0", "boolean");
+            addFieldInDataIQ(data, "muc#roomconfig_membersonly", "0", "boolean");
+            addFieldInDataIQ(data, "muc#roomconfig_membersonly", "0", "boolean");
+			addFieldInDataIQ(data, "muc#roomconfig_changesubject", "1", "boolean");
+			addFieldInDataIQ(data, "allow_private_messages", "1", "boolean");
+			addFieldInDataIQ(data, "allow_private_messages_from_visitors", "anyone", "text");
+			addFieldInDataIQ(data, "allow_query_users", "1", "boolean");
+			addFieldInDataIQ(data, "muc#roomconfig_allowinvites", "0", "boolean");
+			addFieldInDataIQ(data, "muc#roomconfig_allowvisitorstatus", "1", "boolean");
+			addFieldInDataIQ(data, "muc#roomconfig_allowvisitornickchange", "0", "boolean");
+			addFieldInDataIQ(data, "muc#roomconfig_allowvoicerequests", "0", "boolean");
+			addFieldInDataIQ(data, "muc#roomconfig_voicerequestmininterval", "1800", "text");
+			addFieldInDataIQ(data, "muc#roomconfig_captcha_whitelist", "", "text");
+			addFieldInDataIQ(data, "muc#roomconfig_enablelogging", "1", "boolean");
+				
+            oIq.Query.AddChild(data);
+            Settings.xmpp.IqGrabber.SendIq(oIq, new IqCB(OnGetFieldsResult), null);
+        }
+
+        public void OnGetFieldsResult(object sender, IQ iq, object data) {
+            //
+        }
+        
         private void textBoxMessage_KeyDown(object sender, KeyEventArgs e) {
             if ( e.KeyCode == Keys.Enter && checkIfEnter.Checked ) {
                 SendConfMessage(textBoxSend.Text);

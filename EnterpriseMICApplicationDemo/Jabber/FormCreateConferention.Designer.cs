@@ -36,11 +36,13 @@
             this.textBoxConfName = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.textBoConfIdent = new System.Windows.Forms.TextBox();
+            this.checkBoxHistory = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // buttonCreate
             // 
-            this.buttonCreate.Location = new System.Drawing.Point(12, 295);
+            this.buttonCreate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCreate.Location = new System.Drawing.Point(11, 356);
             this.buttonCreate.Name = "buttonCreate";
             this.buttonCreate.Size = new System.Drawing.Size(136, 35);
             this.buttonCreate.TabIndex = 0;
@@ -50,19 +52,23 @@
             // 
             // listViewUsers
             // 
+            this.listViewUsers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listViewUsers.CheckBoxes = true;
             this.listViewUsers.Location = new System.Drawing.Point(12, 103);
             this.listViewUsers.Name = "listViewUsers";
-            this.listViewUsers.Size = new System.Drawing.Size(236, 186);
+            this.listViewUsers.Size = new System.Drawing.Size(228, 222);
             this.listViewUsers.TabIndex = 1;
             this.listViewUsers.UseCompatibleStateImageBehavior = false;
             this.listViewUsers.View = System.Windows.Forms.View.List;
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(154, 295);
+            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCancel.Location = new System.Drawing.Point(153, 357);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(93, 34);
+            this.buttonCancel.Size = new System.Drawing.Size(89, 34);
             this.buttonCancel.TabIndex = 2;
             this.buttonCancel.Text = "Отмена";
             this.buttonCancel.UseVisualStyleBackColor = true;
@@ -88,9 +94,11 @@
             // 
             // textBoxConfName
             // 
+            this.textBoxConfName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxConfName.Location = new System.Drawing.Point(12, 25);
             this.textBoxConfName.Name = "textBoxConfName";
-            this.textBoxConfName.Size = new System.Drawing.Size(235, 20);
+            this.textBoxConfName.Size = new System.Drawing.Size(227, 20);
             this.textBoxConfName.TabIndex = 4;
             this.textBoxConfName.Text = "Конференция IT-разработчиков";
             // 
@@ -105,17 +113,31 @@
             // 
             // textBoConfIdent
             // 
+            this.textBoConfIdent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoConfIdent.Location = new System.Drawing.Point(12, 64);
             this.textBoConfIdent.Name = "textBoConfIdent";
-            this.textBoConfIdent.Size = new System.Drawing.Size(235, 20);
+            this.textBoConfIdent.Size = new System.Drawing.Size(227, 20);
             this.textBoConfIdent.TabIndex = 6;
             this.textBoConfIdent.Text = "grrconf";
+            // 
+            // checkBoxHistory
+            // 
+            this.checkBoxHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxHistory.AutoSize = true;
+            this.checkBoxHistory.Location = new System.Drawing.Point(16, 331);
+            this.checkBoxHistory.Name = "checkBoxHistory";
+            this.checkBoxHistory.Size = new System.Drawing.Size(196, 17);
+            this.checkBoxHistory.TabIndex = 8;
+            this.checkBoxHistory.Text = "Сохранять историю конференции";
+            this.checkBoxHistory.UseVisualStyleBackColor = true;
             // 
             // FormCreateConferention
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(259, 341);
+            this.ClientSize = new System.Drawing.Size(254, 403);
+            this.Controls.Add(this.checkBoxHistory);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBoConfIdent);
             this.Controls.Add(this.label2);
@@ -141,5 +163,6 @@
         private System.Windows.Forms.TextBox textBoxConfName;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBoConfIdent;
+        private System.Windows.Forms.CheckBox checkBoxHistory;
     }
 }
