@@ -72,7 +72,7 @@ namespace EnterpriseMICApplicationDemo {
 				return;
 			}
 			Login login = new Login();
-			int loginIndex = login.getLoginIndex(loginTextBox.Text, passwordTextBox.Text, rememberCheckBox.Checked);
+			int loginIndex = login.GetLoginIndex(loginTextBox.Text, passwordTextBox.Text, rememberCheckBox.Checked);
 			if (loginIndex != Const.THEREISNOT) {
 				if (ReLogin) {
 					if (loginIndex == Program.Data.MainUser.Index) {

@@ -10,13 +10,16 @@ namespace EnterpriseMICApplicationDemo {
 		public static int GetUserIndexByLoginPassword(string login, string password) {
 			DBHelper db = new DBHelper();
 			connection = new MySqlConnection(db.DataBaseConnectorString(Const.DB_NAME, Const.DATA_SOURCE, Const.DB_USER, Const.DB_USER_PASSWORD));
-			string condition = "login=" + login + ", password=" + password;
+			connection.Open();
+			string condition = "login = '" + login + "' and password = '" + password + "'";
 			MySqlCommand command = new MySqlCommand(db.SelectSQLQuery("id_user", Const.USERS_TABLE, condition), connection);
 			MySqlDataReader reader = command.ExecuteReader();
 			if (reader.Read() == false) {
 				return Const.THEREISNOT;
 			}
-			return reader.GetInt32(0);
+			int userIndex = reader.GetInt32(0);
+			connection.Close();
+			return userIndex;
 		}
 	}
 }
