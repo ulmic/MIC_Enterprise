@@ -10,7 +10,7 @@ namespace EnterpriseMICApplicationDemo {
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
       Data = new Middle();      
-      Application.Run(MainWindow = new MainForm(Const.THEREISNOT));
+      Application.Run(MainWindow = new MainForm());
     }
 
     internal static MainForm MainWindow;

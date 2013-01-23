@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace EnterpriseMICApplicationDemo {
-	public class Short {
+	public class Short : User {
 		public string Family { get; set; }
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
@@ -27,10 +27,20 @@ namespace EnterpriseMICApplicationDemo {
 	/// <summary>
 	/// Member of MIC class
 	/// </summary>
-	public class Member {
+	public class Member : User {
 		public string Family { get; set; }
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
+		public string FullName {
+			get {
+				return Family + FirstName + LastName;
+			}
+		}
+		public string Appeal {
+			get {
+				return Family + FirstName;
+			}
+		}
 		public int Number { get; set; }
 		public string Local { get; set; }
 		public DateTime BDate { get; set; }
@@ -49,10 +59,28 @@ namespace EnterpriseMICApplicationDemo {
 		public string Post { get; set; }
 		public string Email { get; set; }
 
+		public Member() { }
+
+		public Member(int userIndex, string userLogin, string userPassword) {
+			Id = userIndex;
+			Login = userLogin;
+			Password = userPassword;
+			Functions = new bool[Const.FUNCTIONS_COUNT];
+			giveFunctions();
+		}
+
 		public override string ToString() {
 			return Family + " " + FirstName + " " + LastName + "\n" + BDate + "\n" + Number + "\n" + Local + "\n" + Education
 			  + "\n" + Job + "\n" + EnterDate + "\n" + IndexAdress + State + City + Area + HomeAdress + "\n" +
 			  Contacts + "\n" + EnterMark + "\n" + ChangeDate + "\n" + GodFather + "\n" + Post + "\n" + Email;
+		}
+
+		private void giveFunctions() {
+			for (int i = 0; i < Functions.Length; i++) {
+				Functions[i] = false;
+			}
+			Distribution.SetLevel(ref userLevel, Member_DB.GetUserLevelById(Id));
+			Distribution.SetFunctions(userLevel, ref Functions);
 		}
 	}
 }

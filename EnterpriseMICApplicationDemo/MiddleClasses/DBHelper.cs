@@ -239,5 +239,34 @@ namespace EnterpriseMICApplicationDemo {
 			}
 			return emails;
 		}
+
+		private string dataBaseConnectorString(string dbName, string dataSource, string userName, string password) {
+			if (password == "") {
+				return "Database=" + dbName + ";Data Source=" + dataSource + ";User Id=" + userName;
+			}
+			return "Database=" + dbName + ";Data Source=" + dataSource + ";User Id=" + userName + ";User Password=" + password;
+		}
+
+		public MySqlConnection CreateConnection() {
+			return new MySqlConnection(dataBaseConnectorString(Const.DB_NAME, Const.DATA_SOURCE, Const.DB_USER, Const.DB_USER_PASSWORD));
+		}
+
+		private string selectSQLQuery(string[] attrs, string table, string condition) {
+			string query = "SELECT ";
+			foreach (string attr in attrs) {
+				query += attr + ", ";
+			}
+			query = query.Remove(query.Length - 2);
+			query += " FROM " + table + " WHERE " + condition;
+			return query;
+		}
+
+		public string SelectSQLQuery(string attr, string table, string condition) {
+			return selectSQLQuery(new string[] { attr }, table, condition);
+		}
+
+		public string SelectSQLQuery(string[] attrs, string table, string condition) {
+			return selectSQLQuery(attrs, table, condition);
+		}
 	}
 }
