@@ -131,6 +131,24 @@ namespace EnterpriseMICApplicationDemo {
 		/// <summary>
 		/// User Attributes
 		/// </summary>
+		public const string FAMILY = "family";
+		public const string FIRST_NAME = "firstName";
+		public const string LAST_NAME = "lastName";
+		public const string NUMBER = "number";
+		public const string LOCAL = "local";
+		public const string B_DATE = "b_day,b_month,b_year";
+		public const string EDUCATION = "education";
+		public const string JOB = "job";
+		public const string ENTER_DATE = "enter_day,enter_month,enter_year";
+		public const string INDEX_ADRESS = "index_adress";
+		public const string STATE = "state";
+		public const string CITY = "city";
+		public const string HOME_ADRESS = "home_adress";
+		public const string CONTACTS = "contacts";
+		public const string ENTER_MARK = "enter_mark";
+		public const string CHANGE_DATE = "change_date";
+		public const string GOD_FATHER = "god_father";
+		public const string POST = "post";
 		public const string USER_LEVEL = "userId";
 		public const string EMAIL = "email";
 	}

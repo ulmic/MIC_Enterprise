@@ -105,7 +105,7 @@ namespace EnterpriseMICApplicationDemo {
 				mmbr.IndexAdress = Int32.Parse(reader["index_adress"].ToString());
 				mmbr.Contacts = reader["contacts"].ToString();
 				mmbr.EnterMark = reader["enter_Mark"].ToString();
-				mmbr.ChangeDate = reader["change_date"].ToString();
+				//mmbr.ChangeDate = reader["change_date"].ToString();
 				mmbr.GodFather = Int32.Parse(reader["godFather"].ToString());
 				mmbr.Post = reader["post"].ToString();
 				mmbr.Email = reader["email"].ToString();
