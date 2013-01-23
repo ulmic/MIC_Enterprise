@@ -23,12 +23,21 @@ namespace EnterpriseMICApplicationDemo {
 			return loginIndex;
 		}
 
-		public int GetLoginIndex(string login, string password, bool remember) {
+		private int getUserIndex(string login, string password) {
 			int userIndex = Login_DB.GetUserIndexByLoginPassword(login, password);
-			if (remember) {
-				writeToRememberFile(userIndex);
-			}
 			return userIndex;
+		}
+
+		public bool Auth(string login, string password, bool remember) {
+			int userIndex = getUserIndex(login, password);
+			if (userIndex != Const.THEREISNOT) {
+				if (remember) {
+					writeToRememberFile(userIndex);
+				}
+				Program.Data.SetMainUser(userIndex, login, password);
+				return true;
+			}
+			return false;
 		}
 
 		private int checkLogin(string login) {

@@ -162,11 +162,10 @@ namespace EnterpriseMICApplicationDemo {
 		}
 
 		public void Initialization(int userIndex) {
-			Program.Data.InitUser(userIndex);
 			InitializeComponent();
 			this.Disposed += new EventHandler(MainForm_Disposed);
 
-			nameLinkLabel.Text = Program.Data.MainUser.Name;
+			nameLinkLabel.Text = Program.Data.MainUser.Appeal;
 			postLabel.Text = Program.Data.MainUser.Post;
 
 			nameLinkLabel.MouseEnter += new EventHandler(nameLinkLabel_MouseEnter);

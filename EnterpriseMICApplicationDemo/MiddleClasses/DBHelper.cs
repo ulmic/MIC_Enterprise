@@ -242,7 +242,7 @@ namespace EnterpriseMICApplicationDemo {
 
 		public string DataBaseConnectorString(string dbName, string dataSource, string userName, string password) {
 			if (password == "") {
-				return "Database=" + dbName + ";Data Source=" + dataSource + ";User Id=" + userName;				
+				return "Database=" + dbName + ";Data Source=" + dataSource + ";User Id=" + userName;
 			}
 			return "Database=" + dbName + ";Data Source=" + dataSource + ";User Id=" + userName + ";User Password=" + password;
 		}

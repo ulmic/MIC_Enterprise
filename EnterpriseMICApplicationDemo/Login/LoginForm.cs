@@ -18,7 +18,6 @@ namespace EnterpriseMICApplicationDemo {
 
 		public LoginForm() {
 			InitializeComponent();
-			InputLanguage.CurrentInputLanguage = InputLanguage.InstalledInputLanguages[Const.ENGLISH_LANGUAGE];
 			this.loginTextBox.Click += new EventHandler(loginTextBox_Click);
 			this.passwordTextBox.TextChanged += new EventHandler(passwordTextBox_Click);
 			this.passwordTextBox.Click += new EventHandler(passwordTextBox_Click);
@@ -30,6 +29,9 @@ namespace EnterpriseMICApplicationDemo {
 			enterButton.Enabled = false;
 			MessageLabel.formSize = MessageLabel.FormSize.Small;
 			MessageLabel.PutMessage("Введите свой логин и пароль");
+
+			InputLanguage.CurrentInputLanguage = InputLanguage.InstalledInputLanguages[1];
+
 		}
 
 		private void loginTextBox_TextChanged(object sender, EventArgs e) {
@@ -71,17 +73,13 @@ namespace EnterpriseMICApplicationDemo {
 				MessageLabel.PutMessage("Логин или пароль не могут содержать управляющие символы и разделители. !@#$%^&*()_+-=\";:?~`\\'|/.,{}[]", Const.BAD_MESSAGE);
 				return;
 			}
-			Login login = new Login();
-			int loginIndex = login.GetLoginIndex(loginTextBox.Text, passwordTextBox.Text, rememberCheckBox.Checked);
-			if (loginIndex != Const.THEREISNOT) {
+			Login login = new Login(); // bad code
+			bool authSuccess = login.Auth(loginTextBox.Text, passwordTextBox.Text, rememberCheckBox.Checked);
+			if (authSuccess != false) {
 				if (ReLogin) {
-					if (loginIndex == Program.Data.MainUser.Index) {
-						MessageLabel.PutMessage("Вы уже находитесь в профиле данного пользователя", Const.BAD_MESSAGE);
-						return;
-					}
 					Program.MainWindow.Clear();
 				}
-				Program.MainWindow.Initialization(loginIndex);
+				Program.MainWindow.Initialization(Program.Data.MainUser.Id);
 				this.Visible = false;
 			}
 			MessageLabel.PutMessage("Неверный логин или пароль!", Const.BAD_MESSAGE);
