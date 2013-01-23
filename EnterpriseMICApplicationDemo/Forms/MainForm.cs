@@ -95,53 +95,27 @@ namespace EnterpriseMICApplicationDemo {
 			nameLinkLabel.Indent = OpacityLinkLabel.ControlIndent.Small;
 			postLabel.Indent = OpacityLabel.ControlIndent.Small;
 			if (Program.Data.MainUser.Functions[Const.VIEW_USER_DATA]) {
-				/* Быдло */
 				functions[Const.VIEW_USER_DATA].InitializeCellsCount(1, 2);
 				functions[Const.VIEW_USER_DATA].Controls.Add(this.nameLinkLabel, 0, 0);
 				functions[Const.VIEW_USER_DATA].Controls.Add(this.postLabel, 0, 1);
-				functions[Const.VIEW_USER_DATA].Size = new System.Drawing.Size(213, 83);
+				functions[Const.VIEW_USER_DATA].Size = new System.Drawing.Size(200, 83);
 				functions[Const.VIEW_USER_DATA].TabIndex = 0;
 			}
 			functions[Const.VIEW_USER_DATA].ReverseControls();
 		}
 
 		private void InitDeliveryPanel() {
-			//deliveryLinkLabel.EnumControlIndent = OpacityLinkLabel.EnumControlIndent.FirstOfList;
 			deliveryListLinkLabel.Indent = OpacityLinkLabel.ControlIndent.FirstOfList;
-			//deliveryNumberLinkLabel.EnumControlIndent = OpacityLinkLabel.EnumControlIndent.FirstOfList;
 			deliveryNumberListLinkLabel.Indent = OpacityLinkLabel.ControlIndent.FirstOfList;
 			if (Program.Data.MainUser.Functions[Const.CREATE_NEW_DELIVERY]) {
-				/* Быдло */
 				functions[Const.CREATE_NEW_DELIVERY].InitializeCellsCount(2, 3);
-				//functions[Const.CREATE_NEW_DELIVERY].Controls.Add(this.deliveryLinkLabel, 0, 0);
 				functions[Const.CREATE_NEW_DELIVERY].Controls.Add(this.deliveryListLinkLabel, 0, 0);
-				//functions[Const.CREATE_NEW_DELIVERY].Controls.Add(this.deliveryNumberLinkLabel, 1, 0);
 				functions[Const.CREATE_NEW_DELIVERY].Controls.Add(this.deliveryNumberListLinkLabel, 1, 0);
 				functions[Const.CREATE_NEW_DELIVERY].Controls.Add(this.deliveryNewButton, 0, 1);
 				functions[Const.CREATE_NEW_DELIVERY].Size = new System.Drawing.Size(200, 91);
 				functions[Const.CREATE_NEW_DELIVERY].TabIndex = 1;
 			}
 		}
-
-		//private void InitPlannerPanel() {
-		//  if (Program.Data.MainUser.Functions[Const.ONLINE_CONFERENCE]) {
-		//    functions[Const.ONLINE_CONFERENCE].Controls.Add(taskLinkLabel);
-		//    functions[Const.ONLINE_CONFERENCE].Controls.Add(taskListLinkLabel);
-		//    functions[Const.ONLINE_CONFERENCE].Controls.Add(eventLinkLabel);
-		//    functions[Const.ONLINE_CONFERENCE].Controls.Add(eventListLinkLabel);
-		//    functions[Const.ONLINE_CONFERENCE].Controls.Add(ideasLinkLabel);
-		//    functions[Const.ONLINE_CONFERENCE].Controls.Add(ideasListLinkLabel);
-		//    functions[Const.ONLINE_CONFERENCE].Controls.Add(newIdeaButton);
-		//    functions[Const.ONLINE_CONFERENCE].Controls.Add(newIdeaLabel);
-		//    functions[Const.ONLINE_CONFERENCE].Controls.Add(newIdeaTextBox);
-		//    functions[Const.ONLINE_CONFERENCE].Dock = System.Windows.Forms.DockStyle.Top;
-		//    functions[Const.ONLINE_CONFERENCE].Size = new Size(213, 203);
-		//    functions[Const.ONLINE_CONFERENCE].TabIndex = 2;
-		//  }
-		//  Program.Data.InitMinds();
-		//  ideasListLinkLabel.Text = Program.Data.IdeasCount.ToString();
-		//  taskListLinkLabel.Text = Program.Data.TasksCount.ToString();
-		//}
 
 		private void InitOnlineConferencePanel() {
 			OpacityLabel onlineConferenceLabel = new OpacityLabel();
