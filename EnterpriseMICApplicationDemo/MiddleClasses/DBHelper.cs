@@ -24,8 +24,6 @@ namespace EnterpriseMICApplicationDemo {
 			try {
 				con = new MySqlConnection(connectionString);
 			} catch {
-				Console.WriteLine("Error: couldn't connect to database");
-				Console.ReadKey();
 				return null;
 			}
 			MySqlCommand cmd = new MySqlCommand(getGroupShortsQuery + "'" + local + "'", con);
@@ -53,8 +51,6 @@ namespace EnterpriseMICApplicationDemo {
 			try {
 				con = new MySqlConnection(connectionString);
 			} catch {
-				Console.WriteLine("Error: couldn't connect to database");
-				Console.ReadKey();
 				str.Add("Ошибка: не создано соединение.");
 				return str;
 			}
@@ -84,8 +80,6 @@ namespace EnterpriseMICApplicationDemo {
 			try {
 				con = new MySqlConnection(connectionString);
 			} catch {
-				Console.WriteLine("Error: couldn't connect to database");
-				Console.ReadKey();
 				return null;
 			}
 			MySqlCommand cmd = new MySqlCommand(getMemberQuery + id.ToString(), con);
@@ -133,8 +127,6 @@ namespace EnterpriseMICApplicationDemo {
 			try {
 				con = new MySqlConnection(connectionString);
 			} catch {
-				Console.WriteLine("Error: couldn't connect to database");
-				Console.ReadKey();
 				return null;
 			}
 			MySqlCommand cmd = new MySqlCommand(sameBDayShortsQuery, con);
@@ -157,8 +149,6 @@ namespace EnterpriseMICApplicationDemo {
 			try {
 				con = new MySqlConnection(connectionString);
 			} catch {
-				Console.WriteLine("Error: couldn't connect to database");
-				Console.ReadKey();
 				return null;
 			}
 			MySqlCommand cmd = new MySqlCommand(sameBDayShortsQuery, con);
@@ -181,8 +171,6 @@ namespace EnterpriseMICApplicationDemo {
 			try {
 				con = new MySqlConnection(connectionString);
 			} catch {
-				Console.WriteLine("Error: couldn't connect to database");
-				Console.ReadKey();
 				return null;
 			}
 			MySqlCommand cmd = new MySqlCommand(sameBDayShortsQuery, con);
@@ -204,8 +192,6 @@ namespace EnterpriseMICApplicationDemo {
 			try {
 				con = new MySqlConnection(connectionString);
 			} catch {
-				Console.WriteLine("Error: couldn't connect to database");
-				Console.ReadKey();
 				return null;
 			}
 			MySqlCommand cmd = new MySqlCommand("SELECT contacts FROM newMIC_9", con);
