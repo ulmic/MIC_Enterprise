@@ -13,14 +13,15 @@ namespace EnterpriseMICApplicationDemo {
 		public Login() { }
 
 		public int CheckEnter() {
-			return 1;
-			//int loginIndex;
-			//try {
-			//  loginIndex = Int32.Parse(File.ReadAllText(@Const.adressRememberUserFile, System.Text.Encoding.Default));
-			//} catch {
-			//  return Const.THEREISNOT;
-			//}
-			//return loginIndex;
+			int loginIndex;
+			try {
+				loginIndex = Int32.Parse(File.ReadAllText(@Const.adressRememberUserFile, System.Text.Encoding.Default));
+			} catch {
+				StreamWriter fileWrite = File.CreateText(@Const.adressRememberUserFile);
+				fileWrite.Write(Const.THEREISNOT);
+				return Const.THEREISNOT;
+			}
+			return loginIndex;
 		}
 
 		public int getLoginIndex(string login, string password, bool remember) {

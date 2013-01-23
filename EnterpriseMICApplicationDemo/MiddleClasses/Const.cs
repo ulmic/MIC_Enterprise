@@ -111,5 +111,12 @@ namespace EnterpriseMICApplicationDemo {
 
 		public const int LIST_DELIVERY = 0;
 		public const int ONCE_MAIL = 1;
+
+		public const string DB_NAME = "mic_enterprise";
+		public const string DB_USER = "root";
+		public const string DB_USER_PASSWORD = "";
+		public const string DATA_SOURCE = "localhost";
+		public const string ALL_ATTRS = "*";
+		public const string USERS_TABLE = "users";
 	}
 }
