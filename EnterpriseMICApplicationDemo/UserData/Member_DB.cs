@@ -5,7 +5,7 @@ using System.Text;
 using MySql.Data.MySqlClient;
 
 namespace EnterpriseMICApplicationDemo{
-	static class User_DB {
+	static class Member_DB {
 		private static MySqlConnection connection;
 		private static DBHelper db;
 		public static int GetUserLevelById(int idUser) {
@@ -15,6 +15,24 @@ namespace EnterpriseMICApplicationDemo{
 				userLevel = Int32.Parse(value);
 			} catch { }
 			return userLevel;
+		}
+
+		public static int GetMemberIdByEmail(string email) {
+			return getUserIdByValue(Const.EMAIL, email);
+		}
+
+		private static int getUserIdByValue(string attrName, string value) {
+			int attrId = getAttrIdByName(attrName);
+			openConnection();
+			string condition = "id_attr = '" + attrId.ToString() + "' and value = '" + value + "'";
+			MySqlCommand command = new MySqlCommand(db.SelectSQLQuery("id_user", Const.USER_VALUES_TABLE, condition), connection);
+			MySqlDataReader reader = command.ExecuteReader();
+			if (reader.Read() == false) {
+				return Const.THEREISNOT;
+			}
+			int userId = Int32.Parse(reader.GetString(0));
+			connection.Close();
+			return userId;
 		}
 
 		private static string getUserValueByIdAndAttr(int idUser, string attrName) {

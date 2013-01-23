@@ -29,12 +29,12 @@ namespace EnterpriseMICApplicationDemo {
 		/// <summary>
 		/// Параметры пользователя
 		/// </summary>
-		public const int LOGIN = 0;
-		public const int PASSWORD = 1;
-		public const int EMAIL = 2;
-		public const int NAME = 3;
-		public const int POST = 4;
-		public const int FULL_NAME = 5;
+		//public const int LOGIN = 0;
+		//public const int PASSWORD = 1;
+		//public const int EMAIL = 2;
+		//public const int NAME = 3;
+		//public const int POST = 4;
+		//public const int FULL_NAME = 5;
 
 		public const string adressRememberUserFile = "userRemember.txt";
 
@@ -131,6 +131,7 @@ namespace EnterpriseMICApplicationDemo {
 		/// <summary>
 		/// User Attributes
 		/// </summary>
-		public const string USER_LEVEL = "userValue";
+		public const string USER_LEVEL = "userId";
+		public const string EMAIL = "email";
 	}
 }

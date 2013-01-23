@@ -79,7 +79,7 @@ namespace EnterpriseMICApplicationDemo {
 			for (int i = 0; i < Functions.Length; i++) {
 				Functions[i] = false;
 			}
-			Distribution.SetLevel(ref userLevel, User_DB.GetUserLevelById(Id));
+			Distribution.SetLevel(ref userLevel, Member_DB.GetUserLevelById(Id));
 			Distribution.SetFunctions(userLevel, ref Functions);
 		}
 	}

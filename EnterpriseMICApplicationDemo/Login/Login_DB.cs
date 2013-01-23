@@ -24,7 +24,7 @@ namespace EnterpriseMICApplicationDemo {
 			return userIndex;
 		}
 
-		public static Member GetMemberById(int idUser) {
+		public static Member GetUserById(int idUser) {
 			openConnection();
 			string condition = "id_user = '" + idUser + "'";
 			MySqlCommand command = new MySqlCommand(db.SelectSQLQuery(new string[] { LOGIN_ATTR, PASSWORD_ATTR }, Const.USERS_TABLE, condition), connection);

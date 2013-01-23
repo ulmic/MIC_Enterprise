@@ -16,7 +16,7 @@ namespace EnterpriseMICApplicationDemo {
 			int userId;
 			try {
 				userId = Int32.Parse(File.ReadAllText(@Const.adressRememberUserFile, System.Text.Encoding.Default));
-				Program.Data.MainUser = Login_DB.GetMemberById(userId);
+				Program.Data.MainUser = Login_DB.GetUserById(userId);
 			} catch {
 				File.WriteAllText(@Const.adressRememberUserFile, Const.THEREISNOT.ToString());
 				return Const.THEREISNOT;

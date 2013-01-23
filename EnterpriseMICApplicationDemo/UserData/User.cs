@@ -26,17 +26,7 @@ namespace EnterpriseMICApplicationDemo {
 		/// </summary>
 		protected Distribution.Level userLevel;
 
-		#region Constructors
-
 		public User() { }
-
-		public User(string param) {
-			if (param.Contains('@')) {
-				getUserByIndex(getIndexByParam(param, Const.EMAIL));
-			}
-		}
-
-		#endregion
 
 		private void getUserByIndex(int index) {
 			Id = index;
@@ -46,22 +36,6 @@ namespace EnterpriseMICApplicationDemo {
 				return;
 			}
 			
-		}
-
-		private int getIndexByParam(string param, int paramType) {
-			string[] parametrs = null;
-			if (paramType == Const.EMAIL) {
-				parametrs = AnyCatches.TryReadAllLines(@"email.txt", System.Text.Encoding.Default);
-			}
-			if (AnyCatches.IfThereIsNot(parametrs)) {
-				return Const.THEREISNOT;
-			}
-			for (int i = 0; i < parametrs.Length; i++) {
-				if (parametrs[i] == param) {
-					return i;
-				}
-			}
-			return Const.THEREISNOT;
 		}
 	}
 }
