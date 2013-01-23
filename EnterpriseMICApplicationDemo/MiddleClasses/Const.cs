@@ -12,7 +12,7 @@ namespace EnterpriseMICApplicationDemo {
 		/// <summary>
 		/// Языки
 		/// </summary>
-		public const int ENGLISH_LANGUAGE = 0;
+		public const int ENGLISH_LANGUAGE = 1;
 
 		/// <summary>
 		/// Длины вводимых данных
@@ -29,12 +29,12 @@ namespace EnterpriseMICApplicationDemo {
 		/// <summary>
 		/// Параметры пользователя
 		/// </summary>
-		public const int LOGIN = 0;
-		public const int PASSWORD = 1;
-		public const int EMAIL = 2;
-		public const int NAME = 3;
-		public const int POST = 4;
-		public const int FULL_NAME = 5;
+		//public const int LOGIN = 0;
+		//public const int PASSWORD = 1;
+		//public const int EMAIL = 2;
+		//public const int NAME = 3;
+		//public const int POST = 4;
+		//public const int FULL_NAME = 5;
 
 		public const string adressRememberUserFile = "userRemember.txt";
 
@@ -111,5 +111,27 @@ namespace EnterpriseMICApplicationDemo {
 
 		public const int LIST_DELIVERY = 0;
 		public const int ONCE_MAIL = 1;
+
+		/// <summary>
+		/// DB Attributes
+		/// </summary>
+		public const string DB_NAME = "mic_enterprise";
+		public const string DB_USER = "root";
+		public const string DB_USER_PASSWORD = "";
+		public const string DATA_SOURCE = "localhost";
+		public const string ALL_ATTRS = "*";
+
+		/// <summary>
+		/// DB Tables
+		/// </summary>
+		public const string USERS_TABLE = "users";
+		public const string USER_VALUES_TABLE = "uservalues";
+		public const string ATTRIBUTES_TABLE = "attributes";
+
+		/// <summary>
+		/// User Attributes
+		/// </summary>
+		public const string USER_LEVEL = "userId";
+		public const string EMAIL = "email";
 	}
 }

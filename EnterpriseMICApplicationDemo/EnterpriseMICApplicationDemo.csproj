@@ -66,26 +66,18 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="agsXMPP">
-      <HintPath>C:\Users\Павел\Desktop\serializ2\serializ2\bin\Debug\agsXMPP.dll</HintPath>
+      <HintPath>..\MIC_Enterprise_DLLs\agsXMPP.dll</HintPath>
     </Reference>
-    <Reference Include="CG.FontCombo, Version=1.0.1889.23263, Culture=neutral, PublicKeyToken=64111b7f946faace">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Павел\Desktop\WindowsFormsPressRelease\WindowsFormsPressRelease\WindowsFormsApplication\MyPressReleaseControl_Class\MyPressReleaseControl_Class\bin\Debug\CG.FontCombo.dll</HintPath>
+    <Reference Include="CG.FontCombo">
+      <HintPath>..\MIC_Enterprise_DLLs\CG.FontCombo.dll</HintPath>
     </Reference>
     <Reference Include="CustomMarshalers" />
     <Reference Include="Microsoft.CSharp">
       <HintPath>C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\Microsoft.CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="MyPressReleaseControl_Class">
-      <HintPath>..\MyPressReleaseControl_Class\MyPressReleaseControl_Class\bin\Debug\MyPressReleaseControl_Class.dll</HintPath>
-    </Reference>
-    <Reference Include="MySql.Data, Version=5.2.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Павел\Desktop\Confined Space\MySql.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="serializ2">
-      <HintPath>C:\Users\Павел\Desktop\Корпоративное приложение Back-Ups\serializ2\serializ2\bin\Debug\serializ2.dll</HintPath>
+    <Reference Include="MySql.Data">
+      <HintPath>..\MIC_Enterprise_DLLs\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -114,6 +106,7 @@
     <Compile Include="Delivery\AddToSendListNewItem.Designer.cs">
       <DependentUpon>AddToSendListNewItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Login\Login_DB.cs" />
     <Compile Include="SetMembersToList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -213,6 +206,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Delivery\SendingList.cs" />
     <Compile Include="Delivery\SendingLists.cs" />
+    <Compile Include="UserData\Member_DB.cs" />
     <EmbeddedResource Include="Delivery\AddToSendListNewItem.resx">
       <DependentUpon>AddToSendListNewItem.cs</DependentUpon>
     </EmbeddedResource>

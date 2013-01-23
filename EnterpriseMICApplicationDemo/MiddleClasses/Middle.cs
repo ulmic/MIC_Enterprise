@@ -9,7 +9,7 @@ namespace EnterpriseMICApplicationDemo {
 	/// Only global application object
 	/// </summary>
 	public class Middle {
-		public User MainUser;
+		public Member MainUser;
 		private Idea ideas;
 		private Task tasks;
 		private DBHelper help;
@@ -89,8 +89,8 @@ namespace EnterpriseMICApplicationDemo {
 
 		#region Corporate Functions
 
-		public void InitUser(int userIndex) {
-			MainUser = new User(userIndex);
+		public void SetMainUser(int userIndex, string userLogin, string userPassword) {
+			MainUser = new Member(userIndex, userLogin, userPassword);
 		}
 
 		public string[] GetMICLocals() {
