@@ -10,6 +10,8 @@ namespace EnterpriseMICApplicationDemo {
 	/// </summary>
 	public class SendingList {
 		private int id;
+		private const string TABLE_NAME = "sendlists";
+		private const string MEMBERS_TABLE_NAME = "members_sendlists";
 		string connectionString = "Database=entermic;Data Source=localhost;User Id=root;Password=";
 		public string title = "";
 		public List<List<string>> members = new List<List<string>>();
@@ -20,41 +22,38 @@ namespace EnterpriseMICApplicationDemo {
 				myConnection = new MySqlConnection(connectionString);
 				myConnection.Open();
 			} catch {
-				Console.WriteLine("ЖОПА!");
 				myConnection.Close();
-				Console.ReadKey();
 				return;
 			}
 			title = _title;
 		}
 
-		public void getFromDataBase(MySqlConnection connection) {
-			string strSQL = "SELECT id FROM lists WHERE title = '" + title + "'";
+		public static List<string> GetFromDataBase(string sendListTitle) {
+			string connectionString = "SELECT id FROM " + TABLE_NAME + " WHERE title = '" + sendListTitle + "'";
 			MySqlConnection newConnection = new MySqlConnection(connectionString);
 			newConnection.Open();
-			MySqlCommand command = new MySqlCommand(strSQL, newConnection);
+			MySqlCommand command = new MySqlCommand(connectionString, newConnection);
 			MySqlDataReader reader = command.ExecuteReader();
 			reader.Read();
-			id = (int)reader[0];
+			int id = (int)reader[0];
 			reader.Close();
-			strSQL = "SELECT Name, eMail FROM members INNER JOIN lists ON id_list = id WHERE id_list = ( SELECT id FROM lists WHERE title = '" + title + "')";
-			command = new MySqlCommand(strSQL, newConnection);
+			List<string> members_lists = new List<string>();
+			connectionString = "SELECT id_user FROM " + MEMBERS_TABLE_NAME + " WHERE id_list = '" + id.ToString() + '"';
+			command = new MySqlCommand(connectionString, newConnection);
 			reader = command.ExecuteReader();
 			while (reader.Read()) {
-				List<string> temp = new List<string>();
-				temp.Add(reader[0].ToString());
-				temp.Add(reader[1].ToString());
-				members.Add(temp);
+				members_lists.Add(Member_DB.GetFirstName(reader.GetInt32(0)) + " " + Member_DB.GetFamily(reader.GetInt32(0)));
 			}
+			return members_lists;
 		}
 
 		public void createNew(MySqlConnection connection) {
-			string strSQL = "INSERT INTO lists VALUES ('', '" + title + "')";
+			string strSQL = "INSERT INTO " + TABLE_NAME + " VALUES ('', '" + title + "')";
 			MySqlConnection newConnection = new MySqlConnection(connectionString);
 			newConnection.Open();
 			MySqlCommand command = new MySqlCommand(strSQL, newConnection);
 			command.ExecuteNonQuery();
-			strSQL = "SELECT id FROM lists WHERE title = '" + title + "'";
+			strSQL = "SELECT id FROM " + TABLE_NAME + " WHERE title = '" + title + "'";
 			command = new MySqlCommand(strSQL, connection);
 			MySqlDataReader reader = command.ExecuteReader();
 			reader.Read();
@@ -63,7 +62,6 @@ namespace EnterpriseMICApplicationDemo {
 		public void addMember(string name, string eMail) {
 			for (int i = 0; i < members.Count; i++) {
 				if (members[i][0] == name) {
-					Console.WriteLine("Wrong name. Equal name exist yet");
 					return;
 				}
 			}
@@ -72,13 +70,11 @@ namespace EnterpriseMICApplicationDemo {
 				myConnection = new MySqlConnection(connectionString);
 				myConnection.Open();
 			} catch {
-				Console.WriteLine("ЖОПА!");
 				myConnection.Close();
-				Console.ReadKey();
 				return;
 			}
 
-			string strSQL = "INSERT INTO members VALUES (" + 0 + ", '" + name + "', '" + eMail + "', " + id + ")";
+			string strSQL = "INSERT INTO " + MEMBERS_TABLE_NAME + " VALUES (" + 0 + ", '" + name + "', '" + eMail + "', " + id + ")";
 			MySqlCommand command = new MySqlCommand(strSQL, myConnection);
 			command.ExecuteNonQuery();
 			List<string> temp = new List<string>();
@@ -94,13 +90,12 @@ namespace EnterpriseMICApplicationDemo {
 				myConnection = new MySqlConnection(connectionString);
 				myConnection.Open();
 			} catch {
-				Console.WriteLine("ЖОПА!");
 				myConnection.Close();
 				Console.ReadKey();
 				return;
 			}
 
-			string strSQL = "DELETE FROM members WHERE Name = '" + name + "'";
+			string strSQL = "DELETE FROM " + MEMBERS_TABLE_NAME + " WHERE Name = '" + name + "'";
 			MySqlCommand command = new MySqlCommand(strSQL, myConnection);
 			command.ExecuteNonQuery();
 			for (int i = 0; i < members.Count; i++) {
@@ -118,13 +113,11 @@ namespace EnterpriseMICApplicationDemo {
 				myConnection = new MySqlConnection(connectionString);
 				myConnection.Open();
 			} catch {
-				Console.WriteLine("ЖОПА!");
 				myConnection.Close();
-				Console.ReadKey();
 				return;
 			}
 
-			string strSQL = "DELETE FROM members WHERE id_list = " + id;
+			string strSQL = "DELETE FROM " + MEMBERS_TABLE_NAME + " WHERE id_list = " + id;
 			MySqlCommand command = new MySqlCommand(strSQL, myConnection);
 			command.ExecuteNonQuery();
 			members.Clear();
@@ -138,25 +131,13 @@ namespace EnterpriseMICApplicationDemo {
 				myConnection = new MySqlConnection(connectionString);
 				myConnection.Open();
 			} catch {
-				Console.WriteLine("ЖОПА!");
 				myConnection.Close();
-				Console.ReadKey();
 				return;
 			}
 
-			string strSQL = "DELETE FROM lists WHERE id = " + id;
+			string strSQL = "DELETE FROM " + TABLE_NAME + " WHERE id = " + id;
 			MySqlCommand command = new MySqlCommand(strSQL, myConnection);
 			command.ExecuteNonQuery();
-		}
-
-		public void print() {
-			Console.WriteLine("Id = " + id + "\n------------------");
-			Console.WriteLine("Title = " + title + "\n------------------");
-			for (int i = 0; i < members.Count; i++) {
-				Console.WriteLine("Name = " + members[i][0] + " email = " + members[i][1]);
-			}
-
-
 		}
 	}
 }
