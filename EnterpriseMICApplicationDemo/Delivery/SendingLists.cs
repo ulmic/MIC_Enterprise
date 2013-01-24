@@ -70,13 +70,6 @@ namespace EnterpriseMICApplicationDemo {
 			}
 		}
 
-		public void print() {
-			for (int i = 0; i < lists.Count; i++) {
-				lists[i].print();
-				Console.WriteLine("||||||||||||||||||||||||||");
-			}
-		}
-
 		public List<string> getTitles() {
 			List<string> res = new List<string>();
 			for (int i = 0; i < lists.Count; i++) {

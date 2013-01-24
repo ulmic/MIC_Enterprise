@@ -96,7 +96,7 @@ namespace EnterpriseMICApplicationDemo{
 		}
 
 		private static int getUserIdByValue(string attrName, string value) {
-			int attrId = getAttrIdByName(attrName);
+			int attrId = db.GetAttrIdByName(attrName);
 			openConnection();
 			string condition = "id_attr = '" + attrId.ToString() + "' and value = '" + value + "'";
 			MySqlCommand command = new MySqlCommand(db.SelectSQLQuery("id_user", Const.USER_VALUES_TABLE, condition), connection);
@@ -126,7 +126,8 @@ namespace EnterpriseMICApplicationDemo{
 		}
 
 		private static string getUserValueByIdAndAttr(int idUser, string attrName) {
-			int attrId = getAttrIdByName(attrName);
+			db = new DBHelper();
+			int attrId = db.GetAttrIdByName(attrName);
 			openConnection();
 			string condition = "id_user = '" + idUser.ToString() + "' and id_attr = '" + attrId.ToString() + "'";
 			MySqlCommand command = new MySqlCommand(db.SelectSQLQuery("value", Const.USER_VALUES_TABLE, condition), connection);
@@ -142,7 +143,7 @@ namespace EnterpriseMICApplicationDemo{
 		private static List<string> getUserValuesArrayByIdAndAttrs(int idUser, string[] attrsNames) {
 			List<string> values = new List<string>();
 			foreach (string attrName in attrsNames) {
-				int attrId = getAttrIdByName(attrName);
+				int attrId = db.GetAttrIdByName(attrName);
 				openConnection();
 				string condition = "id_user = '" + idUser.ToString() + "' and id_attr = '" + attrId.ToString() + "'";
 				MySqlCommand command = new MySqlCommand(db.SelectSQLQuery("value", Const.USER_VALUES_TABLE, condition), connection);
@@ -157,19 +158,6 @@ namespace EnterpriseMICApplicationDemo{
 				values.Add(userValue);
 			}
 			return values;
-		}
-
-		private static int getAttrIdByName(string name) {
-			openConnection();
-			string condition = "name = '" + name + "'";
-			MySqlCommand command = new MySqlCommand(db.SelectSQLQuery("id_attr", Const.ATTRIBUTES_TABLE, condition), connection);
-			MySqlDataReader reader = command.ExecuteReader();
-			if (reader.Read() == false) {
-				return Const.THEREISNOT;
-			}
-			int userLevel = Int32.Parse(reader.GetString(0));
-			connection.Close();
-			return userLevel;
 		}
 
 		private static void openConnection() {

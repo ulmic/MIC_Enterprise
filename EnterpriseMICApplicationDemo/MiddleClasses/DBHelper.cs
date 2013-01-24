@@ -22,25 +22,28 @@ namespace EnterpriseMICApplicationDemo {
 		/// <param name="local">Place from which to get people</param>
 		/// <returns></returns>
 		public List<string> GetShort(string local) {
-			MySqlConnection con = new MySqlConnection();
-			try {
-				con = new MySqlConnection(connectionString);
-			} catch {
-				return null;
-			}
-			MySqlCommand cmd = new MySqlCommand(getGroupShortsQuery + "'" + local + "'", con);
-			List<string> str = new List<string>();
-			try {
-				con.Open();
-			} catch {
-				return null;
-			}
-			MySqlDataReader reader = cmd.ExecuteReader();
+			MySqlConnection connection = CreateConnection();
+			List<string> members = new List<string>();
+			connection.Open();
+			MySqlCommand command = new MySqlCommand(SelectMembersByLocals(local), connection);
+			MySqlDataReader reader = command.ExecuteReader();
 			while (reader.Read()) {
-				str.Add((new Short(reader["family"].ToString(), reader["firstName"].ToString(), reader["lastName"].ToString(), Int32.Parse(reader["number"].ToString()), reader["email"].ToString()).ToString()));
+				members.Add(reader.GetString(0));
 			}
-			con.Close();
-			return str;
+			connection.Close();
+			for (int i = 0; i < members.Count; i++) {
+				int id_user = Int32.Parse(members[i]);
+				members[i] += " " + Member_DB.GetFamily(id_user) + " " + Member_DB.GetFirstName(id_user) + " " + Member_DB.GetLastName(id_user);
+			}
+			members.Remove("");
+			return members;
+		}
+
+		private string SelectMembersByLocals(string local) {
+			int familyAttrId = GetAttrIdByName(Const.FAMILY);
+			int firstNameAttrId = GetAttrIdByName(Const.FIRST_NAME);
+			int lastNameAttrId = GetAttrIdByName(Const.LAST_NAME);
+			return "SELECT id_user FROM uservalues INNER JOIN attributes ON attributes.id_attr = uservalues.id_attr WHERE uservalues.value = '" + local + "' and attributes.name = 'local'";
 		}
 
 		/// <summary>
@@ -48,28 +51,6 @@ namespace EnterpriseMICApplicationDemo {
 		/// </summary>
 		/// <returns></returns>
 		public List<string> GetLocals() {
-			//MySqlConnection con = new MySqlConnection();
-			//List<string> str = new List<string>();
-			//try {
-			//    con = new MySqlConnection(connectionString);
-			//} catch {
-			//    str.Add("Ошибка: не создано соединение.");
-			//    return str;
-			//}
-			//MySqlCommand cmd = new MySqlCommand(getGroupsQuery, con);
-			//try {
-			//    con.Open();
-			//} catch {
-			//    str.Add("Ошибка: не установлено соединение.");
-			//    return str;
-			//}
-			//MySqlDataReader reader = cmd.ExecuteReader();
-			//while (reader.Read()) {
-			//    str.Add(reader["local"].ToString());
-			//}
-			//con.Close();
-			//str.Remove("");
-			//return str;
 			MySqlConnection connection = CreateConnection();
 			List<string> locals = new List<string>();
 			connection.Open();
@@ -82,8 +63,6 @@ namespace EnterpriseMICApplicationDemo {
 			locals.Remove("");
 			return locals;
 		}
-
-		
 
 		/// <summary>
 		/// Returns an instance of the class Member
@@ -268,6 +247,20 @@ namespace EnterpriseMICApplicationDemo {
 
 		public string SelectSQLQuery(string[] attrs, string table, string condition) {
 			return selectSQLQuery(attrs, table, condition);
+		}
+
+		public int GetAttrIdByName(string name) {
+			MySqlConnection connection = CreateConnection();
+			connection.Open();
+			string condition = "name = '" + name + "'";
+			MySqlCommand command = new MySqlCommand(SelectSQLQuery("id_attr", Const.ATTRIBUTES_TABLE, condition), connection);
+			MySqlDataReader reader = command.ExecuteReader();
+			if (reader.Read() == false) {
+				return Const.THEREISNOT;
+			}
+			int userLevel = Int32.Parse(reader.GetString(0));
+			connection.Close();
+			return userLevel;
 		}
 	}
 }
