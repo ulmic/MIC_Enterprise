@@ -32,7 +32,7 @@ namespace EnterpriseMICApplicationDemo {
 			MySqlDataReader reader = command.ExecuteReader();
 			while (reader.Read()) {
 				SendingList temp = new SendingList((string)reader[0]);
-				temp.getFromDataBase(myConnection);
+				//temp.GetFromDataBase(myConnection);
 				lists.Add(temp);
 			}
 		}
@@ -67,13 +67,6 @@ namespace EnterpriseMICApplicationDemo {
 					lists[i].clear();
 					return;
 				}
-			}
-		}
-
-		public void print() {
-			for (int i = 0; i < lists.Count; i++) {
-				lists[i].print();
-				Console.WriteLine("||||||||||||||||||||||||||");
 			}
 		}
 
