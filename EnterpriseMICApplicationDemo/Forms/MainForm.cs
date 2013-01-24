@@ -76,6 +76,7 @@ namespace EnterpriseMICApplicationDemo {
 			bottomButton.Visible = false;
 		}
 
+
 		private void InitPanels() {
 			functions = new List<FunctionPanel>();
 			for (int i = 0; i < Const.FUNCTIONS_COUNT; i++) {

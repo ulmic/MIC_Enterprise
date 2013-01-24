@@ -153,7 +153,6 @@
 			this.leftFunctionPanel.Location = new System.Drawing.Point(3, 3);
 			this.leftFunctionPanel.Name = "leftFunctionPanel";
 			this.leftFunctionPanel.ReverseGradient = false;
-			this.leftFunctionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.leftFunctionPanel.Size = new System.Drawing.Size(224, 396);
 			this.leftFunctionPanel.TabIndex = 0;
 			this.leftFunctionPanel.TableBorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
