@@ -31,8 +31,8 @@ namespace EnterpriseMICApplicationDemo {
 
         public FormJabberStart() {
             InitializeComponent();
-            loginBox.Text = "khelek@jabberd.eu";
-            passwordBox.Text = "abe2b33519";
+            loginBox.Text = "user@haupc";//"haudvd@gmail.com";
+            passwordBox.Text = "321";//"haukot1994";
             this.Paint += new PaintEventHandler(FormJabberStart_Paint);
         }
 #if DEBUG
@@ -133,7 +133,7 @@ namespace EnterpriseMICApplicationDemo {
             agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message(new Jid(toJid), MessageType.chat, message);
             xmpp.Send(msg);
             dialog.AppendText(formateString(nickname, message));
-            addMessageToHistoryDB(mainJid.Bare, toJid, message);
+            //addMessageToHistoryDB(mainJid.Bare, toJid, message);
         }
 
         private void tabsDialogSelectedIndexChangedOrFormDialogFocused(object sender, EventArgs e) {//длинное мнемоническое имя
@@ -194,7 +194,7 @@ namespace EnterpriseMICApplicationDemo {
                         if ( !( formDialog.Focused && tabsDialog.SelectedIndex == indexTab ) ) {
                             getListViewItem(from).BackColor = Color.Orange;
                         }
-                        addMessageToHistoryDB(msg.From.Bare, msg.To.Bare, msg.Body);
+                       // addMessageToHistoryDB(msg.From.Bare, msg.To.Bare, msg.Body);
                         break;
                     case MessageType.groupchat:
                         //конференции сами ловят сообщения в своей форме
@@ -393,7 +393,7 @@ namespace EnterpriseMICApplicationDemo {
                 string nickname = loginBox.Text.Substring(0, loginBox.Text.IndexOf("@"));
                 string server = loginBox.Text.Substring(loginBox.Text.IndexOf("@") + 1);
 #if DEBUG
-                Settings.serverIp = "192.168.1.3";
+                Settings.serverIp = "192.168.1.4";
 #endif
                 Settings.jid = loginBox.Text;
                 string connserver = ( server == "gmail.com" ) ? "talk.google.com" : ( ( server == "haupc" ) ? Settings.serverIp : server );
@@ -482,7 +482,7 @@ namespace EnterpriseMICApplicationDemo {
                 int indexTab = findTagPage(jid);
                 agsXMPP.protocol.client.Message msgWait = waitList.Find(item => item.From.Bare == jid);
                 if ( indexTab == -1 ) {
-                    createTabPage(name, jid, getHistoryFromDB(jid));
+                    createTabPage(name, jid);//, getHistoryFromDB(jid));
                     tabsDialog.SelectedIndex = tabsDialog.TabPages.Count - 1;
                 } else {
                     tabsDialog.SelectedIndex = indexTab;
@@ -505,7 +505,7 @@ namespace EnterpriseMICApplicationDemo {
         }
 
         private void FormJabberStart_Load(object sender, EventArgs e) {
-            connectDb();
+           // connectDb();
         }
 
         private void FormJabberStart_FormClosing(object sender, FormClosingEventArgs e) {
