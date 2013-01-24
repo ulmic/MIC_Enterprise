@@ -9,10 +9,39 @@ namespace EnterpriseMICApplicationDemo {
 	/// There are many const values, which is used in the application.
 	/// </summary>
 	static public class Const {
+
+		#region UI_Constants
+
 		/// <summary>
 		/// Языки
 		/// </summary>
 		public const int ENGLISH_LANGUAGE = 1;
+
+		public const int LOCALS = 0;
+		public const int MEMBERS = 1;
+
+		public const int LISTS = 0;
+		public const int MEMBERS_LIST = 1;
+
+		public const float WIDTH_LEFT_FUNCTION_PANEL = 230F;
+
+		public const int FUNCTION_PANEL_INDENT = 20;
+		public const int CONTROL_INDENT_SMALL = 5;
+		public const int CONTROL_INDENT_MIDDLE = 10;
+		public const int CONTROL_INDENT_BIG = 15;
+		public const int CONTROL_INDENT_VERY_BIG = 30;
+
+		public const int MEMBERCARD_SIZE = 500;
+
+		public const int TITLE_LISTBOX_SENDLISTS = 0;
+		public const int TITLE_LISTBOX_MEMBERS_SENDLIST = 1;
+
+		public const int LIST_DELIVERY = 0;
+		public const int ONCE_MAIL = 1;
+
+		#endregion
+
+		#region AUTH_DATAS_LENGTH
 
 		/// <summary>
 		/// Длины вводимых данных
@@ -20,28 +49,37 @@ namespace EnterpriseMICApplicationDemo {
 		public const int LOGIN_LENGHT = 3;
 		public const int PASSWORD_LENGHT = 3;
 
+		#endregion
+
+		#region Message Types
+
 		/// <summary>
 		/// Типы сообщений интерфейса
 		/// </summary>
 		public const int BAD_MESSAGE = 0;
 		public const int GOOD_MESSAGE = 1;
 
-		/// <summary>
-		/// Параметры пользователя
-		/// </summary>
-		//public const int LOGIN = 0;
-		//public const int PASSWORD = 1;
-		//public const int EMAIL = 2;
-		//public const int NAME = 3;
-		//public const int POST = 4;
-		//public const int FULL_NAME = 5;
+		#endregion
+
+		#region App Files
 
 		public const string adressRememberUserFile = "userRemember.txt";
+
+		#endregion
+
+		#region App Constants
 
 		/// <summary>
 		/// Рабочая переменная.
 		/// </summary>
 		public const int THEREISNOT = -1;
+
+		public const bool YES = true;
+		public const bool NO = false;
+
+		#endregion
+
+		#region App Main Functions
 
 		/// <summary>
 		/// Функции.
@@ -70,11 +108,18 @@ namespace EnterpriseMICApplicationDemo {
 		/// </summary>
 		public const string BOTTOM_BUTTON_CREATE_NEW_DELIVERY = "Сделать рассылку";
 
-		public const string BOTTOM_BUTTON_ADD_TASK = "Добавить задачу";
+		#endregion
+
+		#region Corporate
+
 		/// <summary>
 		/// Названия МИЦ в разных падежах
 		/// </summary>
 		public const string FULL_MIC_GENITIVE = "УОМОО \"МИЦ\"";
+
+		#endregion
+
+		#region Users
 
 		/// <summary>
 		/// Имеет или не имеет пользователь функцию
@@ -82,35 +127,9 @@ namespace EnterpriseMICApplicationDemo {
 		public const bool GOT = true;
 		public const bool NOT_GOT = false;
 
-		public const bool YES = true;
-		public const bool NO = false;
+		#endregion
 
-		public const string NULL = "0";
-
-		public const int IDEA = 0;
-		public const int TASK = 1;
-
-		public const int LOCALS = 0;
-		public const int MEMBERS = 1;
-
-		public const int LISTS = 0;
-		public const int MEMBERS_LIST = 1;
-
-		public const float WIDTH_LEFT_FUNCTION_PANEL = 230F;
-
-		public const int FUNCTION_PANEL_INDENT = 20;
-		public const int CONTROL_INDENT_SMALL = 5;
-		public const int CONTROL_INDENT_MIDDLE = 10;
-		public const int CONTROL_INDENT_BIG = 15;
-		public const int CONTROL_INDENT_VERY_BIG = 30;
-
-		public const int MEMBERCARD_SIZE = 500;
-
-		public const int TITLE_LISTBOX_SENDLISTS = 0;
-		public const int TITLE_LISTBOX_MEMBERS_SENDLIST = 1;
-
-		public const int LIST_DELIVERY = 0;
-		public const int ONCE_MAIL = 1;
+		#region DB
 
 		/// <summary>
 		/// DB Attributes
@@ -151,5 +170,7 @@ namespace EnterpriseMICApplicationDemo {
 		public const string POST = "post";
 		public const string USER_LEVEL = "userId";
 		public const string EMAIL = "email";
+
+		#endregion
 	}
 }

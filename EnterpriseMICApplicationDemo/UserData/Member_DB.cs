@@ -114,7 +114,8 @@ namespace EnterpriseMICApplicationDemo{
 			MySqlCommand command = new MySqlCommand(SELECT_MEMBER_ATTRS_QUERY + userId.ToString() + "'", connection);
 			MySqlDataReader reader = command.ExecuteReader();
 			while (reader.Read()) {
-				string attrName = db.GetAttrNameById(reader.GetInt32("id_attr"));
+				string attrName = db.GetAttrNameById(reader.GetInt32(ID_ATTR_COLUMN));
+
 			}
 			return ;
 		}
