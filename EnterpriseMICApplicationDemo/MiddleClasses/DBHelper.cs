@@ -70,42 +70,7 @@ namespace EnterpriseMICApplicationDemo {
 		/// <param name="id">Id man from the base</param>
 		/// <returns></returns>
 		public Member GetMember(int id) {
-			MySqlConnection con = new MySqlConnection();
-			try {
-				con = new MySqlConnection(connectionString);
-			} catch {
-				return null;
-			}
-			MySqlCommand cmd = new MySqlCommand(getMemberQuery + id.ToString(), con);
-			try {
-				con.Open();
-			} catch {
-				return null;
-			}
-			MySqlDataReader reader = cmd.ExecuteReader();
-			Member mmbr = new Member();
-			while (reader.Read()) {
-				mmbr.Area = reader["area"].ToString();
-				mmbr.Local = reader["local"].ToString();
-				mmbr.Family = reader["family"].ToString();
-				mmbr.FirstName = reader["firstName"].ToString();
-				mmbr.City = reader["city"].ToString();
-				mmbr.LastName = reader["lastName"].ToString();
-				mmbr.BDate = getDateTime(reader["b_Year"], reader["b_month"], reader["b_Day"]);
-				mmbr.Education = reader["education"].ToString();
-				mmbr.Job = reader["job"].ToString();
-				mmbr.EnterDate = getDateTime(reader["enter_year"], reader["enter_month"], reader["enter_day"]);
-				mmbr.Number = Int32.Parse(reader["number"].ToString());
-				mmbr.IndexAdress = Int32.Parse(reader["index_adress"].ToString());
-				mmbr.Contacts = reader["contacts"].ToString();
-				mmbr.EnterMark = reader["enter_Mark"].ToString();
-				//mmbr.ChangeDate = reader["change_date"].ToString();
-				mmbr.GodFather = Int32.Parse(reader["godFather"].ToString());
-				mmbr.Post = reader["post"].ToString();
-				mmbr.Email = reader["email"].ToString();
-			}
-			con.Close();
-			return mmbr;
+			return new Member(id);
 		}
 
 		private DateTime getDateTime(object year, object month, object day) {
@@ -258,9 +223,23 @@ namespace EnterpriseMICApplicationDemo {
 			if (reader.Read() == false) {
 				return Const.THEREISNOT;
 			}
-			int userLevel = Int32.Parse(reader.GetString(0));
+			int attrId = Int32.Parse(reader.GetString(0));
 			connection.Close();
-			return userLevel;
+			return attrId;
+		}
+
+		public string GetAttrNameById(int id_attr) {
+			MySqlConnection connection = CreateConnection();
+			connection.Open();
+			string condition = "id_attr = '" + id_attr + "'";
+			MySqlCommand command = new MySqlCommand(SelectSQLQuery("name", Const.ATTRIBUTES_TABLE, condition), connection);
+			MySqlDataReader reader = command.ExecuteReader();
+			if (reader.Read() == false) {
+				return "";
+			}
+			string attrName = reader.GetString(0);
+			connection.Close();
+			return attrName;
 		}
 	}
 }

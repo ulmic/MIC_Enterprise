@@ -180,8 +180,7 @@ namespace EnterpriseMICApplicationDemo {
 		}
 
 		public string[] PutInMembersLists(string title) {
-			lists = new SendingLists();
-			return lists.getNameAndEmails(title).ToArray<string>();
+			return SendingList.GetFromDataBase(title).ToArray<string>();
 		}
 
 		#endregion

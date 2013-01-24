@@ -9,6 +9,18 @@ namespace EnterpriseMICApplicationDemo{
 		private static MySqlConnection connection;
 		private static DBHelper db;
 
+		#region DataBaseConstants
+
+		private const string ID_ATTR_COLUMN = "id_attr";
+		private const string VALUE_COLUMN = "value";
+		private const string ID_USER_COLUMN = "id_user";
+
+		#endregion
+
+		private const string SELECT_MEMBER_ATTRS_QUERY = "SELECT " + ID_ATTR_COLUMN + ", " + VALUE_COLUMN + "FROM " + Const.USER_VALUES_TABLE + " WHERE " + ID_USER_COLUMN + " = '";
+
+		#region GetMemberAttributes
+
 		public static string GetFamily(int idUser) {
 			return getUserValueByIdAndAttr(idUser, Const.FAMILY);
 		}
@@ -93,6 +105,18 @@ namespace EnterpriseMICApplicationDemo{
 
 		public static int GetMemberIdByEmail(string email) {
 			return getUserIdByValue(Const.EMAIL, email);
+		}
+
+		#endregion
+
+		public List<string> GetMemberAttrWithOneQuery(int userId) {
+			openConnection();
+			MySqlCommand command = new MySqlCommand(SELECT_MEMBER_ATTRS_QUERY + userId.ToString() + "'", connection);
+			MySqlDataReader reader = command.ExecuteReader();
+			while (reader.Read()) {
+				string attrName = db.GetAttrNameById(reader.GetInt32("id_attr"));
+			}
+			return ;
 		}
 
 		private static int getUserIdByValue(string attrName, string value) {

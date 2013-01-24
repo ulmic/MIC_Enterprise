@@ -28,28 +28,23 @@ namespace EnterpriseMICApplicationDemo {
 			title = _title;
 		}
 
-		public List<string> getFromDataBase(string sendListName) {
-			string strSQL = "SELECT id FROM " + TABLE_NAME + " WHERE title = '" + title + "'";
+		public static List<string> GetFromDataBase(string sendListTitle) {
+			string connectionString = "SELECT id FROM " + TABLE_NAME + " WHERE title = '" + sendListTitle + "'";
 			MySqlConnection newConnection = new MySqlConnection(connectionString);
 			newConnection.Open();
-			MySqlCommand command = new MySqlCommand(strSQL, newConnection);
+			MySqlCommand command = new MySqlCommand(connectionString, newConnection);
 			MySqlDataReader reader = command.ExecuteReader();
 			reader.Read();
-			id = (int)reader[0];
+			int id = (int)reader[0];
 			reader.Close();
 			List<string> members_lists = new List<string>();
-			strSQL = "SELECT id_user FROM " + MEMBERS_TABLE_NAME + " WHERE id_list = '" + id.ToString() + '"';
-			command = new MySqlCommand(strSQL, newConnection);
+			connectionString = "SELECT id_user FROM " + MEMBERS_TABLE_NAME + " WHERE id_list = '" + id.ToString() + '"';
+			command = new MySqlCommand(connectionString, newConnection);
 			reader = command.ExecuteReader();
 			while (reader.Read()) {
-				members_lists.Add(Member_DB.GetFirstName(reader.GetInt32(0));
-
-
-				List<string> temp = new List<string>();
-				temp.Add(reader[0].ToString());
-				temp.Add(reader[1].ToString());
-				members.Add(temp);
+				members_lists.Add(Member_DB.GetFirstName(reader.GetInt32(0)) + " " + Member_DB.GetFamily(reader.GetInt32(0)));
 			}
+			return members_lists;
 		}
 
 		public void createNew(MySqlConnection connection) {

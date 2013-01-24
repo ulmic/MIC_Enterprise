@@ -32,7 +32,7 @@ namespace EnterpriseMICApplicationDemo {
 			MySqlDataReader reader = command.ExecuteReader();
 			while (reader.Read()) {
 				SendingList temp = new SendingList((string)reader[0]);
-				temp.getFromDataBase(myConnection);
+				//temp.GetFromDataBase(myConnection);
 				lists.Add(temp);
 			}
 		}

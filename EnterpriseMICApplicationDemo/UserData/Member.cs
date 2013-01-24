@@ -65,6 +65,13 @@ namespace EnterpriseMICApplicationDemo {
 
 		public Member() { }
 
+		public Member(int userId) {
+			Id = userId;
+			Login = Login_DB.GetUserById(userId).Login;
+			Password = Login_DB.GetUserById(userId).Password;
+			getMemberByUserId();
+		}
+
 		public Member(int userId, string userLogin, string userPassword) {
 			Id = userId;
 			Login = userLogin;
