@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MySql.Data.MySqlClient;
+using System.Reflection;
 
 namespace EnterpriseMICApplicationDemo{
 	static class Member_DB {
@@ -109,15 +110,20 @@ namespace EnterpriseMICApplicationDemo{
 
 		#endregion
 
-		public List<string> GetMemberAttrWithOneQuery(int userId) {
+		public static List<string> GetMemberAttrWithOneQuery(int userId) {
 			openConnection();
 			MySqlCommand command = new MySqlCommand(SELECT_MEMBER_ATTRS_QUERY + userId.ToString() + "'", connection);
 			MySqlDataReader reader = command.ExecuteReader();
 			while (reader.Read()) {
 				string attrName = db.GetAttrNameById(reader.GetInt32(ID_ATTR_COLUMN));
-
+				Member m = new Member();
+				foreach (FieldInfo f in m.GetType().GetFields()) {
+					if (f.Name == attrName) {
+						System.Windows.Forms.MessageBox.Show("yes");
+					}
+				}
 			}
-			return ;
+			return new List<string>();
 		}
 
 		private static int getUserIdByValue(string attrName, string value) {

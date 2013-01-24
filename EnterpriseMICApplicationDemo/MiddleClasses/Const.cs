@@ -39,6 +39,9 @@ namespace EnterpriseMICApplicationDemo {
 		public const int LIST_DELIVERY = 0;
 		public const int ONCE_MAIL = 1;
 
+		public const int IDEA = 0;
+		public const int TASK = 1;
+		public const string BOTTOM_BUTTON_ADD_TASK = "Добавить задачу";
 		#endregion
 
 		#region AUTH_DATAS_LENGTH
