@@ -113,10 +113,10 @@ namespace EnterpriseMICApplicationDemo {
 			m.Area = thereIsNotData(m.Area);
 			m.City = thereIsNotData(m.City);
 			m.Contacts = thereIsNotData(m.Education);
-			m.EnterMark = thereIsNotData(m.EnterMark);
+			m.Enter_Mark = thereIsNotData(m.Enter_Mark);
 			m.Family = thereIsNotData(m.Family);
 			m.FirstName = thereIsNotData(m.FirstName);
-			m.HomeAdress = thereIsNotData(m.HomeAdress);
+			m.Home_Adress = thereIsNotData(m.Home_Adress);
 			m.Job = thereIsNotData(m.Job);
 			m.LastName = thereIsNotData(m.LastName);
 			m.Local = thereIsNotData(m.Local);
@@ -128,7 +128,7 @@ namespace EnterpriseMICApplicationDemo {
 
 		public Member GetMICGodFather(Member member) {
 			help = new DBHelper();
-			return help.GetMember(member.GodFather);
+			return help.GetMember(member.God_Father);
 		}
 
 		public Member GetMICMember(int numberMember) {
@@ -180,8 +180,7 @@ namespace EnterpriseMICApplicationDemo {
 		}
 
 		public string[] PutInMembersLists(string title) {
-			lists = new SendingLists();
-			return lists.getNameAndEmails(title).ToArray<string>();
+			return SendingList.GetFromDataBase(title).ToArray<string>();
 		}
 
 		#endregion
