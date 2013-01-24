@@ -35,12 +35,12 @@ namespace EnterpriseMICApplicationDemo {
 		public string LastName { get; set; }
 		public string FullName {
 			get {
-				return Family + FirstName + LastName;
+				return Family + " " + FirstName + " " + LastName;
 			}
 		}
 		public string Appeal {
 			get {
-				return Family + FirstName;
+				return FirstName + " " + Family;
 			}
 		}
 		public int Number { get; set; }
