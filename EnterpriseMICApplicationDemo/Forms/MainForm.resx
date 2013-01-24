@@ -121,7 +121,7 @@
   <data name="workSpaceTableLayoutPanel.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAkcAAAFUCAYAAAAu6ZhfAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAADdSSURBVHhe7Z3llh1X0rR9X2ZmxqF3TGNmZqYxM9uyZcvM
+        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAADdSSURBVHhe7Z3llh1X0rR9X2ZmxqF3TGNmZqYxM9uyZcvM
         nhmTsMWymFktqVvMkkWnqvKLfSpzn92+g2+t58ezKuoOYkVG5j6kM/JQazmsx6jDrZM5Qjo4UtoZfZR1
         MkdLB8dIO2OOtU7mOOngeGln7AnWGcKJ+k+c1GPcydbJnCIdnCodnGadvsTpmarvDOtxprQYnzir4Gzp
         xDk9JpxrVeY86eB8aTExcUHBhdLOpIusyvxFOvirtJic+FvB36WdKf+wKvN/0sE/rZoaXCwdXCLtTLvU
@@ -363,7 +363,7 @@
   <data name="leftFunctionPanel.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAOAAAAGMCAYAAADDbK50AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAABFVSURBVHhe7d1nm91VGYXxfC9AKWIFBVQ6CvZCSQ/Fikon
+        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAABFVSURBVHhe7d1nm91VGYXxfC9AKWIFBVQ6CvZCSQ/Fikon
         AUJVFEFQiqIU+6STAimTBNLrTHqHhGSSnL3343PO/D+EL34v1nXNFzjXObPXfa9nQm/onOgNnRu9Oedl
         PtHlk9Gbe37mgsyF0Zt3UeZTXS6O3vxPZz6T+Wz0Fnwu8/nMFzKXRG/hpYOUhV+MsuhLmcsyl2euiPLO
         lzNfyXw1yuIrM1eNZ8nVmWsy10ZZel3m+ijLbujytSjvfj1zY+amKO99I/PNLt+Ksvzbme9kvhtlxfcy
@@ -443,7 +443,7 @@
   <data name="fillFunctionPanel.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAyAAAAGWCAYAAACAfOcpAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAFrUSURBVHhe7Z3lsibHsUX1XgLbMorBzJaZmSXLJKNkgdmW
+        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAFrUSURBVHhe7Z3lsibHsUX1XgLbMorBzJaZmSXLJKNkgdmW
         mVFktgfPMDMzM/N83Z03s6uyOqvP/LgPsCZix/l63mDF2jvrusmM62XIDfo7ZOaNMqlyk37HPE+/Q2Y9
         XybT8gL9v5ib9Ttk9gtlUuVF+h3zYv0OmfMSmUzLS/X/PC/T3zG3yGRuzK36HXObfsfcLpOpmDv0O6WZ
         unOUu/Q7Z57+nXf3KPfod8y9+p0zX//Of/kor9DvmFfqd84C/bvgVaO8Wr9jXiPNwpjX6vc4r5NmUczr

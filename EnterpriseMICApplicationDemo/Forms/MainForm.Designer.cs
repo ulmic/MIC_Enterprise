@@ -397,7 +397,6 @@
 			this.fillFunctionPanel.Name = "fillFunctionPanel";
 			this.fillFunctionPanel.ReverseGradient = false;
 			this.fillFunctionPanel.RowCount = 1;
-			this.fillFunctionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.fillFunctionPanel.Size = new System.Drawing.Size(800, 406);
 			this.fillFunctionPanel.TabIndex = 0;
 			this.fillFunctionPanel.TableBorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;

@@ -30,9 +30,9 @@ namespace EnterpriseMICApplicationDemo {
 	public class Member : User {
 		#region Member Attrs
 
-		public string Family { get; set; }
-		public string FirstName { get; set; }
-		public string LastName { get; set; }
+		public string Family;
+		public string FirstName;
+		public string LastName;
 		public string FullName {
 			get {
 				return Family + " " + FirstName + " " + LastName;
@@ -43,23 +43,23 @@ namespace EnterpriseMICApplicationDemo {
 				return FirstName + " " + Family;
 			}
 		}
-		public int Number { get; set; }
-		public string Local { get; set; }
+		public int Number;
+		public string Local;
 		public DateTime BDate { get; set; }
-		public string Education { get; set; }
-		public string Job { get; set; }
+		public string Education;
+		public string Job;
 		public DateTime EnterDate { get; set; }
-		public int IndexAdress { get; set; }
-		public string State { get; set; }
-		public string City { get; set; }
-		public string Area { get; set; }
-		public string HomeAdress { get; set; }
-		public string Contacts { get; set; }
-		public string EnterMark { get; set; }
-		public DateTime ChangeDate { get; set; }
-		public int GodFather { get; set; }
-		public string Post { get; set; }
-		public string Email { get; set; }
+		public int Index_Adress;
+		public string State;
+		public string City;
+		public string Area;
+		public string Home_Adress;
+		public string Contacts;
+		public string Enter_Mark;
+		public DateTime Change_Date;
+		public int God_Father;
+		public string Post;
+		public string Email;
 
 		#endregion
 
@@ -69,7 +69,7 @@ namespace EnterpriseMICApplicationDemo {
 			Id = userId;
 			Login = Login_DB.GetUserById(userId).Login;
 			Password = Login_DB.GetUserById(userId).Password;
-			getMemberByUserId();
+			Member m = Member_DB.GetMemberAttrWithOneQuery(userId);
 		}
 
 		public Member(int userId, string userLogin, string userPassword) {
@@ -78,13 +78,13 @@ namespace EnterpriseMICApplicationDemo {
 			Password = userPassword;
 			Functions = new bool[Const.FUNCTIONS_COUNT];
 			giveFunctions();
-			getMemberByUserId();
+			Member m = Member_DB.GetMemberAttrWithOneQuery(userId);
 		}
 		
 		public override string ToString() {
 			return Family + " " + FirstName + " " + LastName + "\n" + BDate + "\n" + Number + "\n" + Local + "\n" + Education
-			  + "\n" + Job + "\n" + EnterDate + "\n" + IndexAdress + State + City + Area + HomeAdress + "\n" +
-			  Contacts + "\n" + EnterMark + "\n" + ChangeDate + "\n" + GodFather + "\n" + Post + "\n" + Email;
+			  + "\n" + Job + "\n" + EnterDate + "\n" + Index_Adress + State + City + Area + Home_Adress + "\n" +
+			  Contacts + "\n" + Enter_Mark + "\n" + Change_Date + "\n" + God_Father + "\n" + Post + "\n" + Email;
 		}
 
 		private void giveFunctions() {
@@ -105,14 +105,14 @@ namespace EnterpriseMICApplicationDemo {
 			Education = Member_DB.GetEducation(Id);
 			Job = Member_DB.GetJob(Id);
 			EnterDate = Member_DB.GetEnterDate(Id);
-			IndexAdress = Member_DB.GetIndexAdress(Id);
+			Index_Adress = Member_DB.GetIndexAdress(Id);
 			State = Member_DB.GetState(Id);
 			City = Member_DB.GetCity(Id);
-			HomeAdress = Member_DB.GetHomeAdress(Id);
+			Home_Adress = Member_DB.GetHomeAdress(Id);
 			Contacts = Member_DB.GetContacts(Id);
-			EnterMark = Member_DB.GetEnterMark(Id);
-			ChangeDate = Member_DB.GetChangeDate(Id);
-			GodFather = Member_DB.GetGodFather(Id);
+			Enter_Mark = Member_DB.GetEnterMark(Id);
+			Change_Date = Member_DB.GetChangeDate(Id);
+			God_Father = Member_DB.GetGodFather(Id);
 			Post = Member_DB.GetPost(Id);
 			Email = Member_DB.GetEmail(Id);
 		}

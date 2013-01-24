@@ -10,7 +10,7 @@ using MySql.Data.MySqlClient;
 namespace EnterpriseMICApplicationDemo {
 	public class DBHelper {
 		private string getGroupsQuery = "SELECT local FROM newMIC_9 GROUP BY local";
-		private string getGroupShortsQuery = "SELECT family, firstName, lastName, number, email FROM newMIC_9 WHERE local = ";
+		private string getGroupShortsQuery = "SELECT Family, firstName, lastName, number, email FROM newMIC_9 WHERE local = ";
 		private string connectionString = "server=localhost;database=ENTERMIC;uid=root";
 		private string getMemberQuery = "SELECT * FROM newMIC_9 WHERE number = ";
 
@@ -81,7 +81,7 @@ namespace EnterpriseMICApplicationDemo {
 		}
 
 		public List<string> GetSameBDayShorts(DateTime date) {
-			string sameBDayShortsQuery = "SELECT family, firstName, lastName, number, email FROM newMIC_9 WHERE b_Day = " + date.Day + " AND b_month = " + date.Month;
+			string sameBDayShortsQuery = "SELECT Family, firstName, lastName, number, email FROM newMIC_9 WHERE b_Day = " + date.Day + " AND b_month = " + date.Month;
 			MySqlConnection con = new MySqlConnection();
 			try {
 				con = new MySqlConnection(connectionString);
@@ -97,13 +97,13 @@ namespace EnterpriseMICApplicationDemo {
 			MySqlDataReader reader = cmd.ExecuteReader();
 			List<string> list = new List<string>();
 			while (reader.Read()) {
-				list.Add(new Short(reader["family"].ToString(), reader["firstName"].ToString(), reader["lastName"].ToString(), Int32.Parse(reader["number"].ToString()), reader["email"].ToString()).ToString());
+				list.Add(new Short(reader["Family"].ToString(), reader["firstName"].ToString(), reader["lastName"].ToString(), Int32.Parse(reader["number"].ToString()), reader["email"].ToString()).ToString());
 			}
 			return list;
 		}
 
 		public List<string> GetSameEnterDayShorts(DateTime date) {
-			string sameBDayShortsQuery = "SELECT family, firstName, lastName, number, email FROM newMIC_9 WHERE enter_Day = " + date.Day + " AND enter_month = " + date.Month + " AND enter_year = " + date.Year;
+			string sameBDayShortsQuery = "SELECT Family, firstName, lastName, number, email FROM newMIC_9 WHERE enter_Day = " + date.Day + " AND enter_month = " + date.Month + " AND enter_year = " + date.Year;
 			MySqlConnection con = new MySqlConnection();
 			try {
 				con = new MySqlConnection(connectionString);
@@ -119,13 +119,13 @@ namespace EnterpriseMICApplicationDemo {
 			MySqlDataReader reader = cmd.ExecuteReader();
 			List<string> list = new List<string>();
 			while (reader.Read()) {
-				list.Add(new Short(reader["family"].ToString(), reader["firstName"].ToString(), reader["lastName"].ToString(), Int32.Parse(reader["number"].ToString()), reader["email"].ToString()).ToString());
+				list.Add(new Short(reader["Family"].ToString(), reader["firstName"].ToString(), reader["lastName"].ToString(), Int32.Parse(reader["number"].ToString()), reader["email"].ToString()).ToString());
 			}
 			return list;
 		}
 
 		public List<string> GetSameCityPeople(string city) {
-			string sameBDayShortsQuery = "SELECT family, firstName, lastName, number FROM newMIC_9 WHERE city = '" + city + "'";
+			string sameBDayShortsQuery = "SELECT Family, firstName, lastName, number FROM newMIC_9 WHERE city = '" + city + "'";
 			MySqlConnection con = new MySqlConnection();
 			try {
 				con = new MySqlConnection(connectionString);
@@ -141,7 +141,7 @@ namespace EnterpriseMICApplicationDemo {
 			MySqlDataReader reader = cmd.ExecuteReader();
 			List<string> list = new List<string>();
 			while (reader.Read()) {
-				list.Add(new Short(reader["family"].ToString(), reader["firstName"].ToString(), reader["lastName"].ToString(), Int32.Parse(reader["number"].ToString()), "").ToString());
+				list.Add(new Short(reader["Family"].ToString(), reader["firstName"].ToString(), reader["lastName"].ToString(), Int32.Parse(reader["number"].ToString()), "").ToString());
 			}
 			return list;
 		}

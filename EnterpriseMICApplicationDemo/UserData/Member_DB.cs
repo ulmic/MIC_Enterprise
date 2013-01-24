@@ -18,8 +18,7 @@ namespace EnterpriseMICApplicationDemo{
 
 		#endregion
 
-		private const string SELECT_MEMBER_ATTRS_QUERY = "SELECT " + ID_ATTR_COLUMN + ", " + VALUE_COLUMN + "FROM " + Const.USER_VALUES_TABLE + " WHERE " + ID_USER_COLUMN + " = '";
-
+		private const string SELECT_MEMBER_ATTRS_QUERY = "SELECT " + ID_ATTR_COLUMN + ", " + VALUE_COLUMN + " FROM " + Const.USER_VALUES_TABLE + " WHERE " + ID_USER_COLUMN + " = '";
 		#region GetMemberAttributes
 
 		public static string GetFamily(int idUser) {
@@ -110,20 +109,55 @@ namespace EnterpriseMICApplicationDemo{
 
 		#endregion
 
-		public static List<string> GetMemberAttrWithOneQuery(int userId) {
+		public static Member GetMemberAttrWithOneQuery(int userId) {
 			openConnection();
 			MySqlCommand command = new MySqlCommand(SELECT_MEMBER_ATTRS_QUERY + userId.ToString() + "'", connection);
 			MySqlDataReader reader = command.ExecuteReader();
+			Member m = new Member();
+			m.BDate = new DateTime();
+			m.EnterDate = new DateTime();
 			while (reader.Read()) {
 				string attrName = db.GetAttrNameById(reader.GetInt32(ID_ATTR_COLUMN));
-				Member m = new Member();
+				if (attrName == "b_day") {
+					m.BDate = new DateTime(m.BDate.Year, m.BDate.Month, reader.GetInt32(VALUE_COLUMN));
+					continue;
+				}
+				if (attrName == "b_month") {
+					m.BDate = new DateTime(m.BDate.Year, reader.GetInt32(VALUE_COLUMN), m.BDate.Day);
+					continue;
+				}
+				if (attrName == "b_year") {
+					m.BDate = new DateTime(reader.GetInt32(VALUE_COLUMN), m.BDate.Month, m.BDate.Day);
+					continue;
+				}
+				if (attrName == "enter_day") {
+					m.EnterDate = new DateTime(m.EnterDate.Year, m.EnterDate.Month, reader.GetInt32(VALUE_COLUMN));
+					continue;
+				}
+				if (attrName == "enter_month") {
+					m.EnterDate = new DateTime(m.EnterDate.Year, reader.GetInt32(VALUE_COLUMN), m.EnterDate.Day);
+					continue;
+				}
+				if (attrName == "enter_year") {
+					m.EnterDate = new DateTime(reader.GetInt32(VALUE_COLUMN), m.EnterDate.Month, m.EnterDate.Day);
+					continue;
+				}
 				foreach (FieldInfo f in m.GetType().GetFields()) {
-					if (f.Name == attrName) {
-						System.Windows.Forms.MessageBox.Show("yes");
+					if (String.Compare(f.Name, attrName, true) == 0) {
+						if (f.FieldType == typeof(Int32)) {
+							m.GetType().GetField(f.Name).SetValue(m, reader.GetInt32(VALUE_COLUMN));
+							continue;
+						}
+						if ((f.FieldType == typeof(DateTime)) && (f.Name != "BDate") && (f.Name != "EnterDate")) {
+							m.GetType().GetField(f.Name).SetValue(m, DateTime.Parse(reader.GetString(VALUE_COLUMN)));
+							continue;
+						}
+						m.GetType().GetField(f.Name).SetValue(m, reader.GetString(VALUE_COLUMN));
 					}
 				}
+				
 			}
-			return new List<string>();
+			return m;
 		}
 
 		private static int getUserIdByValue(string attrName, string value) {

@@ -90,6 +90,7 @@ namespace EnterpriseMICApplicationDemo {
 			this.leftFunctionPanel.TableBorderStyle = BorderStyle.None;
 			this.leftFunctionPanel.InitializeCellsCount(1, functions.Count);
 			this.leftFunctionPanel.Controls.AddRange(functions.ToArray<FunctionPanel>());
+			this.leftFunctionPanel.RowStyles.Clear();
 		}
 
 		private void InitViewUserDataPanel() {
