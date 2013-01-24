@@ -69,7 +69,7 @@ namespace EnterpriseMICApplicationDemo {
 			Id = userId;
 			Login = Login_DB.GetUserById(userId).Login;
 			Password = Login_DB.GetUserById(userId).Password;
-			Member m = Member_DB.GetMemberAttrWithOneQuery(userId);
+			getMemberByUserId();
 		}
 
 		public Member(int userId, string userLogin, string userPassword) {
@@ -78,7 +78,7 @@ namespace EnterpriseMICApplicationDemo {
 			Password = userPassword;
 			Functions = new bool[Const.FUNCTIONS_COUNT];
 			giveFunctions();
-			Member m = Member_DB.GetMemberAttrWithOneQuery(userId);
+			getMemberByUserId();
 		}
 		
 		public override string ToString() {
@@ -96,25 +96,26 @@ namespace EnterpriseMICApplicationDemo {
 		}
 
 		private void getMemberByUserId() {
-			Family = Member_DB.GetFamily(Id);
-			FirstName = Member_DB.GetFirstName(Id);
-			LastName = Member_DB.GetLastName(Id);
-			Number = Member_DB.GetNumber(Id);
-			Local = Member_DB.GetLocal(Id);
-			BDate = Member_DB.GetBDate(Id);
-			Education = Member_DB.GetEducation(Id);
-			Job = Member_DB.GetJob(Id);
-			EnterDate = Member_DB.GetEnterDate(Id);
-			Index_Adress = Member_DB.GetIndexAdress(Id);
-			State = Member_DB.GetState(Id);
-			City = Member_DB.GetCity(Id);
-			Home_Adress = Member_DB.GetHomeAdress(Id);
-			Contacts = Member_DB.GetContacts(Id);
-			Enter_Mark = Member_DB.GetEnterMark(Id);
-			Change_Date = Member_DB.GetChangeDate(Id);
-			God_Father = Member_DB.GetGodFather(Id);
-			Post = Member_DB.GetPost(Id);
-			Email = Member_DB.GetEmail(Id);
+			Member m = Member_DB.GetMemberAttrWithOneQuery(Id);
+			Family = m.Family;
+			FirstName = m.FirstName;
+			LastName = m.LastName;
+			Number = m.Number;
+			Local = m.Local;
+			BDate = m.BDate;
+			Education = m.Education;
+			Job = m.Job;
+			EnterDate = m.EnterDate;
+			Index_Adress = m.Index_Adress;
+			State = m.State;
+			City = m.City;
+			Home_Adress = m.Home_Adress;
+			Contacts = m.Contacts;
+			Enter_Mark = m.Enter_Mark;
+			Change_Date = m.Change_Date;
+			God_Father = m.God_Father;
+			Post = m.Post;
+			Email = m.Email;
 		}
 	}
 }
