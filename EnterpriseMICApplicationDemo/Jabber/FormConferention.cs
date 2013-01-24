@@ -22,8 +22,10 @@ namespace EnterpriseMICApplicationDemo
         private string mainJid;
         private string nickname;
         private string roomName;
-        private string roomDesc = "описание";
+        private string roomDesc;
         private string password = "";
+        private string savingHistory;
+        private string persistRoom;
         private XmppClientConnection xmpp;
         private MucManager muc;
 
@@ -35,27 +37,29 @@ namespace EnterpriseMICApplicationDemo
             mainJid = Settings.jid;
             nickname = Settings.nickname;
             muc = new MucManager(xmpp);
+            muc.JoinRoom(roomJid, nickname);
             xmpp.MesagageGrabber.Add(roomJid, new BareJidComparer(), new MessageCB(MessageCallback), null);
             xmpp.PresenceGrabber.Add(roomJid, new BareJidComparer(), new PresenceCB(PresenceCallback), null);
         }
 
-        public FormConferention(string _roomJid, List<string> users, string _roomName, bool savingHistory)
+        public FormConferention(string _roomJid, string _roomName, bool _savingHistory, bool _persistRoom, string _roomDesc = "", List<string> users = null )
         {
             InitializeComponent();
             roomJid = new Jid(_roomJid);
             roomName = _roomName;
-            xmpp = Settings.xmpp;
+            this.Text = _roomName;
+            roomDesc = _roomDesc;
             mainJid = Settings.jid;
             nickname = Settings.nickname;
             muc = new MucManager(xmpp);
-            muc.AcceptDefaultConfiguration(roomJid, new IqCB(OnGetFieldsResult));
+            savingHistory = _savingHistory ? "1" : "0";
+            persistRoom = _persistRoom ? "1" : "0";
+            xmpp = Settings.xmpp;
+            //muc.AcceptDefaultConfiguration(roomJid, new IqCB(OnGetFieldsResult));
             muc.CreateReservedRoom(roomJid);
             muc.GrantOwnershipPrivileges(roomJid, new Jid(mainJid));
             muc.JoinRoom(roomJid, nickname);
-            if (savingHistory)
-            {
-                initMucConfigFromSavingHistory();
-            }
+            initMucConfig();
             xmpp.MesagageGrabber.Add(roomJid, new BareJidComparer(), new MessageCB(MessageCallback), null);
             xmpp.PresenceGrabber.Add(roomJid, new BareJidComparer(), new PresenceCB(PresenceCallback), null);
             muc.Invite(users.ConvertAll<Jid>(
@@ -66,7 +70,7 @@ namespace EnterpriseMICApplicationDemo
             ).ToArray(), roomJid, "Вы приглашены в конференцию Конф.");
         }
 
-        private void initMucConfigFromSavingHistory()
+        private void initMucConfig()
         {
             muc.RequestConfigurationForm(roomJid, new IqCB(ReceiveFormConfiguration));
         }
@@ -97,12 +101,12 @@ namespace EnterpriseMICApplicationDemo
             addFieldInDataIQ(data, "FORM_TYPE", "http://jabber.org/protocol/muc#roomconfig");
             addFieldInDataIQ(data, "muc#roomconfig_roomname", roomName);
             addFieldInDataIQ(data, "muc#roomconfig_roomdesc", roomDesc);
-            addFieldInDataIQ(data, "muc#roomconfig_persistentroom", "1");
+            addFieldInDataIQ(data, "muc#roomconfig_persistentroom", persistRoom);
             addFieldInDataIQ(data, "muc#roomconfig_publicroom", "1");
             addFieldInDataIQ(data, "public_list", "1");
             addFieldInDataIQ(data, "muc#roomconfig_passwordprotectedroom", (password == "") ? "0" : "1");
             addFieldInDataIQ(data, "muc#roomconfig_roomsecret", "");
-            addFieldInDataIQ(data, "muc#roomconfig_maxusers", "200");
+            addFieldInDataIQ(data, "muc#roomconfig_maxusers", "1000");
             addFieldInDataIQ(data, "muc#roomconfig_whois", "moderators");
             addFieldInDataIQ(data, "muc#roomconfig_membersonly", "0");
             addFieldInDataIQ(data, "muc#roomconfig_moderatedroom", "1");
@@ -119,7 +123,7 @@ namespace EnterpriseMICApplicationDemo
             addFieldInDataIQ(data, "muc#roomconfig_allowvoicerequests", "1");
             addFieldInDataIQ(data, "muc#roomconfig_voicerequestmininterval", "1800");
             addFieldInDataIQ(data, "muc#roomconfig_captcha_whitelist", "");
-            addFieldInDataIQ(data, "muc#roomconfig_enablelogging", "1");
+            addFieldInDataIQ(data, "muc#roomconfig_enablelogging", savingHistory);
 
             oIq.Query.AddChild(data);
             Settings.xmpp.IqGrabber.SendIq(oIq, new IqCB(OnGetFieldsResult), null);
@@ -246,11 +250,11 @@ namespace EnterpriseMICApplicationDemo
             }
             if (msg.Subject != null)
             {
-                //txtSubject.Text = msg.Subject;
+                txtSubject.Text = msg.Subject;
 
                 rtfChat.SelectionColor = Color.DarkGreen;
                 // The Nickname of the sender is in GroupChat in the Resource of the Jid
-                rtfChat.AppendText(msg.From.Resource + " changed subject: ");
+                rtfChat.AppendText(msg.From.Resource + " изменил тему: ");
                 rtfChat.SelectionColor = Color.Black;
                 rtfChat.AppendText(msg.Subject);
                 rtfChat.AppendText("\r\n");
@@ -296,13 +300,16 @@ namespace EnterpriseMICApplicationDemo
         private void cmdChangeSubject_Click(object sender, EventArgs e)
         {
             agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message();
-
             msg.Type = MessageType.groupchat;
             msg.To = roomJid;
             msg.Subject = txtSubject.Text;
-
             xmpp.Send(msg);
         }
+
+        private void buttonDescr_Click(object sender, EventArgs e) {
+            //muc.D
+        }
+
 
     }
 }

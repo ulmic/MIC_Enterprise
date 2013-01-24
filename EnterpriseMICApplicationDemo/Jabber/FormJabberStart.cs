@@ -19,12 +19,12 @@ namespace EnterpriseMICApplicationDemo {
         FormDialog formDialog;
         TabControl tabsDialog;
         XmppClientConnection xmpp;
-        private Jid mainJid;// текущий логин пользователя(имеется ввиду jid на самом деле - xxx@yyy.zz)
+        private Jid mainJid;// текущий jid
         private string nickname = "we";
-        private List<string> onlineUsers = new List<string>();//хранятся контакты, которые в онлайне на момент загрузки списка контактов; затем отмечаются в списке как онлайн и удаляются
+        private List<string> onlineUsersWait = new List<string>();//хранятся контакты, которые в онлайне на момент загрузки списка контактов; затем отмечаются в списке как онлайн и удаляются
         private List<ListViewItem> offlineUsers = new List<ListViewItem>();
-        private List<agsXMPP.protocol.client.Message> waitList = new List<agsXMPP.protocol.client.Message>();
-        bool offlineContactsHidden = false;
+        private List<agsXMPP.protocol.client.Message> waitList = new List<agsXMPP.protocol.client.Message>();//хранит сообщения, которые пришли, но еще не прочитаны пользователем(хранятся при условии, что formDialog закрыта)
+        bool offlineContactsHidden = false;//скрыты ли контакты, которые не в сети
         private SQLiteConnection sql_con;
         private SQLiteCommand sql_cmd;
 
@@ -68,6 +68,7 @@ namespace EnterpriseMICApplicationDemo {
             Settings.nickname = nickname;
             Settings.jid = jid;
         }
+
         private void FormJabberStart_Paint(object sender, PaintEventArgs e) {
             Graphics g = e.Graphics;
             DrawRectangle(g, 0, 0, this.Width, this.Height);
@@ -86,54 +87,27 @@ namespace EnterpriseMICApplicationDemo {
             g.FillRectangle(brush, rec);
         }
 
+        /// <summary>
+        /// создает вкладку с диалогом на FormDialog
+        /// </summary>
+        /// <param name="tabName">название вкладки(ник собеседника)</param>
+        /// <param name="key">скрытый параметр - jid собеседника</param>
+        /// <param name="insideText">текст, добавляющийся на вкладку сразу после её создания</param>
         private void createTabPage(string tabName, string key = "", string insideText = null) {
-            TabPage p = new TabPage(tabName);
-            p.Name = key;
-            TextBox dialog = new TextBox();
-            dialog.Location = tabsDialog.Location;
-            dialog.Size = new System.Drawing.Size(450, 170);
-            dialog.Multiline = true;
-            dialog.ScrollBars = ScrollBars.Vertical;
-            dialog.ReadOnly = true;
-            dialog.BackColor = Color.White;
-            //dialog.Anchor = (AnchorStyles)(AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
-            if ( insideText != null ) {
-                dialog.AppendText(insideText);
-            }
-            TextBox textBoxSend = new TextBox();
-            textBoxSend.Location = new Point(dialog.Location.X, dialog.Location.Y + dialog.Height);
-            textBoxSend.Size = new System.Drawing.Size(240, 45);
-            textBoxSend.Multiline = true;
-            //textBoxSend.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            Button send = new Button();
-            send.Text = "Послать";
-            send.Location = new Point(dialog.Location.X + dialog.Width - 80, dialog.Location.Y + dialog.Height + 10);
-            //send.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            send.Click += delegate(object s, EventArgs a) {
-                SendTextMessage(tabName, dialog, textBoxSend.Text);
-                textBoxSend.Clear();
-            };
-            CheckBox enter = new CheckBox();
-            enter.Text = "Send if Enter";
-            enter.Location = new Point(textBoxSend.Location.X + textBoxSend.Width + 10, dialog.Location.Y + dialog.Height + 5);
-            enter.Checked = true;
-            //enter.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-
-            textBoxSend.KeyDown += delegate(object o, KeyEventArgs k) {
-                if ( k.KeyCode == Keys.Enter && enter.Checked ) {
-                    SendTextMessage(key, dialog, textBoxSend.Text);
-                    textBoxSend.Clear();
-                }
-            };
-            p.Controls.AddRange(new Control[] { dialog, textBoxSend, send, enter });
-            tabsDialog.TabPages.Add(p);
+            formDialog.createTabPage(this, tabName, key, insideText);
         }
 
-        private void SendTextMessage(string toJid, TextBox dialog, string message) {
-            agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message(new Jid(toJid), MessageType.chat, message);
+        /// <summary>
+        /// Отправляет сообщение к собеседнику с заданным jid и выводит его в textbox с чатом, а также добавляет в историю(в бд)
+        /// </summary>
+        /// <param name="toJid">jid получателя</param>
+        /// <param name="dialog">textbox с чатом</param>
+        /// <param name="message">сообщение</param>
+        public void SendTextMessage(Jid toJid, RichTextBox dialog, string message) {
+            agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message(toJid, MessageType.chat, message);
             xmpp.Send(msg);
-            dialog.AppendText(formateString(nickname, message));
-            //addMessageToHistoryDB(mainJid.Bare, toJid, message);
+            addMessToDialog(nickname, message, dialog, Settings.myColor);
+            //addMessageToHistoryDB(mainJid.Bare, mainJid.Resource, toJid.Bare, toJid.Resource, message);
         }
 
         private void tabsDialogSelectedIndexChangedOrFormDialogFocused(object sender, EventArgs e) {//длинное мнемоническое имя
@@ -149,9 +123,14 @@ namespace EnterpriseMICApplicationDemo {
             it.BackColor = Color.Transparent;
         }
 
-        private int findTagPage(string name) {
+        /// <summary>
+        /// Находит в коллекции открытых вкладок с диалогами ту вкладку, jid собеседника которой совпадает с аргументом
+        /// </summary>
+        /// <param name="jid"></param>
+        /// <returns>Возвращает индекс найденной вкладки</returns>
+        private int findTagPage(string jid) {
             for ( int i = 0; i < tabsDialog.TabPages.Count; i++ ) {
-                if ( name == tabsDialog.TabPages[i].Name ) {
+                if ( jid == tabsDialog.TabPages[i].Name ) {
                     return i;
                 }
             }
@@ -163,6 +142,18 @@ namespace EnterpriseMICApplicationDemo {
                             + Environment.NewLine + mess + Environment.NewLine + Environment.NewLine );
         }
 
+        private void addMessToDialog(string from, string mess, RichTextBox dialog, Color color) {
+            dialog.SelectionColor = color;
+            dialog.AppendText( from + " (" + DateTime.Now.ToString() + ")");
+            dialog.SelectionColor = Color.Black;
+            dialog.AppendText(Environment.NewLine + mess + Environment.NewLine + Environment.NewLine );
+        }
+
+        /// <summary>
+        /// Получает из списка контактов тот элемент, в котором jid совпадает с аргументом
+        /// </summary>
+        /// <param name="jid"></param>
+        /// <returns>Возвращает элемент списка</returns>
         private ListViewItem getListViewItem(string jid) {
             foreach ( ListViewItem lvi in listUsers.Items ) {
                 if ( jid.ToLower() == lvi.Name.ToLower() )
@@ -171,6 +162,13 @@ namespace EnterpriseMICApplicationDemo {
             return null;
         }
 
+        /// <summary>
+        /// Создает элемент списка контактов
+        /// </summary>
+        /// <param name="jid">jid контакта</param>
+        /// <param name="name">ник контакта</param>
+        /// <param name="color">цвет отображения контакта в списке</param>
+        /// <returns></returns>
         private ListViewItem createListViewItem(string jid, string name, Color color) {
             ListViewItem item = new ListViewItem();
             item.Name = jid;
@@ -179,22 +177,27 @@ namespace EnterpriseMICApplicationDemo {
             return item;
         }
 
+        /// <summary>
+        /// Событие, вызывающееся при получении сообщения
+        /// </summary>
+        /// <param name="o"></param>
+        /// <param name="msg"></param>
         private void HandlerOnMessage(object o, agsXMPP.protocol.client.Message msg) {
             BeginInvoke(new MethodInvoker(delegate {
                 string from = msg.From.Bare;
                 switch ( msg.Type ) {
-                    case MessageType.chat: //простое сообщение			
-                        //initFormDialog();
+                    case MessageType.chat: //простое сообщение		
                         int indexTab = findTagPage(from);
                         if ( indexTab != -1 ) {//если уже существует вкладка для него 
-                            ( (TextBox)tabsDialog.TabPages[indexTab].Controls[0] ).AppendText(formateString(from, msg.Body));
+                            addMessToDialog(from, msg.Body, (RichTextBox)tabsDialog.TabPages[indexTab].Controls[0], Settings.youColor);//добаляем в диалог
+                            //( (TextBox)tabsDialog.TabPages[indexTab].Controls[0] ).AppendText(formateString(from, msg.Body));
                         } else {
-                            waitList.Add(msg);
+                            waitList.Add(msg);//добавляем в лист ожидания
                         }
                         if ( !( formDialog.Focused && tabsDialog.SelectedIndex == indexTab ) ) {
-                            getListViewItem(from).BackColor = Color.Orange;
+                            getListViewItem(from).BackColor = Color.Orange;//если на форме с диалогом нет фокуса или открыта не та вкладка, к которой пришло сообщение, выделяем в списке контактов контакт отправителя
                         }
-                       // addMessageToHistoryDB(msg.From.Bare, msg.To.Bare, msg.Body);
+                        // addMessageToHistoryDB(msg.From.Bare, msg.From.Resource, msg.To.Bare, msg.To.Resource, msg.Body);//записываем сообщение в бд(история)
                         break;
                     case MessageType.groupchat:
                         //конференции сами ловят сообщения в своей форме
@@ -203,18 +206,30 @@ namespace EnterpriseMICApplicationDemo {
                         //вообще не ловятся
                         break;
                 }
+                if ( msg.FirstChild.TagName == "invite" ) {
+                    MessageBox.Show("Вам пришло приглашение в конференцию" + msg.From);
+                }
             }));
         }
 
+        /// <summary>
+        /// Событие, вызыващееся при получении присутствия
+        /// </summary>
+        /// <param name="o"></param>
+        /// <param name="presence"></param>
         private void HandlerOnPresence(object o, Presence presence) {
             BeginInvoke(new MethodInvoker(delegate {
                 ListViewItem it = getListViewItem(presence.From.Bare);
-                if ( presence.Type.ToString() == "unavailable" || presence.Type.ToString() == "error" ) {//client.presence == "unavailable") 
+                //если контакт не онлайн
+                if ( presence.Type.ToString() == "unavailable" || presence.Type.ToString() == "error" ) {
                     if ( it == null ) {
-                        onlineUsers.Remove(presence.From.Bare);
+                        // и его нет в списке контактов, то удаляем его из списка onlineUsers
+                        onlineUsersWait.Remove(presence.From.Bare);
                     } else if ( !offlineContactsHidden ) {
+                        //а если есть в списке контактов, и контакты не в сети не надо скрывать, то выделяем его красным
                         it.ForeColor = Color.Red;
                     } else {
+                        //а если же пользователь не желает зрить контакты, с коими общаться не можно, то заносим ирода в список пользователей недоступных
                         ListViewItem offlineUser = getListViewItem(presence.From.Bare);
                         offlineUser.ForeColor = Color.Red;
                         offlineUsers.Add(offlineUser);
@@ -222,23 +237,31 @@ namespace EnterpriseMICApplicationDemo {
                 }
                 if ( presence.Type.ToString() == "available" ) {
                     if ( it != null ) {
+                        //если пользователь есть в списке контактов
                         it.ForeColor = Color.Black;
                     } else if ( offlineContactsHidden ) {
+                        //если нужно скрывать оффлайн контакты, то ищем в списке оффлайн юзеров 
                         ListViewItem listItem = offlineUsers.Find(item => item.Name == presence.From.Bare);
                         if ( listItem == null ) {
-                            //здесь попадаются какие-то левые
+                            //здесь попадаться здесь не должен _никто_(по идее), но попадаются какие-то левые 
                         } else {
+                            //и добавляем в список контактов
                             listItem.ForeColor = Color.Black;
                             listUsers.Items.Add(listItem);
                             offlineUsers.Remove(listItem);
                         }
                     } else {
-                        onlineUsers.Add(presence.From.Bare);
+                        //если же пользователя нет в списке контактов, и оффлановые контакты не скрыты, то это значит, что список контактов еще не загрузился, и добавляем контакт в список ожидания
+                        onlineUsersWait.Add(presence.From.Bare);
                     }
                 }
             }));
         }
 
+        /// <summary>
+        /// Происходит при удачной авторизации
+        /// </summary>
+        /// <param name="o"></param>
         private void HandlerOnLogin(object o) {
             BeginInvoke(new MethodInvoker(delegate() {
                 setStatus("Онлайн");
@@ -264,39 +287,61 @@ namespace EnterpriseMICApplicationDemo {
             }));
         }
 
+        /// <summary>
+        /// Происходит при начале получения списка контактов
+        /// </summary>
+        /// <param name="o"></param>
         private void HandlerOnRosterStart(object o) {
             BeginInvoke(new MethodInvoker(delegate() {
                 listUsers.BeginUpdate();
             }));
         }
 
+        /// <summary>
+        /// Происходит, когда весь список контактов получен
+        /// </summary>
+        /// <param name="o"></param>
         private void HandlerOnRosterEnd(object o) {
             BeginInvoke(new MethodInvoker(delegate() {
-                for ( int i = onlineUsers.Count - 1; i >= 0; i-- ) {
-                    ListViewItem it = getListViewItem(onlineUsers[i]);
+                //добавляем контакты из списка ожидания
+                for ( int i = onlineUsersWait.Count - 1; i >= 0; i-- ) {
+                    ListViewItem it = getListViewItem(onlineUsersWait[i]);
                     if ( it != null ) {
                         it.ForeColor = Color.Black;
-                        onlineUsers.RemoveAt(i);
+                        onlineUsersWait.RemoveAt(i);
                     }
                 }
                 listUsers.EndUpdate();
             }));
         }
 
+        /// <summary>
+        /// Происходит при получении одного элемента списка контактов
+        /// </summary>
+        /// <param name="o"></param>
+        /// <param name="item"></param>
         private void HandlerOnRosterItem(object o, agsXMPP.protocol.iq.roster.RosterItem item) {
             BeginInvoke(new MethodInvoker(delegate {
                 string itemJid = item.Jid.Bare;
                 if ( item.Subscription != agsXMPP.protocol.iq.roster.SubscriptionType.remove ) {
+                    //если этот элемент списка не пришел с меткой на удаление, то добавляем его
                     string nodeText = item.Name != null ? item.Name : itemJid;
                     listUsers.Items.Add(createListViewItem(itemJid, nodeText, Color.Red));
                 } else {
+                    //иначе удаляем
                     listUsers.Items.Remove(getListViewItem(itemJid));
                 }
             }));
         }
 
+        /// <summary>
+        /// Происходит при ошибке авторизации
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HandlerOnAuthError(object sender, agsXMPP.Xml.Dom.Element e) {
-            throw new NotImplementedException();
+            MessageBox.Show("Ошибка авторизации. При частом её повторении помолитесь и попробуйте еще разок.");
+            Exit_Click(null, null);
         }
 
         private void setStatus(string status) {
@@ -324,18 +369,22 @@ namespace EnterpriseMICApplicationDemo {
             int res = sql_cmd.ExecuteNonQuery();
         }
 
+        /// <summary>
+        /// Получает из бд историю переписки с контактом
+        /// </summary>
+        /// <param name="jidTo">jid контакта</param>
+        /// <returns></returns>
         private string getHistoryFromDB(string jidTo) {
             string res = "";
             int limit = 2;
             Stack<string> lastMessages = new Stack<string>();
-            sql_cmd.CommandText = @"SELECT * FROM chat_history WHERE user_from ='" + jidTo + "' OR user_to ='" + jidTo + "' ORDER BY date_time DESC LIMIT " + limit;
+            sql_cmd.CommandText = @"SELECT * FROM chat_history WHERE user_from_jid ='" + jidTo + "' OR user_to_jid ='" + jidTo + "' ORDER BY date_time DESC LIMIT " + limit;
             using ( SQLiteDataReader reader = sql_cmd.ExecuteReader() ) {
                 if ( reader.HasRows ) {
                     for ( int i = 0; i < limit && reader.Read(); i++ ) {
-                        string from = reader.GetValue(0).ToString();
-                        if ( from == mainJid.Bare )
-                            from = nickname;
-                        lastMessages.Push(Environment.NewLine + from + "(" + reader.GetValue(2) + ")" + Environment.NewLine + reader.GetValue(3) + Environment.NewLine);
+                        //    0        1       2      3         4        5
+                        //from_jid from_name to_jid to_name data_time message
+                        lastMessages.Push(Environment.NewLine + reader.GetValue(1) + "(" + reader.GetValue(4) + ")" + Environment.NewLine + reader.GetValue(5) + Environment.NewLine);
                     }
                 }
             }
@@ -347,8 +396,9 @@ namespace EnterpriseMICApplicationDemo {
             return res;
         }
 
-        private void addMessageToHistoryDB(string from, string to, string message) {
-            sql_cmd.CommandText = @"INSERT INTO chat_history (user_from,user_to,date_time,message) VALUES('" + from + "','" + to + "','" + DateTime.Now.ToString() + "', '" + message + "');";
+        private void addMessageToHistoryDB(string fromJid, string fromName, string toJid, string toName, string message) {
+            sql_cmd.CommandText = @"INSERT INTO chat_history (user_from_jid, user_from_name, user_to_jid, user_to_name, date_time,message)
+                                    VALUES('" + fromJid + "','" + fromName + "','" + toJid + "','" + toName + "','" + DateTime.Now.ToString() + "', '" + message + "');";
             int res = sql_cmd.ExecuteNonQuery();
         }
 
@@ -392,9 +442,6 @@ namespace EnterpriseMICApplicationDemo {
             try {
                 string nickname = loginBox.Text.Substring(0, loginBox.Text.IndexOf("@"));
                 string server = loginBox.Text.Substring(loginBox.Text.IndexOf("@") + 1);
-#if DEBUG
-                Settings.serverIp = "192.168.1.4";
-#endif
                 Settings.jid = loginBox.Text;
                 string connserver = ( server == "gmail.com" ) ? "talk.google.com" : ( ( server == "haupc" ) ? Settings.serverIp : server );
                 mainJid = new Jid(loginBox.Text);
@@ -428,6 +475,11 @@ namespace EnterpriseMICApplicationDemo {
             checkBoxConnected.Checked = false;
         }
 
+        /// <summary>
+        /// Событие нажатия на кнопку "показать/скрыть оффлайн контакты". Показывает или скрывает контакты.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonShowHideContacts_Click(object sender, EventArgs e) {
             listUsers.BeginUpdate();
             if ( offlineContactsHidden ) {
@@ -480,7 +532,7 @@ namespace EnterpriseMICApplicationDemo {
                 string name = listUsers.SelectedItems[0].Text;
                 string jid = listUsers.SelectedItems[0].Name;
                 int indexTab = findTagPage(jid);
-                agsXMPP.protocol.client.Message msgWait = waitList.Find(item => item.From.Bare == jid);
+                List <agsXMPP.protocol.client.Message> msgsWait = waitList.FindAll(item => item.From.Bare == jid);//получает все сообщения из списка ожидающих сообщений с нужным jid
                 if ( indexTab == -1 ) {
                     createTabPage(name, jid);//, getHistoryFromDB(jid));
                     tabsDialog.SelectedIndex = tabsDialog.TabPages.Count - 1;
@@ -488,24 +540,26 @@ namespace EnterpriseMICApplicationDemo {
                     tabsDialog.SelectedIndex = indexTab;
                 }
                 indexTab = tabsDialog.SelectedIndex;
-                while ( msgWait != null ) {
+                //добавляем сообщения из ожидания в диалог
+                for (int i = msgsWait.Count - 1; i >= 0; i-- ) {
+                    agsXMPP.protocol.client.Message msgWait = msgsWait[i];
                     ( (TextBox)tabsDialog.TabPages[indexTab].Controls[0] ).AppendText(formateString(msgWait.From.Bare, msgWait.Body));
                     waitList.Remove(msgWait);
-                    msgWait = waitList.Find(item => item.From.Bare == jid);
                 }
             }
         }
 
         private void login_MouseClick(object sender, MouseEventArgs e) {
-            //login.Clear();
         }
 
         private void password_MouseClick(object sender, MouseEventArgs e) {
-            //password.Clear();
         }
 
         private void FormJabberStart_Load(object sender, EventArgs e) {
            // connectDb();
+#if DEBUG
+            Settings.serverIp = "192.168.1.4";
+#endif
         }
 
         private void FormJabberStart_FormClosing(object sender, FormClosingEventArgs e) {

@@ -35,7 +35,8 @@ namespace EnterpriseMICApplicationDemo{
                     selectedUsers.Add(listViewUsers.Items[i].Text);
                 }
             }
-            ( new FormConferention(textBoConfIdent.Text.Trim() + "@conference.haupc", selectedUsers, "Конференция 1", checkBoxHistory.Checked) ).Show();
+            ( new FormConferention(textBoxConfIdent.Text.Trim() + "@conference." + Settings.server, textBoxConfName.Text,
+                                    checkBoxHistory.Checked, checkBoxPersistentRoom.Checked, textBoxDescription.Text, selectedUsers ) ).Show();
 			this.Close();
         }
 
@@ -43,6 +44,7 @@ namespace EnterpriseMICApplicationDemo{
         {
             this.Close();
         }
+
 
 
         
