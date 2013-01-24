@@ -14,6 +14,8 @@ namespace EnterpriseMICApplicationDemo {
 		private string connectionString = "server=localhost;database=ENTERMIC;uid=root";
 		private string getMemberQuery = "SELECT * FROM newMIC_9 WHERE number = ";
 
+		private const string SELECT_LOCALS = "SELECT DISTINCT value FROM uservalues INNER JOIN attributes ON uservalues.id_attr = attributes.id_attr WHERE attributes.name = 'local' ORDER BY uservalues.value";
+
 		/// <summary>
 		/// Returns a list strings
 		/// </summary>
@@ -46,29 +48,42 @@ namespace EnterpriseMICApplicationDemo {
 		/// </summary>
 		/// <returns></returns>
 		public List<string> GetLocals() {
-			MySqlConnection con = new MySqlConnection();
-			List<string> str = new List<string>();
-			try {
-				con = new MySqlConnection(connectionString);
-			} catch {
-				str.Add("Ошибка: не создано соединение.");
-				return str;
-			}
-			MySqlCommand cmd = new MySqlCommand(getGroupsQuery, con);
-			try {
-				con.Open();
-			} catch {
-				str.Add("Ошибка: не установлено соединение.");
-				return str;
-			}
-			MySqlDataReader reader = cmd.ExecuteReader();
+			//MySqlConnection con = new MySqlConnection();
+			//List<string> str = new List<string>();
+			//try {
+			//    con = new MySqlConnection(connectionString);
+			//} catch {
+			//    str.Add("Ошибка: не создано соединение.");
+			//    return str;
+			//}
+			//MySqlCommand cmd = new MySqlCommand(getGroupsQuery, con);
+			//try {
+			//    con.Open();
+			//} catch {
+			//    str.Add("Ошибка: не установлено соединение.");
+			//    return str;
+			//}
+			//MySqlDataReader reader = cmd.ExecuteReader();
+			//while (reader.Read()) {
+			//    str.Add(reader["local"].ToString());
+			//}
+			//con.Close();
+			//str.Remove("");
+			//return str;
+			MySqlConnection connection = CreateConnection();
+			List<string> locals = new List<string>();
+			connection.Open();
+			MySqlCommand command = new MySqlCommand(SELECT_LOCALS, connection);
+			MySqlDataReader reader = command.ExecuteReader();
 			while (reader.Read()) {
-				str.Add(reader["local"].ToString());
+				locals.Add(reader.GetString(0));
 			}
-			con.Close();
-			str.Remove("");
-			return str;
+			connection.Close();
+			locals.Remove("");
+			return locals;
 		}
+
+		
 
 		/// <summary>
 		/// Returns an instance of the class Member
