@@ -22,9 +22,7 @@ namespace EnterpriseMICApplicationDemo {
 				myConnection = new MySqlConnection(connectionString);
 				myConnection.Open();
 			} catch {
-				Console.WriteLine("ЖОПА!");
 				myConnection.Close();
-				Console.ReadKey();
 				return;
 			}
 			string strSQL = "SELECT title FROM " + TABLE_NAME;
@@ -43,9 +41,7 @@ namespace EnterpriseMICApplicationDemo {
 				myConnection = new MySqlConnection(connectionString);
 				myConnection.Open();
 			} catch {
-				Console.WriteLine("ЖОПА!");
 				myConnection.Close();
-				Console.ReadKey();
 				return;
 			}
 			SendingList temp = new SendingList(title);
