@@ -38,13 +38,13 @@ namespace EnterpriseMICApplicationDemo
             InitializeComponent();
             setInfoOfTheRoom();
             roomJid = new Jid(_roomJid);
-            roomJid.Resource = roomName;
+         //   roomJid.Resource = roomName;
             mainJid = Settings.jid;
             this.Text = roomName;
             nickname = Settings.nickname;
             xmpp = Settings.xmpp;
             muc = new MucManager(xmpp);
-            muc.JoinRoom(roomJid, nickname, password);
+            muc.JoinRoom(roomJid, "as"/*nickname*/, password);
             xmpp.MesagageGrabber.Add(roomJid, new BareJidComparer(), new MessageCB(MessageCallback), null);
             xmpp.PresenceGrabber.Add(roomJid, new BareJidComparer(), new PresenceCB(PresenceCallback), null);
         }
@@ -59,33 +59,33 @@ namespace EnterpriseMICApplicationDemo
         /// <param name="users">Приглашенные юзеры</param>
         /// <param name="_roomDesc">Описание комнаты</param>
         /// <param name="password"></param>
-        public FormConferention(string _roomJid, string _roomName, bool _savingHistory, bool _persistRoom, List<string> users = null, string _roomDesc = "", string password = null )
+        public FormConferention(string _roomJid, string _roomName, bool _savingHistory, bool _persistRoom, List<string> users = null, string _roomDesc = "", string password = null)
         {
             InitializeComponent();
-            roomJid = new Jid(_roomJid );
-            roomJid.Resource = _roomName;
+            roomJid = new Jid(_roomJid);
+           // roomJid.Resource = _roomName;
             mainJid = Settings.jid;
             roomName = _roomName;
             roomDesc = _roomDesc;
             this.Text = _roomName;
-            nickname = Settings.nickname;			
+            nickname = Settings.nickname;
             xmpp = Settings.xmpp;
             muc = new MucManager(xmpp);
             savingHistory = _savingHistory ? "1" : "0";
             persistRoom = _persistRoom ? "1" : "0";
-	        muc.CreateReservedRoom(roomJid);
+            muc.CreateReservedRoom(roomJid);
             muc.GrantOwnershipPrivileges(roomJid, new Jid(mainJid));
             muc.JoinRoom(roomJid, nickname, password);
             initMucConfig();
             xmpp.MesagageGrabber.Add(roomJid, new BareJidComparer(), new MessageCB(MessageCallback), null);
             xmpp.PresenceGrabber.Add(roomJid, new BareJidComparer(), new PresenceCB(PresenceCallback), null);
-            muc.Invite(users.ConvertAll<Jid>(
-                delegate(string jid)
+            muc.Invite(users.ConvertAll<Jid>( deleg            ).ToArray(), roomJid, "Вы приглашены в конференцию " + roomName);
+        }
+
+        private Jid deleg(string jid)
                 {
                     return new Jid(jid);
                 }
-            ).ToArray(), roomJid, "Вы приглашены в конференцию " + roomName);
-        }
 
         private void initMucConfig()
         {
@@ -98,15 +98,17 @@ namespace EnterpriseMICApplicationDemo
         /// <param name="sender"></param>
         /// <param name="iq"></param>
         /// <param name="obj"></param>
-        private void ReceiveFormConfiguration(object sender, IQ iq, object obj) {
+        private void ReceiveFormConfiguration(object sender, IQ iq, object obj)
+        {
             agsXMPP.protocol.x.muc.iq.owner.OwnerIq oIq = new agsXMPP.protocol.x.muc.iq.owner.OwnerIq();
             oIq.Type = IqType.get;
             oIq.To = roomJid;
             Settings.xmpp.IqGrabber.SendIq(oIq, new IqCB(OnRequestConfiguration), null);
         }
 
-        private void addFieldInDataIQ(agsXMPP.protocol.x.data.Data data, string fieldname, string value) {
-            Field field = new Field();					
+        private void addFieldInDataIQ(agsXMPP.protocol.x.data.Data data, string fieldname, string value)
+        {
+            Field field = new Field();
             field.Var = fieldname;
             agsXMPP.Xml.Dom.Element e = new agsXMPP.Xml.Dom.Element("value", value);
             field.AddChild(e);
@@ -187,7 +189,7 @@ namespace EnterpriseMICApplicationDemo
                 textBoxSend.Clear();
             }
         }
-        
+
         private void FormConferention_FormClosed(object sender, FormClosedEventArgs e)
         {
             muc.LeaveRoom(roomJid, nickname);
@@ -201,10 +203,14 @@ namespace EnterpriseMICApplicationDemo
         /// <param name="data"></param>
         private void MessageCallback(object sender, agsXMPP.protocol.client.Message msg, object data)
         {
-            BeginInvoke(new MethodInvoker(delegate {
-            if (msg.Type == MessageType.groupchat)
-                IncomingMessage(msg);
-			}));
+            if (InvokeRequired)
+            {
+                BeginInvoke(new MethodInvoker(delegate
+                {
+                    if (msg.Type == MessageType.groupchat)
+                        IncomingMessage(msg);
+                }));
+            }
         }
 
         /// <summary>
@@ -215,36 +221,40 @@ namespace EnterpriseMICApplicationDemo
         /// <param name="data"></param>
         private void PresenceCallback(object sender, agsXMPP.protocol.client.Presence pres, object data)
         {
-            BeginInvoke(new MethodInvoker(delegate {
-	            string user = findListBoxItem(pres.From.Resource);
-	            if (user != null)//если есть в списке присутствия 
-	            {
-	                if (pres.Type == PresenceType.unavailable)
-	                {
-	                    listBoxConfUsers.Items.Remove(user);
-	                }
-	                else
-	                {
-	                    //хз что делает
-	
-	                    //int imageIdx = Util.GetRosterImageIndex(pres);
-	                    //lvi.ImageIndex = imageIdx;
-	                    //lvi.SubItems[1].Text = ( pres.Status == null ? "" : pres.Status );
-	                    //User u = pres.SelectSingleElement(typeof(User)) as User;
-	                    //if ( u != null ) {
-	                    //    lvi.SubItems[2].Text = u.Item.Affiliation.ToString();
-	                    //    lvi.SubItems[3].Text = u.Item.Role.ToString();
-	                    //}
-	                }
-	            }
-	            else
-	            {
-	                if (pres.Type != PresenceType.unavailable)
-	                {
-	                    listBoxConfUsers.Items.Add(pres.From.Resource);
-	                }
-	            }
-			}));
+            if (InvokeRequired)
+            {
+                BeginInvoke(new MethodInvoker(delegate
+                {
+                    string user = findListBoxItem(pres.From.Resource);
+                    if (user != null)//если есть в списке присутствия 
+                    {
+                        if (pres.Type == PresenceType.unavailable)
+                        {
+                            listBoxConfUsers.Items.Remove(user);
+                        }
+                        else
+                        {
+                            //хз что делает
+
+                            //int imageIdx = Util.GetRosterImageIndex(pres);
+                            //lvi.ImageIndex = imageIdx;
+                            //lvi.SubItems[1].Text = ( pres.Status == null ? "" : pres.Status );
+                            //User u = pres.SelectSingleElement(typeof(User)) as User;
+                            //if ( u != null ) {
+                            //    lvi.SubItems[2].Text = u.Item.Affiliation.ToString();
+                            //    lvi.SubItems[3].Text = u.Item.Role.ToString();
+                            //}
+                        }
+                    }
+                    else
+                    {
+                        if (pres.Type != PresenceType.unavailable)
+                        {
+                            listBoxConfUsers.Items.Add(pres.From.Resource);
+                        }
+                    }
+                }));
+            }
         }
 
         private string findListBoxItem(string jid)
@@ -301,31 +311,40 @@ namespace EnterpriseMICApplicationDemo
             xmpp.Send(msg);
         }
 
-        private void buttonDescr_Click(object sender, EventArgs e) {	
-								
+        private void buttonDescr_Click(object sender, EventArgs e)
+        {
+
         }
-		
+
         //получает и задает значения названия комнаты и её описания
-		private void setInfoOfTheRoom() {
-			requestOnGetInfoTheRoom (delegate (object sender, IQ iq, object data) {				
-				roomDesc = iq.Query.LastNode.ChildNodes.Item(2).ChildNodes.Item(1).Value;	
-				roomName = iq.Query.FirstChild.Attribute("name");
-			});			
-		}
-				
+        private void setInfoOfTheRoom()
+        {
+            requestOnGetInfoTheRoom(delegate(object sender, IQ iq, object data)
+            {
+                roomDesc = iq.Query.LastNode.ChildNodes.Item(2).ChildNodes.Item(1).Value;
+                roomName = iq.Query.FirstChild.Attribute("name");
+            });
+        }
+
         //делает запрос на получение информпции 
-		private void requestOnGetInfoTheRoom(agsXMPP.IqCB handl) {
-			BeginInvoke( new MethodInvoker(delegate {
-				IQ iq = new IQ(IqType.get, new Jid(mainJid), roomJid);
-				agsXMPP.protocol.iq.disco.DiscoInfo info = new agsXMPP.protocol.iq.disco.DiscoInfo();
-				iq.Query = info;
-				iq.Id = "id_" + mainJid + "_" + roomJid.Bare + "_" + (Settings.requestId++);
-	            xmpp.IqGrabber.SendIq(iq, handl, null);					
-			}));
-		}
+        private void requestOnGetInfoTheRoom(agsXMPP.IqCB handl)
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke(new MethodInvoker(delegate
+                {
+                    IQ iq = new IQ(IqType.get, new Jid(mainJid), roomJid);
+                    agsXMPP.protocol.iq.disco.DiscoInfo info = new agsXMPP.protocol.iq.disco.DiscoInfo();
+                    iq.Query = info;
+                    iq.Id = "id_" + mainJid + "_" + roomJid.Bare + "_" + (Settings.requestId++);
+                    xmpp.IqGrabber.SendIq(iq, handl, null);
+                }));
+            }
+        }
 
-        private void buttonHistory_Click(object sender, EventArgs e) {
-
+        private void buttonHistory_Click(object sender, EventArgs e)
+        {
+            ( new FormHistoryView(roomJid.Bare, "")).Show();
         }
     }
 }

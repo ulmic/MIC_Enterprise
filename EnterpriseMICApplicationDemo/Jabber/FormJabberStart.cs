@@ -20,7 +20,7 @@ namespace EnterpriseMICApplicationDemo {
         TabControl tabsDialog;
         XmppClientConnection xmpp;
         private Jid mainJid;// текущий jid
-        private string nickname = "we";
+        private string nickname = "You";
         private List<string> onlineUsersWait = new List<string>();//хранятся контакты, которые в онлайне на момент загрузки списка контактов; затем отмечаются в списке как онлайн и удаляются
         private List<ListViewItem> offlineUsers = new List<ListViewItem>();
         private List<agsXMPP.protocol.client.Message> waitList = new List<agsXMPP.protocol.client.Message>();//хранит сообщения, которые пришли, но еще не прочитаны пользователем(хранятся при условии, что formDialog закрыта)
@@ -108,10 +108,10 @@ namespace EnterpriseMICApplicationDemo {
         /// <param name="message">сообщение</param>
         public void SendTextMessage(Jid toJid, RichTextBox dialog, string message) {
 			if (message != "") {
-	            agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message(toJid, MessageType.chat, message);
+                addMessToDialog(nickname, message, dialog, Settings.myColor);
+                agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message(toJid, MessageType.chat, message);
 	            xmpp.Send(msg);
-	            addMessToDialog(nickname, message, dialog, Settings.myColor);
-	            //addMessageToHistoryDB(mainJid.Bare, mainJid.Resource, toJid.Bare, toJid.Resource, message);
+	            addMessageToHistoryDB(mainJid.Bare, nickname, toJid.Bare, toJid.Resource, message);
 			}
         }
 
@@ -155,6 +155,18 @@ namespace EnterpriseMICApplicationDemo {
             dialog.ScrollToCaret();
         }
 
+        private string getNickname(string jid)
+        {
+            for (int i = 0; i < listUsers.Items.Count; i++)
+            {
+                if (listUsers.Items[i].Name == jid)
+                {
+                    return listUsers.Items[i].Text;
+                }
+            }
+            return jid;
+        }
+
         /// <summary>
         /// Получает из списка контактов тот элемент, в котором jid совпадает с аргументом
         /// </summary>
@@ -184,7 +196,7 @@ namespace EnterpriseMICApplicationDemo {
         }
 
         private RichTextBox getRichTextBox(int indexTab) {
-            return (RichTextBox)tabsDialog.TabPages[indexTab].Controls[3];
+            return (RichTextBox)tabsDialog.TabPages[indexTab].Controls[4];
         }
 
         /// <summary>
@@ -199,15 +211,20 @@ namespace EnterpriseMICApplicationDemo {
                     case MessageType.chat: //простое сообщение		
                         int indexTab = findTagPage(from);
                         if ( indexTab != -1 ) {//если уже существует вкладка для него 
+                            from = tabsDialog.TabPages[indexTab].Text;
                             addMessToDialog(from, msg.Body, getRichTextBox(indexTab), Settings.youColor);//добаляем в диалог
                             //( (TextBox)tabsDialog.TabPages[indexTab].Controls[0] ).AppendText(formateString(from, msg.Body));
                         } else {
                             waitList.Add(msg);//добавляем в лист ожидания
                         }
-                        if ( !( tabsDialog.SelectedIndex == indexTab ) ) {
-                            getListViewItem(from).BackColor = Color.Orange;//если на форме с диалогом нет фокуса или открыта не та вкладка, к которой пришло сообщение, выделяем в списке контактов контакт отправителя
-                        }
-                        // addMessageToHistoryDB(msg.From.Bare, msg.From.Resource, msg.To.Bare, msg.To.Resource, msg.Body);//записываем сообщение в бд(история)
+                        if ( indexTab == -1 || tabsDialog.SelectedIndex != indexTab ) {
+                            ListViewItem it = getListViewItem(from);
+                            if (it != null)
+                            {
+                                it.BackColor = Color.Orange;//если на форме с диалогом нет фокуса или открыта не та вкладка, к которой пришло сообщение, выделяем в списке контактов контакт отправителя
+                            }
+                            }
+                        addMessageToHistoryDB(msg.From.Bare, getNickname(msg.From.Bare), msg.To.Bare, nickname, msg.Body);//записываем сообщение в бд(история)
                         break;
                     case MessageType.groupchat:
                         //конференции сами ловят сообщения в своей форме
@@ -217,7 +234,8 @@ namespace EnterpriseMICApplicationDemo {
                         break;
                 }
                 try {
-                    if ( msg.FirstChild.FirstChild.TagName == "invite" ) {
+                    if (msg.FirstChild.FirstChild.TagName == "invite" && msg.FirstChild.FirstChild.Attribute("to") == mainJid.Bare)
+                    {
                         DialogResult res = MessageBox.Show("Вам пришло приглашение в конференцию " + msg.From.Resource + ". Желаете присоединиться?", "caption", MessageBoxButtons.OKCancel);
                         if ( res == DialogResult.OK ) {
                             ( new FormConferention(msg.From.Bare) ).Show();
@@ -418,7 +436,7 @@ namespace EnterpriseMICApplicationDemo {
         }
 
         private void connectDb() {
-            sql_con = new SQLiteConnection(@"Data Source=d:\programming\git\MIC_Enterprise\EnterpriseMICApplicationDemo\Jabber\db\xmpp_db;New=False;Version=3");
+            sql_con = new SQLiteConnection(@"Data Source=C:\Users\Оксана\Desktop\ddv\xmpp\serializ2\db\xmpp_db;New=False;Version=3");
             sql_con.Open();
             sql_cmd = sql_con.CreateCommand();
         }
@@ -516,9 +534,11 @@ namespace EnterpriseMICApplicationDemo {
         }
 
         private void createConference_Click(object sender, EventArgs e) {
-            List<string> users = new List<string>();
-            foreach ( ListViewItem it in listUsers.Items )
-                users.Add(it.Text);
+            Dictionary<string, string> users = new Dictionary<string, string>();
+            foreach (ListViewItem it in listUsers.Items)
+            {
+                users.Add(it.Name, it.Text);
+            }
             FormCreateConferention fCreate = new FormCreateConferention(users);
             fCreate.Show();
         }
@@ -546,6 +566,7 @@ namespace EnterpriseMICApplicationDemo {
                 if ( indexTab == -1 ) {
                     createTabPage(name, jid);//, getHistoryFromDB(jid));
                     tabsDialog.SelectedIndex = tabsDialog.TabPages.Count - 1;
+                    listUsers.SelectedItems[0].BackColor = Color.Transparent;
                 } else {
                     tabsDialog.SelectedIndex = indexTab;
                 }
@@ -553,7 +574,7 @@ namespace EnterpriseMICApplicationDemo {
                 //добавляем сообщения из ожидания в диалог
                 for (int i = msgsWait.Count - 1; i >= 0; i-- ) {
                     agsXMPP.protocol.client.Message msgWait = msgsWait[i];
-                    getRichTextBox(indexTab).AppendText(formateString(msgWait.From.Bare, msgWait.Body));
+                    addMessToDialog(getNickname(msgWait.From.Bare), msgWait.Body, getRichTextBox(indexTab), Color.Red);
                     waitList.Remove(msgWait);
                 }
             }
@@ -566,7 +587,7 @@ namespace EnterpriseMICApplicationDemo {
         }
 
         private void FormJabberStart_Load(object sender, EventArgs e) {
-           // connectDb();
+            connectDb();
         }
 
         private void FormJabberStart_FormClosing(object sender, FormClosingEventArgs e) {

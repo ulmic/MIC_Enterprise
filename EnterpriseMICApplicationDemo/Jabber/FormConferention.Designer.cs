@@ -33,7 +33,6 @@
             this.buttonHistory = new System.Windows.Forms.Button();
             this.rtfChat = new System.Windows.Forms.RichTextBox();
             this.buttonChangeSubject = new System.Windows.Forms.Button();
-            this.buttonDescr = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtSubject
@@ -132,22 +131,11 @@
             this.buttonChangeSubject.UseVisualStyleBackColor = true;
             this.buttonChangeSubject.Click += new System.EventHandler(this.cmdChangeSubject_Click);
             // 
-            // buttonDescr
-            // 
-            this.buttonDescr.Location = new System.Drawing.Point(417, 276);
-            this.buttonDescr.Name = "buttonDescr";
-            this.buttonDescr.Size = new System.Drawing.Size(75, 29);
-            this.buttonDescr.TabIndex = 13;
-            this.buttonDescr.Text = "Описание";
-            this.buttonDescr.UseVisualStyleBackColor = true;
-            this.buttonDescr.Click += new System.EventHandler(this.buttonDescr_Click);
-            // 
             // FormConferention
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(574, 334);
-            this.Controls.Add(this.buttonDescr);
             this.Controls.Add(this.buttonChangeSubject);
             this.Controls.Add(this.rtfChat);
             this.Controls.Add(this.buttonHistory);
@@ -178,6 +166,5 @@
         private System.Windows.Forms.Button buttonHistory;
         private System.Windows.Forms.RichTextBox rtfChat;
         private System.Windows.Forms.Button buttonChangeSubject;
-        private System.Windows.Forms.Button buttonDescr;
     }
 }
