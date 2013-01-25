@@ -229,5 +229,35 @@ namespace EnterpriseMICApplicationDemo{
 			connection = db.CreateConnection();
 			connection.Open();
 		}
+
+		private static int getIdByFIO(string FIO) {
+			string[] fio = FIO.Split(' ');
+			if (fio.Length != 3) {
+				return Const.THEREISNOT;
+			}
+			DBHelper db = new DBHelper();
+			MySqlConnection connection = db.CreateConnection();
+			connection.Open();
+			string subsubquery = db.SelectSQLQuery(Const.ID_USER_COLUMN, Const.USER_VALUES_TABLE, ID_ATTR_COLUMN + " = '" + Const.FAMILY + "' AND " + VALUE_COLUMN + " = '" + fio[0] + "' AND " + Const.ID_USER_COLUMN + " = ");
+			string subquery = "(" + db.SelectSQLQuery(Const.ID_USER_COLUMN, Const.USER_VALUES_TABLE, ID_ATTR_COLUMN + " = '" + Const.FIRST_NAME + "' AND " + VALUE_COLUMN + " = '" + fio[1] + "' AND " + Const.ID_USER_COLUMN + " = ");
+			string query = "(" + db.SelectSQLQuery(Const.ID_USER_COLUMN, Const.USER_VALUES_TABLE, ID_ATTR_COLUMN + " = '" + Const.LAST_NAME + "' AND " + VALUE_COLUMN + " = '" + fio[2] + "'") + "))";
+			MySqlCommand command = new MySqlCommand(db.SelectSQLQuery(Const.ID_USER_COLUMN, Const.USER_VALUES_TABLE, ID_ATTR_COLUMN + " = '" + db.GetAttrIdByName(Const.FAMILY).ToString() + "' AND " + VALUE_COLUMN + " = '" + fio[0] + "'"), connection);
+			MySqlDataReader reader = command.ExecuteReader();
+			if (reader.Read() == false) {
+				return Const.THEREISNOT;
+			}
+			int id = reader.GetInt32(0);
+			connection.Close();
+			return id;
+		}
+
+		public static bool FindUserByFIO(string titleSendList, string FIO) {
+			int id = getIdByFIO(FIO);
+			if (id == Const.THEREISNOT) {
+				return false;
+			}
+			SendingList.AddMemberFromDB(titleSendList, id);			
+			return true;
+		}
 	}
 }

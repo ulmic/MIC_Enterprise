@@ -14,6 +14,7 @@ namespace EnterpriseMICApplicationDemo {
 		private const string MEMBERS_TABLE_NAME = "user_sendlists_members";
 
 		private const string ID_SENDLIST_COLUMN = "id_sendlist";
+		private const string TITLE_COLUMN = "title";
 
 		public string title = "";
 		public List<List<string>> members = new List<List<string>>();
@@ -63,30 +64,32 @@ namespace EnterpriseMICApplicationDemo {
 			newConnection.Close();
 		}
 
-		public void addMember(string name, string eMail) {
-			for (int i = 0; i < members.Count; i++) {
-				if (members[i][0] == name) {
-					return;
-				}
-			}
-			MySqlConnection myConnection = new MySqlConnection();
-			try {
-				DBHelper db = new DBHelper();
-				myConnection = db.CreateConnection();
-				myConnection.Open();
-			} catch {
-				myConnection.Close();
-				return;
-			}
+		public static void AddMember(string name, string eMail) {
+			
+		}
 
-			string strSQL = "INSERT INTO " + MEMBERS_TABLE_NAME + " VALUES (" + 0 + ", '" + name + "', '" + eMail + "', " + id + ")";
-			MySqlCommand command = new MySqlCommand(strSQL, myConnection);
+		public static void AddMemberFromDB(string titleSendList, int id_user) {
+			DBHelper db = new DBHelper();
+			MySqlConnection connection = db.CreateConnection();
+			connection.Open();
+			MySqlCommand command = new MySqlCommand(db.InsertSQLQuery(MEMBERS_TABLE_NAME, new string[] { getIdSendListByTitle(titleSendList).ToString(), id_user.ToString() }), connection);
 			command.ExecuteNonQuery();
-			List<string> temp = new List<string>();
-			temp.Add(name);
-			temp.Add(eMail);
-			members.Add(temp);
-			myConnection.Close();
+			connection.Close();
+		}
+
+		private static int getIdSendListByTitle(string title) {
+			DBHelper db = new DBHelper();
+			MySqlConnection connection = db.CreateConnection();
+			connection.Open();
+			MySqlCommand command = new MySqlCommand(db.SelectSQLQuery(ID_SENDLIST_COLUMN, TABLE_NAME, TITLE_COLUMN + " = '" + title + "'"), connection);
+			MySqlDataReader reader = command.ExecuteReader();
+			if (reader.Read() == false) {
+				connection.Close();
+				return Const.THEREISNOT;
+			}
+			int id = reader.GetInt32(0);
+			connection.Close();
+			return id;
 		}
 
 		public void deleteMember(string name) {
