@@ -22,43 +22,60 @@ namespace EnterpriseMICApplicationDemo
         private string mainJid;
         private string nickname;
         private string roomName;
-        private string roomDesc;
-        private string password = "";
+        private string roomDesc;//описание комнаты
         private string savingHistory;
         private string persistRoom;
         private XmppClientConnection xmpp;
         private MucManager muc;
 
-        public FormConferention(string _roomJid)
+        /// <summary>
+        /// Вызывается, если присоединяемся к конференции
+        /// </summary>
+        /// <param name="_roomJid"></param>
+        /// <param name="password"></param>
+        public FormConferention(string _roomJid, string password = null)
         {
             InitializeComponent();
+            setInfoOfTheRoom();
             roomJid = new Jid(_roomJid);
-            xmpp = Settings.xmpp;
+            roomJid.Resource = roomName;
             mainJid = Settings.jid;
+            this.Text = roomName;
             nickname = Settings.nickname;
+            xmpp = Settings.xmpp;
             muc = new MucManager(xmpp);
-            muc.JoinRoom(roomJid, nickname);
+            muc.JoinRoom(roomJid, nickname, password);
             xmpp.MesagageGrabber.Add(roomJid, new BareJidComparer(), new MessageCB(MessageCallback), null);
             xmpp.PresenceGrabber.Add(roomJid, new BareJidComparer(), new PresenceCB(PresenceCallback), null);
         }
 
-        public FormConferention(string _roomJid, string _roomName, bool _savingHistory, bool _persistRoom, string _roomDesc = "", List<string> users = null )
+        /// <summary>
+        /// Вызывается при создании новой комнаты
+        /// </summary>
+        /// <param name="_roomJid"></param>
+        /// <param name="_roomName">Название комнаты</param>
+        /// <param name="_savingHistory">Сохранять историю на сервере</param>
+        /// <param name="_persistRoom">Постоянная комната</param>
+        /// <param name="users">Приглашенные юзеры</param>
+        /// <param name="_roomDesc">Описание комнаты</param>
+        /// <param name="password"></param>
+        public FormConferention(string _roomJid, string _roomName, bool _savingHistory, bool _persistRoom, List<string> users = null, string _roomDesc = "", string password = null )
         {
             InitializeComponent();
-            roomJid = new Jid(_roomJid);
-            roomName = _roomName;
-            this.Text = _roomName;
-            roomDesc = _roomDesc;
+            roomJid = new Jid(_roomJid );
+            roomJid.Resource = _roomName;
             mainJid = Settings.jid;
-            nickname = Settings.nickname;
+            roomName = _roomName;
+            roomDesc = _roomDesc;
+            this.Text = _roomName;
+            nickname = Settings.nickname;			
+            xmpp = Settings.xmpp;
             muc = new MucManager(xmpp);
             savingHistory = _savingHistory ? "1" : "0";
             persistRoom = _persistRoom ? "1" : "0";
-            xmpp = Settings.xmpp;
-            //muc.AcceptDefaultConfiguration(roomJid, new IqCB(OnGetFieldsResult));
-            muc.CreateReservedRoom(roomJid);
+	        muc.CreateReservedRoom(roomJid);
             muc.GrantOwnershipPrivileges(roomJid, new Jid(mainJid));
-            muc.JoinRoom(roomJid, nickname);
+            muc.JoinRoom(roomJid, nickname, password);
             initMucConfig();
             xmpp.MesagageGrabber.Add(roomJid, new BareJidComparer(), new MessageCB(MessageCallback), null);
             xmpp.PresenceGrabber.Add(roomJid, new BareJidComparer(), new PresenceCB(PresenceCallback), null);
@@ -67,12 +84,25 @@ namespace EnterpriseMICApplicationDemo
                 {
                     return new Jid(jid);
                 }
-            ).ToArray(), roomJid, "Вы приглашены в конференцию Конф.");
+            ).ToArray(), roomJid, "Вы приглашены в конференцию " + roomName);
         }
 
         private void initMucConfig()
         {
             muc.RequestConfigurationForm(roomJid, new IqCB(ReceiveFormConfiguration));
+        }
+
+        /// <summary>
+        /// Отправляет запрос на получение иформации от комнаты и определяет обработчик её прихода.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="iq"></param>
+        /// <param name="obj"></param>
+        private void ReceiveFormConfiguration(object sender, IQ iq, object obj) {
+            agsXMPP.protocol.x.muc.iq.owner.OwnerIq oIq = new agsXMPP.protocol.x.muc.iq.owner.OwnerIq();
+            oIq.Type = IqType.get;
+            oIq.To = roomJid;
+            Settings.xmpp.IqGrabber.SendIq(oIq, new IqCB(OnRequestConfiguration), null);
         }
 
         private void addFieldInDataIQ(agsXMPP.protocol.x.data.Data data, string fieldname, string value) {
@@ -83,14 +113,12 @@ namespace EnterpriseMICApplicationDemo
             data.AddChild(field);
         }
 
-        private void ReceiveFormConfiguration(object sender, IQ iq, object obj)
-        {
-            agsXMPP.protocol.x.muc.iq.owner.OwnerIq oIq = new agsXMPP.protocol.x.muc.iq.owner.OwnerIq();
-            oIq.Type = IqType.get;
-            oIq.To = roomJid;
-            Settings.xmpp.IqGrabber.SendIq(oIq, new IqCB(OnRequestConfiguration), null);
-        }
-
+        /// <summary>
+        /// Отправляет конфигурацию комнаты
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="iq"></param>
+        /// <param name="obj"></param>
         private void OnRequestConfiguration(object sender, IQ iq, object obj)
         {
             agsXMPP.protocol.x.muc.iq.owner.OwnerIq oIq = new agsXMPP.protocol.x.muc.iq.owner.OwnerIq();
@@ -104,7 +132,7 @@ namespace EnterpriseMICApplicationDemo
             addFieldInDataIQ(data, "muc#roomconfig_persistentroom", persistRoom);
             addFieldInDataIQ(data, "muc#roomconfig_publicroom", "1");
             addFieldInDataIQ(data, "public_list", "1");
-            addFieldInDataIQ(data, "muc#roomconfig_passwordprotectedroom", (password == "") ? "0" : "1");
+            addFieldInDataIQ(data, "muc#roomconfig_passwordprotectedroom", "0");//(password == "") ? "0" : "1");//сложно сказать
             addFieldInDataIQ(data, "muc#roomconfig_roomsecret", "");
             addFieldInDataIQ(data, "muc#roomconfig_maxusers", "1000");
             addFieldInDataIQ(data, "muc#roomconfig_whois", "moderators");
@@ -159,75 +187,64 @@ namespace EnterpriseMICApplicationDemo
                 textBoxSend.Clear();
             }
         }
-
-        private void FormConferention_Load(object sender, EventArgs e)
-        {
-        }
-
+        
         private void FormConferention_FormClosed(object sender, FormClosedEventArgs e)
         {
             muc.LeaveRoom(roomJid, nickname);
         }
 
         /// <summary>
-        /// 
+        /// Ловит сообщения от заданного Jid(в этом случае используется jid комнаты)
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="msg"></param>
         /// <param name="data"></param>
         private void MessageCallback(object sender, agsXMPP.protocol.client.Message msg, object data)
         {
-            if (InvokeRequired)
-            {
-                // Windows Forms are not Thread Safe, we need to invoke this :(
-                // We're not in the UI thread, so we need to call BeginInvoke				
-                BeginInvoke(new MessageCB(MessageCallback), new object[] { sender, msg, data });
-                return;
-            }
+            BeginInvoke(new MethodInvoker(delegate {
             if (msg.Type == MessageType.groupchat)
                 IncomingMessage(msg);
+			}));
         }
 
         /// <summary>
-        /// 
+        /// Ловит присутствия от заданного Jid(в этос случае от jid комнаты)
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="pres"></param>
         /// <param name="data"></param>
         private void PresenceCallback(object sender, agsXMPP.protocol.client.Presence pres, object data)
         {
-            if (InvokeRequired)
-            {
-                // Windows Forms are not Thread Safe, we need to invoke this :(
-                // We're not in the UI thread, so we need to call BeginInvoke				
-                BeginInvoke(new PresenceCB(PresenceCallback), new object[] { sender, pres, data });
-                return;
-            }
-            string user = findListBoxItem(pres.From.Resource);
-            if (user != null)
-            {
-                if (pres.Type == PresenceType.unavailable)
-                {
-                    listBoxConfUsers.Items.Remove(user);
-                }
-                else
-                {
-                    //хз что делает
-
-                    //int imageIdx = Util.GetRosterImageIndex(pres);
-                    //lvi.ImageIndex = imageIdx;
-                    //lvi.SubItems[1].Text = ( pres.Status == null ? "" : pres.Status );
-                    //User u = pres.SelectSingleElement(typeof(User)) as User;
-                    //if ( u != null ) {
-                    //    lvi.SubItems[2].Text = u.Item.Affiliation.ToString();
-                    //    lvi.SubItems[3].Text = u.Item.Role.ToString();
-                    //}
-                }
-            }
-            else
-            {
-                listBoxConfUsers.Items.Add(pres.From.Resource);
-            }
+            BeginInvoke(new MethodInvoker(delegate {
+	            string user = findListBoxItem(pres.From.Resource);
+	            if (user != null)//если есть в списке присутствия 
+	            {
+	                if (pres.Type == PresenceType.unavailable)
+	                {
+	                    listBoxConfUsers.Items.Remove(user);
+	                }
+	                else
+	                {
+	                    //хз что делает
+	
+	                    //int imageIdx = Util.GetRosterImageIndex(pres);
+	                    //lvi.ImageIndex = imageIdx;
+	                    //lvi.SubItems[1].Text = ( pres.Status == null ? "" : pres.Status );
+	                    //User u = pres.SelectSingleElement(typeof(User)) as User;
+	                    //if ( u != null ) {
+	                    //    lvi.SubItems[2].Text = u.Item.Affiliation.ToString();
+	                    //    lvi.SubItems[3].Text = u.Item.Role.ToString();
+	                    //}
+	                }
+	            }
+	            else
+	            {
+	                if (pres.Type != PresenceType.unavailable)
+	                {
+	                    listBoxConfUsers.Items.Add(pres.From.Resource);
+	                }
+	            }
+			}));
         }
 
         private string findListBoxItem(string jid)
@@ -244,16 +261,14 @@ namespace EnterpriseMICApplicationDemo
         {
             if (msg.Type == MessageType.error)
             {
-                //Handle errors here
-                // we dont handle them in this example
+                //не обрабатывается
                 return;
             }
+            //если в сообщении есть сведения о смене темы
             if (msg.Subject != null)
             {
                 txtSubject.Text = msg.Subject;
-
                 rtfChat.SelectionColor = Color.DarkGreen;
-                // The Nickname of the sender is in GroupChat in the Resource of the Jid
                 rtfChat.AppendText(msg.From.Resource + " изменил тему: ");
                 rtfChat.SelectionColor = Color.Black;
                 rtfChat.AppendText(msg.Subject);
@@ -263,7 +278,6 @@ namespace EnterpriseMICApplicationDemo
             {
                 if (msg.Body == null)
                     return;
-
                 rtfChat.SelectionColor = Color.Blue;//(msg.Nickname.InnerXml == nickname) ? Color.Green : Color.Red;
                 // The Nickname of the sender is in GroupChat in the Resource of the Jid
                 rtfChat.AppendText(msg.From.Resource + " : ");
@@ -273,27 +287,8 @@ namespace EnterpriseMICApplicationDemo
             }
         }
 
-        private void cmdSend_Click(object sender, EventArgs e)
-        {
-            // Make sure that the users send no empty messages
-            if (textBoxSend.Text.Length > 0)
-            {
-                agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message();
-
-                msg.Type = MessageType.groupchat;
-                msg.To = roomJid;
-                msg.Body = textBoxSend.Text;
-
-                xmpp.Send(msg);
-
-                textBoxSend.Text = "";
-            }
-        }
-
         /// <summary>
-        /// Changing the subject in a chatroom
-        /// in MUC rooms this could return an error when you are a normal user and not allowed
-        /// to change the subject.
+        /// Изменение темы в комнате.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -306,10 +301,31 @@ namespace EnterpriseMICApplicationDemo
             xmpp.Send(msg);
         }
 
-        private void buttonDescr_Click(object sender, EventArgs e) {
-            //muc.D
+        private void buttonDescr_Click(object sender, EventArgs e) {	
+								
         }
+		
+        //получает и задает значения названия комнаты и её описания
+		private void setInfoOfTheRoom() {
+			requestOnGetInfoTheRoom (delegate (object sender, IQ iq, object data) {				
+				roomDesc = iq.Query.LastNode.ChildNodes.Item(2).ChildNodes.Item(1).Value;	
+				roomName = iq.Query.FirstChild.Attribute("name");
+			});			
+		}
+				
+        //делает запрос на получение информпции 
+		private void requestOnGetInfoTheRoom(agsXMPP.IqCB handl) {
+			BeginInvoke( new MethodInvoker(delegate {
+				IQ iq = new IQ(IqType.get, new Jid(mainJid), roomJid);
+				agsXMPP.protocol.iq.disco.DiscoInfo info = new agsXMPP.protocol.iq.disco.DiscoInfo();
+				iq.Query = info;
+				iq.Id = "id_" + mainJid + "_" + roomJid.Bare + "_" + (Settings.requestId++);
+	            xmpp.IqGrabber.SendIq(iq, handl, null);					
+			}));
+		}
 
+        private void buttonHistory_Click(object sender, EventArgs e) {
 
+        }
     }
 }

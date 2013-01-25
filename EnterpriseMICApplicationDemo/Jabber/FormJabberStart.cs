@@ -41,14 +41,17 @@ namespace EnterpriseMICApplicationDemo {
             switch ( i )//это свитч 
             {
                 case 1:
+				Settings.nickname = "user2";
                     loginBox.Text = "user2@haupc";//"khelek@jabber.ru";
                     passwordBox.Text = "321";//"haukot1994";
                     break;
                 case 2:
+				Settings.nickname = "admin";
                     loginBox.Text = "admin@haupc";//"khelek@jabberd.eu";
                     passwordBox.Text = "haukot";//"abe2b33519";
                     break;
                 case 3:
+				Settings.nickname = "user";
                     loginBox.Text = "user@haupc";//"haudvd@gmail.com";
                     passwordBox.Text = "321";//"haukot1994";
                     break;
@@ -104,10 +107,12 @@ namespace EnterpriseMICApplicationDemo {
         /// <param name="dialog">textbox с чатом</param>
         /// <param name="message">сообщение</param>
         public void SendTextMessage(Jid toJid, RichTextBox dialog, string message) {
-            agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message(toJid, MessageType.chat, message);
-            xmpp.Send(msg);
-            addMessToDialog(nickname, message, dialog, Settings.myColor);
-            //addMessageToHistoryDB(mainJid.Bare, mainJid.Resource, toJid.Bare, toJid.Resource, message);
+			if (message != "") {
+	            agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message(toJid, MessageType.chat, message);
+	            xmpp.Send(msg);
+	            addMessToDialog(nickname, message, dialog, Settings.myColor);
+	            //addMessageToHistoryDB(mainJid.Bare, mainJid.Resource, toJid.Bare, toJid.Resource, message);
+			}
         }
 
         private void tabsDialogSelectedIndexChangedOrFormDialogFocused(object sender, EventArgs e) {//длинное мнемоническое имя
@@ -138,7 +143,7 @@ namespace EnterpriseMICApplicationDemo {
         }
 
         private string formateString(string from, string mess) {
-            return ( from + " (" + DateTime.Now.ToString() + ")"//Controls[0] - это textBox с диалогом
+            return ( from + " (" + DateTime.Now.ToString() + ")"
                             + Environment.NewLine + mess + Environment.NewLine + Environment.NewLine );
         }
 
@@ -147,6 +152,7 @@ namespace EnterpriseMICApplicationDemo {
             dialog.AppendText( from + " (" + DateTime.Now.ToString() + ")");
             dialog.SelectionColor = Color.Black;
             dialog.AppendText(Environment.NewLine + mess + Environment.NewLine + Environment.NewLine );
+            dialog.ScrollToCaret();
         }
 
         /// <summary>
@@ -177,6 +183,10 @@ namespace EnterpriseMICApplicationDemo {
             return item;
         }
 
+        private RichTextBox getRichTextBox(int indexTab) {
+            return (RichTextBox)tabsDialog.TabPages[indexTab].Controls[3];
+        }
+
         /// <summary>
         /// Событие, вызывающееся при получении сообщения
         /// </summary>
@@ -189,12 +199,12 @@ namespace EnterpriseMICApplicationDemo {
                     case MessageType.chat: //простое сообщение		
                         int indexTab = findTagPage(from);
                         if ( indexTab != -1 ) {//если уже существует вкладка для него 
-                            addMessToDialog(from, msg.Body, (RichTextBox)tabsDialog.TabPages[indexTab].Controls[0], Settings.youColor);//добаляем в диалог
+                            addMessToDialog(from, msg.Body, getRichTextBox(indexTab), Settings.youColor);//добаляем в диалог
                             //( (TextBox)tabsDialog.TabPages[indexTab].Controls[0] ).AppendText(formateString(from, msg.Body));
                         } else {
                             waitList.Add(msg);//добавляем в лист ожидания
                         }
-                        if ( !( formDialog.Focused && tabsDialog.SelectedIndex == indexTab ) ) {
+                        if ( !( tabsDialog.SelectedIndex == indexTab ) ) {
                             getListViewItem(from).BackColor = Color.Orange;//если на форме с диалогом нет фокуса или открыта не та вкладка, к которой пришло сообщение, выделяем в списке контактов контакт отправителя
                         }
                         // addMessageToHistoryDB(msg.From.Bare, msg.From.Resource, msg.To.Bare, msg.To.Resource, msg.Body);//записываем сообщение в бд(история)
@@ -206,8 +216,15 @@ namespace EnterpriseMICApplicationDemo {
                         //вообще не ловятся
                         break;
                 }
-                if ( msg.FirstChild.TagName == "invite" ) {
-                    MessageBox.Show("Вам пришло приглашение в конференцию" + msg.From);
+                try {
+                    if ( msg.FirstChild.FirstChild.TagName == "invite" ) {
+                        DialogResult res = MessageBox.Show("Вам пришло приглашение в конференцию " + msg.From.Resource + ". Желаете присоединиться?", "caption", MessageBoxButtons.OKCancel);
+                        if ( res == DialogResult.OK ) {
+                            ( new FormConferention(msg.From.Bare) ).Show();
+                        }
+                    }
+                } catch ( Exception ex ) {
+                    //без отлова
                 }
             }));
         }
@@ -267,12 +284,11 @@ namespace EnterpriseMICApplicationDemo {
                 setStatus("Онлайн");
                 if ( formDialog == null ) {
                     formDialog = new FormDialog();
-                    tabsDialog = new TabControl();
-                    tabsDialog.Size = new System.Drawing.Size(500, 260);
-                    tabsDialog.Location = new Point(10, 10);
-                    tabsDialog.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                    var arrContorls = formDialog.Controls.Find("tabControlDialogs", false);
+                    if ( arrContorls != null ) {
+                        tabsDialog = (TabControl)arrContorls[0];
+                    }
                     tabsDialog.SelectedIndexChanged += tabsDialogSelectedIndexChangedOrFormDialogFocused;
-                    formDialog.Controls.AddRange(new Control[] { tabsDialog });
                     formDialog.GotFocus += tabsDialogSelectedIndexChangedOrFormDialogFocused;
                     formDialog.FormClosing += formDialog_FormClosing;
                     formDialog.Show();//this is
@@ -374,9 +390,8 @@ namespace EnterpriseMICApplicationDemo {
         /// </summary>
         /// <param name="jidTo">jid контакта</param>
         /// <returns></returns>
-        private string getHistoryFromDB(string jidTo) {
+        public string getHistoryFromDB(string jidTo, int limit) {
             string res = "";
-            int limit = 2;
             Stack<string> lastMessages = new Stack<string>();
             sql_cmd.CommandText = @"SELECT * FROM chat_history WHERE user_from_jid ='" + jidTo + "' OR user_to_jid ='" + jidTo + "' ORDER BY date_time DESC LIMIT " + limit;
             using ( SQLiteDataReader reader = sql_cmd.ExecuteReader() ) {
@@ -500,11 +515,6 @@ namespace EnterpriseMICApplicationDemo {
             listUsers.EndUpdate();
         }
 
-        private void Add_Users_Click(object sender, EventArgs e) {
-            FormAddUser add_us = new FormAddUser();//никак не работает
-            add_us.Show();//ничего не делает
-        }
-
         private void createConference_Click(object sender, EventArgs e) {
             List<string> users = new List<string>();
             foreach ( ListViewItem it in listUsers.Items )
@@ -543,7 +553,7 @@ namespace EnterpriseMICApplicationDemo {
                 //добавляем сообщения из ожидания в диалог
                 for (int i = msgsWait.Count - 1; i >= 0; i-- ) {
                     agsXMPP.protocol.client.Message msgWait = msgsWait[i];
-                    ( (TextBox)tabsDialog.TabPages[indexTab].Controls[0] ).AppendText(formateString(msgWait.From.Bare, msgWait.Body));
+                    getRichTextBox(indexTab).AppendText(formateString(msgWait.From.Bare, msgWait.Body));
                     waitList.Remove(msgWait);
                 }
             }
@@ -557,9 +567,6 @@ namespace EnterpriseMICApplicationDemo {
 
         private void FormJabberStart_Load(object sender, EventArgs e) {
            // connectDb();
-#if DEBUG
-            Settings.serverIp = "192.168.1.4";
-#endif
         }
 
         private void FormJabberStart_FormClosing(object sender, FormClosingEventArgs e) {
@@ -570,7 +577,5 @@ namespace EnterpriseMICApplicationDemo {
         private void formDialog_FormClosing(object sender, FormClosingEventArgs e) {
             tabsDialog.TabPages.Clear();
         }
-
-
     }
 }

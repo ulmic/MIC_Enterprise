@@ -36,7 +36,7 @@ namespace EnterpriseMICApplicationDemo{
                 }
             }
             ( new FormConferention(textBoxConfIdent.Text.Trim() + "@conference." + Settings.server, textBoxConfName.Text,
-                                    checkBoxHistory.Checked, checkBoxPersistentRoom.Checked, textBoxDescription.Text, selectedUsers ) ).Show();
+                                    checkBoxHistory.Checked, checkBoxPersistentRoom.Checked, selectedUsers, textBoxDescription.Text ) ).Show();
 			this.Close();
         }
 

@@ -34,15 +34,14 @@
             this.loginBox = new System.Windows.Forms.TextBox();
             this.passwordBox = new System.Windows.Forms.TextBox();
             this.buttonLogin = new System.Windows.Forms.Button();
-            this.Add_Users = new System.Windows.Forms.Button();
             this.Exit = new System.Windows.Forms.Button();
             this.buttonCreateConf = new System.Windows.Forms.Button();
             this.buttonJoinConf = new System.Windows.Forms.Button();
             this.listUsers = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.buttonShowHideContacts = new System.Windows.Forms.Button();
             this.buttonSettings = new System.Windows.Forms.Button();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.opacityLabel1 = new EnterpriseMICApplicationDemo.OpacityLabel();
+            this.opacityLabel1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBoxStatus
@@ -76,7 +75,7 @@
             // loginBox
             // 
             this.loginBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.loginBox.Location = new System.Drawing.Point(183, 245);
+            this.loginBox.Location = new System.Drawing.Point(182, 263);
             this.loginBox.Name = "loginBox";
             this.loginBox.Size = new System.Drawing.Size(106, 20);
             this.loginBox.TabIndex = 14;
@@ -86,7 +85,7 @@
             // passwordBox
             // 
             this.passwordBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.passwordBox.Location = new System.Drawing.Point(183, 271);
+            this.passwordBox.Location = new System.Drawing.Point(182, 289);
             this.passwordBox.Name = "passwordBox";
             this.passwordBox.PasswordChar = '*';
             this.passwordBox.Size = new System.Drawing.Size(106, 20);
@@ -97,7 +96,7 @@
             // buttonLogin
             // 
             this.buttonLogin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonLogin.Location = new System.Drawing.Point(183, 297);
+            this.buttonLogin.Location = new System.Drawing.Point(182, 315);
             this.buttonLogin.Name = "buttonLogin";
             this.buttonLogin.Size = new System.Drawing.Size(106, 34);
             this.buttonLogin.TabIndex = 16;
@@ -105,21 +104,10 @@
             this.buttonLogin.UseVisualStyleBackColor = true;
             this.buttonLogin.Click += new System.EventHandler(this.buttonLogin_Click);
             // 
-            // Add_Users
-            // 
-            this.Add_Users.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Add_Users.Location = new System.Drawing.Point(183, 12);
-            this.Add_Users.Name = "Add_Users";
-            this.Add_Users.Size = new System.Drawing.Size(106, 49);
-            this.Add_Users.TabIndex = 17;
-            this.Add_Users.Text = "Добавить контакт";
-            this.Add_Users.UseVisualStyleBackColor = true;
-            this.Add_Users.Click += new System.EventHandler(this.Add_Users_Click);
-            // 
             // Exit
             // 
             this.Exit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Exit.Location = new System.Drawing.Point(183, 297);
+            this.Exit.Location = new System.Drawing.Point(182, 315);
             this.Exit.Name = "Exit";
             this.Exit.Size = new System.Drawing.Size(107, 33);
             this.Exit.TabIndex = 18;
@@ -131,7 +119,7 @@
             // buttonCreateConf
             // 
             this.buttonCreateConf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCreateConf.Location = new System.Drawing.Point(183, 66);
+            this.buttonCreateConf.Location = new System.Drawing.Point(182, 66);
             this.buttonCreateConf.Name = "buttonCreateConf";
             this.buttonCreateConf.Size = new System.Drawing.Size(106, 39);
             this.buttonCreateConf.TabIndex = 19;
@@ -143,7 +131,7 @@
             // buttonJoinConf
             // 
             this.buttonJoinConf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonJoinConf.Location = new System.Drawing.Point(183, 111);
+            this.buttonJoinConf.Location = new System.Drawing.Point(182, 111);
             this.buttonJoinConf.Name = "buttonJoinConf";
             this.buttonJoinConf.Size = new System.Drawing.Size(106, 39);
             this.buttonJoinConf.TabIndex = 20;
@@ -163,17 +151,21 @@
             this.listUsers.Location = new System.Drawing.Point(12, 66);
             this.listUsers.MultiSelect = false;
             this.listUsers.Name = "listUsers";
-            this.listUsers.Size = new System.Drawing.Size(161, 264);
+            this.listUsers.Size = new System.Drawing.Size(160, 282);
             this.listUsers.TabIndex = 21;
             this.listUsers.UseCompatibleStateImageBehavior = false;
             this.listUsers.View = System.Windows.Forms.View.Tile;
             this.listUsers.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listUsers_KeyDown);
             this.listUsers.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listUsers_MouseDoubleClick);
             // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Width = 172;
+            // 
             // buttonShowHideContacts
             // 
             this.buttonShowHideContacts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonShowHideContacts.Location = new System.Drawing.Point(183, 156);
+            this.buttonShowHideContacts.Location = new System.Drawing.Point(182, 156);
             this.buttonShowHideContacts.Name = "buttonShowHideContacts";
             this.buttonShowHideContacts.Size = new System.Drawing.Size(107, 36);
             this.buttonShowHideContacts.TabIndex = 22;
@@ -185,24 +177,19 @@
             // buttonSettings
             // 
             this.buttonSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSettings.Location = new System.Drawing.Point(183, 198);
+            this.buttonSettings.Location = new System.Drawing.Point(182, 12);
             this.buttonSettings.Name = "buttonSettings";
-            this.buttonSettings.Size = new System.Drawing.Size(107, 41);
+            this.buttonSettings.Size = new System.Drawing.Size(103, 49);
             this.buttonSettings.TabIndex = 23;
             this.buttonSettings.Text = "Настройки";
             this.buttonSettings.UseVisualStyleBackColor = true;
             this.buttonSettings.Click += new System.EventHandler(this.buttonSettings_Click);
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Width = 172;
             // 
             // opacityLabel1
             // 
             this.opacityLabel1.AutoSize = true;
             this.opacityLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(15)))), ((int)(((byte)(0)))));
             this.opacityLabel1.ForeColor = System.Drawing.Color.Black;
-            this.opacityLabel1.Indent = EnterpriseMICApplicationDemo.OpacityLabel.ControlIndent.None;
             this.opacityLabel1.Location = new System.Drawing.Point(15, 15);
             this.opacityLabel1.Margin = new System.Windows.Forms.Padding(0);
             this.opacityLabel1.Name = "opacityLabel1";
@@ -214,14 +201,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(298, 348);
+            this.ClientSize = new System.Drawing.Size(297, 366);
             this.Controls.Add(this.opacityLabel1);
             this.Controls.Add(this.buttonSettings);
             this.Controls.Add(this.buttonShowHideContacts);
             this.Controls.Add(this.listUsers);
             this.Controls.Add(this.buttonJoinConf);
             this.Controls.Add(this.buttonCreateConf);
-            this.Controls.Add(this.Add_Users);
             this.Controls.Add(this.buttonLogin);
             this.Controls.Add(this.passwordBox);
             this.Controls.Add(this.loginBox);
@@ -246,14 +232,14 @@
         private System.Windows.Forms.TextBox loginBox;
         private System.Windows.Forms.TextBox passwordBox;
         private System.Windows.Forms.Button buttonLogin;
-        private System.Windows.Forms.Button Add_Users;
         private System.Windows.Forms.Button Exit;
         private System.Windows.Forms.Button buttonCreateConf;
         private System.Windows.Forms.Button buttonJoinConf;
         private System.Windows.Forms.ListView listUsers;
         private System.Windows.Forms.Button buttonShowHideContacts;
         private System.Windows.Forms.Button buttonSettings;
-        private OpacityLabel opacityLabel1;
+		private System.Windows.Forms.Label opacityLabel1;
+        //private OpacityLabel opacityLabel1;
         private System.Windows.Forms.ColumnHeader columnHeader1;
     }
 }

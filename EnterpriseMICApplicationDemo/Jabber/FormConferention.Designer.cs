@@ -109,6 +109,7 @@
             this.buttonHistory.TabIndex = 10;
             this.buttonHistory.Text = "История";
             this.buttonHistory.UseVisualStyleBackColor = true;
+            this.buttonHistory.Click += new System.EventHandler(this.buttonHistory_Click);
             // 
             // rtfChat
             // 
@@ -160,7 +161,6 @@
             this.Name = "FormConferention";
             this.Text = "Конференция";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormConferention_FormClosed);
-            this.Load += new System.EventHandler(this.FormConferention_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

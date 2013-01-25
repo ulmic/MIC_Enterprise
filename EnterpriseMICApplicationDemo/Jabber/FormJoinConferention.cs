@@ -14,10 +14,10 @@ namespace EnterpriseMICApplicationDemo {
 
         public FormJoinConferention() {
             InitializeComponent();
-        }
+        }		
 
         private void buttonCreate_Click(object sender, EventArgs e) {
-            ( new FormConferention(textBoxConfName.Text.Trim() + "@conference.haupc") ).Show();
+            ( new FormConferention(textBoxConfName.Text.Trim() + "@conference." + Settings.server) ).Show();
             this.Close();
         }
 
