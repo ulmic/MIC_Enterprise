@@ -10,16 +10,19 @@ namespace EnterpriseMICApplicationDemo {
 	/// </summary>
 	public class SendingList {
 		private int id;
-		private const string TABLE_NAME = "sendlists";
-		private const string MEMBERS_TABLE_NAME = "members_sendlists";
-		string connectionString = "Database=entermic;Data Source=localhost;User Id=root;Password=";
+		private const string TABLE_NAME = "user_sendlists";
+		private const string MEMBERS_TABLE_NAME = "user_sendlists_members";
+
+		private const string ID_SENDLIST_COLUMN = "id_sendlist";
+
 		public string title = "";
 		public List<List<string>> members = new List<List<string>>();
 
 		public SendingList(string _title) {
 			MySqlConnection myConnection = new MySqlConnection();
 			try {
-				myConnection = new MySqlConnection(connectionString);
+				DBHelper db = new DBHelper();
+				myConnection = db.CreateConnection();
 				myConnection.Open();
 			} catch {
 				myConnection.Close();
@@ -29,8 +32,9 @@ namespace EnterpriseMICApplicationDemo {
 		}
 
 		public static List<string> GetFromDataBase(string sendListTitle) {
-			string connectionString = "SELECT id FROM " + TABLE_NAME + " WHERE title = '" + sendListTitle + "'";
-			MySqlConnection newConnection = new MySqlConnection(connectionString);
+			DBHelper db = new DBHelper();
+			string connectionString = db.SelectSQLQuery(ID_SENDLIST_COLUMN, TABLE_NAME, "title = '" + sendListTitle + "'");
+			MySqlConnection newConnection = db.CreateConnection();
 			newConnection.Open();
 			MySqlCommand command = new MySqlCommand(connectionString, newConnection);
 			MySqlDataReader reader = command.ExecuteReader();
@@ -38,18 +42,19 @@ namespace EnterpriseMICApplicationDemo {
 			int id = (int)reader[0];
 			reader.Close();
 			List<string> members_lists = new List<string>();
-			connectionString = "SELECT id_user FROM " + MEMBERS_TABLE_NAME + " WHERE id_list = '" + id.ToString() + '"';
+			connectionString = db.SelectSQLQuery(Const.ID_USER_COLUMN, MEMBERS_TABLE_NAME, ID_SENDLIST_COLUMN + " = '" + id.ToString() + "'");
 			command = new MySqlCommand(connectionString, newConnection);
 			reader = command.ExecuteReader();
 			while (reader.Read()) {
-				members_lists.Add(Member_DB.GetFirstName(reader.GetInt32(0)) + " " + Member_DB.GetFamily(reader.GetInt32(0)));
+				members_lists.Add(Member_DB.GetFirstName(reader.GetInt32(0)) + " " + Member_DB.GetFamily(reader.GetInt32(0)) + " " + Member_DB.GetEmail(reader.GetInt32(0));
 			}
 			return members_lists;
 		}
 
 		public void createNew(MySqlConnection connection) {
 			string strSQL = "INSERT INTO " + TABLE_NAME + " VALUES ('', '" + title + "')";
-			MySqlConnection newConnection = new MySqlConnection(connectionString);
+			DBHelper db = new DBHelper();
+			MySqlConnection newConnection = db.CreateConnection();
 			newConnection.Open();
 			MySqlCommand command = new MySqlCommand(strSQL, newConnection);
 			command.ExecuteNonQuery();
@@ -59,6 +64,7 @@ namespace EnterpriseMICApplicationDemo {
 			reader.Read();
 			id = (int)reader[0];
 		}
+
 		public void addMember(string name, string eMail) {
 			for (int i = 0; i < members.Count; i++) {
 				if (members[i][0] == name) {
@@ -67,7 +73,8 @@ namespace EnterpriseMICApplicationDemo {
 			}
 			MySqlConnection myConnection = new MySqlConnection();
 			try {
-				myConnection = new MySqlConnection(connectionString);
+				DBHelper db = new DBHelper();
+				myConnection = db.CreateConnection();
 				myConnection.Open();
 			} catch {
 				myConnection.Close();
@@ -87,7 +94,8 @@ namespace EnterpriseMICApplicationDemo {
 		public void deleteMember(string name) {
 			MySqlConnection myConnection = new MySqlConnection();
 			try {
-				myConnection = new MySqlConnection(connectionString);
+				DBHelper db = new DBHelper();
+				myConnection = db.CreateConnection();
 				myConnection.Open();
 			} catch {
 				myConnection.Close();
@@ -110,7 +118,8 @@ namespace EnterpriseMICApplicationDemo {
 		public void clear() {
 			MySqlConnection myConnection = new MySqlConnection();
 			try {
-				myConnection = new MySqlConnection(connectionString);
+				DBHelper db = new DBHelper();
+				myConnection = db.CreateConnection();
 				myConnection.Open();
 			} catch {
 				myConnection.Close();
@@ -128,7 +137,8 @@ namespace EnterpriseMICApplicationDemo {
 			clear();
 			MySqlConnection myConnection = new MySqlConnection();
 			try {
-				myConnection = new MySqlConnection(connectionString);
+				DBHelper db = new DBHelper();
+				myConnection = db.CreateConnection();
 				myConnection.Open();
 			} catch {
 				myConnection.Close();

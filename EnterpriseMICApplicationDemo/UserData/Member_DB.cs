@@ -14,11 +14,10 @@ namespace EnterpriseMICApplicationDemo{
 
 		private const string ID_ATTR_COLUMN = "id_attr";
 		private const string VALUE_COLUMN = "value";
-		private const string ID_USER_COLUMN = "id_user";
 
 		#endregion
 
-		private const string SELECT_MEMBER_ATTRS_QUERY = "SELECT " + ID_ATTR_COLUMN + ", " + VALUE_COLUMN + " FROM " + Const.USER_VALUES_TABLE + " WHERE " + ID_USER_COLUMN + " = '";
+		private const string SELECT_MEMBER_ATTRS_QUERY = "SELECT " + ID_ATTR_COLUMN + ", " + VALUE_COLUMN + " FROM " + Const.USER_VALUES_TABLE + " WHERE " + Const.ID_USER_COLUMN + " = '";
 		#region GetMemberAttributes
 
 		public static string GetFamily(int idUser) {

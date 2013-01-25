@@ -680,6 +680,7 @@ namespace EnterpriseMICApplicationDemo {
 
 			this.workSpaceTableLayoutPanel.Controls.Add(memberList[Const.LISTS], 0, 1);
 			this.workSpaceTableLayoutPanel.Controls.Add(memberList[Const.MEMBERS_LIST], 1, 1);
+			this.workSpaceTableLayoutPanel.SetColumnSpan(memberList[Const.MEMBERS_LIST], 2);
 
 			AppButton sendListButton = new AppButton();
 			sendListButton.Text = "Сделать рассылку по списку";
