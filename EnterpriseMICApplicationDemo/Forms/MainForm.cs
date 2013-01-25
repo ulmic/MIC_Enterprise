@@ -208,7 +208,7 @@ namespace EnterpriseMICApplicationDemo {
 		}
 
 		private void newIdeaButton_Click(object sender, EventArgs e) {
-			if (newIdeaTextBox.NotDisText == false) {
+			if (newIdeaTextBox.TextWasChanged == false) {
 				messageLabel.PutMessage("Введите текст новой идеи", Const.BAD_MESSAGE);
 				return;
 			}
@@ -712,7 +712,12 @@ namespace EnterpriseMICApplicationDemo {
 
 		private void createNewSendListButton_Click(object sender, EventArgs e) {
 			CreateNewSendListForm createNewSendListForm = new CreateNewSendListForm();
+			createNewSendListForm.SendListAdded += new CreateNewSendListForm.SendListAddedEventHandler(createNewSendListForm_SendListAdded);
 			createNewSendListForm.Show();
+		}
+
+		private void createNewSendListForm_SendListAdded() {
+			PutInSendListBox();
 		}
 
 		private void sendMemberListButton_Click(object sender, EventArgs e) {

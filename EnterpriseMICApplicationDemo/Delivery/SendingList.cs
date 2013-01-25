@@ -18,6 +18,8 @@ namespace EnterpriseMICApplicationDemo {
 		public string title = "";
 		public List<List<string>> members = new List<List<string>>();
 
+		public SendingList() { }
+
 		public SendingList(string _title) {
 			MySqlConnection myConnection = new MySqlConnection();
 			try {
@@ -48,21 +50,17 @@ namespace EnterpriseMICApplicationDemo {
 			while (reader.Read()) {
 				members_lists.Add(Member_DB.GetFirstName(reader.GetInt32(0)) + " " + Member_DB.GetFamily(reader.GetInt32(0)) + " " + Member_DB.GetEmail(reader.GetInt32(0)));
 			}
+			newConnection.Close();
 			return members_lists;
 		}
 
-		public void createNew(MySqlConnection connection) {
-			string strSQL = "INSERT INTO " + TABLE_NAME + " VALUES ('', '" + title + "')";
+		public void CreateNewSendList(string title) {
 			DBHelper db = new DBHelper();
 			MySqlConnection newConnection = db.CreateConnection();
 			newConnection.Open();
-			MySqlCommand command = new MySqlCommand(strSQL, newConnection);
+			MySqlCommand command = new MySqlCommand(db.InsertSQLQuery(TABLE_NAME, new string[] { "", title }), newConnection);
 			command.ExecuteNonQuery();
-			strSQL = "SELECT id FROM " + TABLE_NAME + " WHERE title = '" + title + "'";
-			command = new MySqlCommand(strSQL, connection);
-			MySqlDataReader reader = command.ExecuteReader();
-			reader.Read();
-			id = (int)reader[0];
+			newConnection.Close();
 		}
 
 		public void addMember(string name, string eMail) {

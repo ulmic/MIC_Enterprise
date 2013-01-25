@@ -162,7 +162,7 @@ namespace EnterpriseMICApplicationDemo {
 
 		public string[] GetAllSendLists() {
 			lists = new SendingLists();
-			return lists.getTitles().ToArray<string>();
+			return lists.GetSendListsTitles().ToArray<string>();
 		}
 
 		public string[] GetSendList(string title) {
@@ -171,12 +171,12 @@ namespace EnterpriseMICApplicationDemo {
 
 		public int GetNumberOfSendLists() {
 			lists = new SendingLists();
-			return lists.getTitles().Count;
+			return lists.GetSendListsTitles().Count;
 		}
 
 		public string[] PutInSendLists() {
 			lists = new SendingLists();
-			return lists.getTitles().ToArray<string>();
+			return lists.GetSendListsTitles().ToArray<string>();
 		}
 
 		public string[] PutInMembersLists(string title) {

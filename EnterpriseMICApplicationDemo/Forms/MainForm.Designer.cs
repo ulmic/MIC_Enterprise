@@ -158,6 +158,7 @@
 			this.leftFunctionPanel.Location = new System.Drawing.Point(3, 3);
 			this.leftFunctionPanel.Name = "leftFunctionPanel";
 			this.leftFunctionPanel.ReverseGradient = false;
+			this.leftFunctionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.leftFunctionPanel.Size = new System.Drawing.Size(224, 396);
 			this.leftFunctionPanel.TabIndex = 0;
 			this.leftFunctionPanel.TableBorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -397,6 +398,7 @@
 			this.fillFunctionPanel.Name = "fillFunctionPanel";
 			this.fillFunctionPanel.ReverseGradient = false;
 			this.fillFunctionPanel.RowCount = 1;
+			this.fillFunctionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.fillFunctionPanel.Size = new System.Drawing.Size(800, 406);
 			this.fillFunctionPanel.TabIndex = 0;
 			this.fillFunctionPanel.TableBorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
