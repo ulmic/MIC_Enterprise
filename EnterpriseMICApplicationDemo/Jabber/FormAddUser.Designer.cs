@@ -1,6 +1,6 @@
-﻿namespace serializ2
+﻿namespace EnterpriseMICApplicationDemo
 {
-    partial class Form3
+    partial class FormAddUser
     {
         /// <summary>
         /// Required designer variable.
@@ -49,10 +49,10 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Jabber_Id";
             // 
-            // onlineConferenceButton
+            // button1
             // 
             this.button1.Location = new System.Drawing.Point(179, 20);
-            this.button1.Name = "onlineConferenceButton";
+            this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 20);
             this.button1.TabIndex = 2;
             this.button1.Text = "Добавить";

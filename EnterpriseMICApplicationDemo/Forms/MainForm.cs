@@ -7,11 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using YO_APP_FULL;
-using serializ2;
+using System.Data.SQLite;
 
 namespace EnterpriseMICApplicationDemo {
     public partial class MainForm : Form {
-
         /// <summary>
         /// Controls on main form
         /// </summary>
@@ -787,12 +786,13 @@ namespace EnterpriseMICApplicationDemo {
             initializeOnlineConferenceInterface();
         }
 
-        private void initializeOnlineConferenceInterface() {
-            ( new Form1() ).Show();
+        private void initializeOnlineConferenceInterface() {            
+            ( new FormJabberStart() ).Show(); 
         }
 
         #endregion
 
         #endregion
     }
+
 }

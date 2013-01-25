@@ -51,14 +51,26 @@ namespace EnterpriseMICApplicationDemo {
 
 		#endregion
 
+        private string getValue(string filepath, int index) {
+            string[] tempVal = AnyCatches.TryReadAllLines(filepath, System.Text.Encoding.Default);
+            if ( tempVal == null ) {
+                return null;
+            }
+            if ( index >= tempVal.Length ) {
+                return null;
+            }
+            return tempVal[index];
+        }
+
 		private void getUserByIndex(int index) {
+            index = 0;//for me
 			Index = index;
-			Login = AnyCatches.TryReadAllLines("login.txt", System.Text.Encoding.Default)[index];
-			Password = AnyCatches.TryReadAllLines("password.txt", System.Text.Encoding.Default)[index];
-			Email = AnyCatches.TryReadAllLines("email.txt", System.Text.Encoding.Default)[index];
-			Name = AnyCatches.TryReadAllLines("user.txt", System.Text.Encoding.Default)[index];
-			Post = AnyCatches.TryReadAllLines("post.txt", System.Text.Encoding.Default)[index];
-			FullName = AnyCatches.TryReadAllLines("fullName.txt", System.Text.Encoding.Default)[index];
+			Login = getValue("login.txt", index);
+            Password = getValue("password.txt", index);
+            Email = getValue("email.txt", index);
+            Name = getValue("user.txt", index);
+            Post = getValue("post.txt", index);
+            FullName = getValue("fullName.txt", index);
 			if ((AnyCatches.IfThereIsNot(Login)) || (AnyCatches.IfThereIsNot(Password)) || (AnyCatches.IfThereIsNot(Email)) ||
 				(AnyCatches.IfThereIsNot(Name)) || (AnyCatches.IfThereIsNot(Post)) || (AnyCatches.IfThereIsNot(FullName))) {
 				return;
@@ -66,7 +78,7 @@ namespace EnterpriseMICApplicationDemo {
 			for (int i = 0; i < Functions.Length; i++) {
 				Functions[i] = false;
 			}
-			Distribution.SetLevel(ref userLevel, Int32.Parse(AnyCatches.TryReadAllLines("level.txt", System.Text.Encoding.Default)[index]));
+			Distribution.SetLevel(ref userLevel, Int32.Parse(getValue("level.txt", index)));
 			Distribution.SetFunctions(userLevel, ref Functions);
 		}
 
