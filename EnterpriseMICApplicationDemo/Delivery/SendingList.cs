@@ -46,7 +46,7 @@ namespace EnterpriseMICApplicationDemo {
 			command = new MySqlCommand(connectionString, newConnection);
 			reader = command.ExecuteReader();
 			while (reader.Read()) {
-				members_lists.Add(Member_DB.GetFirstName(reader.GetInt32(0)) + " " + Member_DB.GetFamily(reader.GetInt32(0)) + " " + Member_DB.GetEmail(reader.GetInt32(0));
+				members_lists.Add(Member_DB.GetFirstName(reader.GetInt32(0)) + " " + Member_DB.GetFamily(reader.GetInt32(0)) + " " + Member_DB.GetEmail(reader.GetInt32(0)));
 			}
 			return members_lists;
 		}

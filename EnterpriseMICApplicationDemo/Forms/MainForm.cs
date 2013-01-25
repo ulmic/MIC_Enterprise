@@ -662,13 +662,14 @@ namespace EnterpriseMICApplicationDemo {
 			optionLabels[Const.TITLE_LISTBOX_SENDLISTS].Text = "Доступные списки рассылки";
 			optionLabels[Const.TITLE_LISTBOX_MEMBERS_SENDLIST].Text = "Список рассылки";
 
-			this.workSpaceTableLayoutPanel.InitializeCellsCount(3, 4);
+			this.workSpaceTableLayoutPanel.InitializeCellsCount(4, 4);
 			this.workSpaceTableLayoutPanel.ColumnStyles.Insert(0, new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, columnWidth));
 			this.workSpaceTableLayoutPanel.ColumnStyles.Insert(1, new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, columnWidth));
 			this.workSpaceTableLayoutPanel.RowStyles.Insert(0, new RowStyle(SizeType.Absolute, rowHeight));
 			this.workSpaceTableLayoutPanel.RowStyles.Insert(1, new RowStyle(SizeType.Percent, 90F));
 			this.workSpaceTableLayoutPanel.RowStyles.Insert(2, new RowStyle(SizeType.Absolute, rowHeight * 2));
-			this.workSpaceTableLayoutPanel.RowStyles.Insert(3, new RowStyle(SizeType.Absolute, rowHeight * 2));
+			this.workSpaceTableLayoutPanel.RowStyles.Insert(3, new RowStyle(SizeType.Absolute, rowHeight));
+			this.workSpaceTableLayoutPanel.RowStyles.Insert(4, new RowStyle(SizeType.Absolute, rowHeight));
 
 			this.workSpaceTableLayoutPanel.Controls.Add(optionLabels[Const.TITLE_LISTBOX_MEMBERS_SENDLIST], 0, 0);
 			this.workSpaceTableLayoutPanel.Controls.Add(optionLabels[Const.TITLE_LISTBOX_SENDLISTS], 0, 0);
