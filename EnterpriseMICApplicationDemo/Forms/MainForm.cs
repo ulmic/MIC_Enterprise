@@ -208,7 +208,7 @@ namespace EnterpriseMICApplicationDemo {
 		}
 
 		private void newIdeaButton_Click(object sender, EventArgs e) {
-			if (newIdeaTextBox.NotDisText == false) {
+			if (newIdeaTextBox.TextWasChanged == false) {
 				messageLabel.PutMessage("Введите текст новой идеи", Const.BAD_MESSAGE);
 				return;
 			}
@@ -662,13 +662,14 @@ namespace EnterpriseMICApplicationDemo {
 			optionLabels[Const.TITLE_LISTBOX_SENDLISTS].Text = "Доступные списки рассылки";
 			optionLabels[Const.TITLE_LISTBOX_MEMBERS_SENDLIST].Text = "Список рассылки";
 
-			this.workSpaceTableLayoutPanel.InitializeCellsCount(3, 4);
+			this.workSpaceTableLayoutPanel.InitializeCellsCount(4, 4);
 			this.workSpaceTableLayoutPanel.ColumnStyles.Insert(0, new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, columnWidth));
 			this.workSpaceTableLayoutPanel.ColumnStyles.Insert(1, new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, columnWidth));
 			this.workSpaceTableLayoutPanel.RowStyles.Insert(0, new RowStyle(SizeType.Absolute, rowHeight));
 			this.workSpaceTableLayoutPanel.RowStyles.Insert(1, new RowStyle(SizeType.Percent, 90F));
 			this.workSpaceTableLayoutPanel.RowStyles.Insert(2, new RowStyle(SizeType.Absolute, rowHeight * 2));
-			this.workSpaceTableLayoutPanel.RowStyles.Insert(3, new RowStyle(SizeType.Absolute, rowHeight * 2));
+			this.workSpaceTableLayoutPanel.RowStyles.Insert(3, new RowStyle(SizeType.Absolute, rowHeight));
+			this.workSpaceTableLayoutPanel.RowStyles.Insert(4, new RowStyle(SizeType.Absolute, rowHeight));
 
 			this.workSpaceTableLayoutPanel.Controls.Add(optionLabels[Const.TITLE_LISTBOX_MEMBERS_SENDLIST], 0, 0);
 			this.workSpaceTableLayoutPanel.Controls.Add(optionLabels[Const.TITLE_LISTBOX_SENDLISTS], 0, 0);
@@ -680,6 +681,7 @@ namespace EnterpriseMICApplicationDemo {
 
 			this.workSpaceTableLayoutPanel.Controls.Add(memberList[Const.LISTS], 0, 1);
 			this.workSpaceTableLayoutPanel.Controls.Add(memberList[Const.MEMBERS_LIST], 1, 1);
+			this.workSpaceTableLayoutPanel.SetColumnSpan(memberList[Const.MEMBERS_LIST], 2);
 
 			AppButton sendListButton = new AppButton();
 			sendListButton.Text = "Сделать рассылку по списку";
@@ -710,7 +712,12 @@ namespace EnterpriseMICApplicationDemo {
 
 		private void createNewSendListButton_Click(object sender, EventArgs e) {
 			CreateNewSendListForm createNewSendListForm = new CreateNewSendListForm();
+			createNewSendListForm.SendListAdded += new CreateNewSendListForm.SendListAddedEventHandler(createNewSendListForm_SendListAdded);
 			createNewSendListForm.Show();
+		}
+
+		private void createNewSendListForm_SendListAdded() {
+			PutInSendListBox();
 		}
 
 		private void sendMemberListButton_Click(object sender, EventArgs e) {

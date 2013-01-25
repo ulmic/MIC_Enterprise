@@ -15,7 +15,7 @@ namespace EnterpriseMICApplicationDemo {
 		private string getMemberQuery = "SELECT * FROM newMIC_9 WHERE number = ";
 
 		private const string SELECT_LOCALS = "SELECT DISTINCT value FROM uservalues INNER JOIN attributes ON uservalues.id_attr = attributes.id_attr WHERE attributes.name = 'local' ORDER BY uservalues.value";
-
+		public const string EMPTY_CONDITION = "";
 		/// <summary>
 		/// Returns a list strings
 		/// </summary>
@@ -196,6 +196,8 @@ namespace EnterpriseMICApplicationDemo {
 			return new MySqlConnection(dataBaseConnectorString(Const.DB_NAME, Const.DATA_SOURCE, Const.DB_USER, Const.DB_USER_PASSWORD));
 		}
 
+		#region MySQL Query
+
 		private string selectSQLQuery(string[] attrs, string table, string condition) {
 			string query = "SELECT ";
 			foreach (string attr in attrs) {
@@ -213,6 +215,23 @@ namespace EnterpriseMICApplicationDemo {
 		public string SelectSQLQuery(string[] attrs, string table, string condition) {
 			return selectSQLQuery(attrs, table, condition);
 		}
+
+		public string SelectSQLQuery(string attr, string table) {
+			return selectSQLQuery(new string[] { attr }, table, "").Remove(selectSQLQuery(new string[] { attr }, table, "").Length - 5);
+		}
+
+		public string InsertSQLQuery(string insertIntoTable, string[] values) {
+			string query = "INSERT INTO " + insertIntoTable;
+			query += " VALUES (";
+			foreach (string value in values) {
+				query += "'" + value + "', ";
+			}
+			query = query.Remove(query.Length - 2);
+			query += ")";
+			return query;
+		}
+
+		#endregion
 
 		public int GetAttrIdByName(string name) {
 			MySqlConnection connection = CreateConnection();
