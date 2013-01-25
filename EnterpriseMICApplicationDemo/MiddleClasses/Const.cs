@@ -174,6 +174,8 @@ namespace EnterpriseMICApplicationDemo {
 		public const string USER_LEVEL = "userId";
 		public const string EMAIL = "email";
 
+		public const string ID_USER_COLUMN = "id_user";
+
 		#endregion
 	}
 }

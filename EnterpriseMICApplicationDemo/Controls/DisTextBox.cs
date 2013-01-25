@@ -49,7 +49,7 @@ namespace EnterpriseMICApplicationDemo {
 		/// <summary>
 		/// Check whether the text was changed in textbox
 		/// </summary>
-		public bool NotDisText {
+		public bool TextWasChanged {
 			get {
 				return (Text != disText);
 			}

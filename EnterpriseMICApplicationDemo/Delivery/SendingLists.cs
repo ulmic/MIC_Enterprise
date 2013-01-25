@@ -10,32 +10,16 @@ namespace EnterpriseMICApplicationDemo {
 	/// Class to work with sendlists
 	/// </summary>
 	public class SendingLists {
-		const string TABLE_NAME = "sendlists";
+		const string TABLE_NAME = "user_sendlists";
 		List<SendingList> lists = new List<SendingList>();
 		string connectionString = "Database=entermic;Data Source=localhost;User Id=root;Password=";
+
+		private const string TITLE_COLUMN = "title";
+
 		/// <summary>
 		/// Get all lists from base
 		/// </summary>
-		public SendingLists() {
-			MySqlConnection myConnection = new MySqlConnection();
-			try {
-				myConnection = new MySqlConnection(connectionString);
-				myConnection.Open();
-			} catch {
-				Console.WriteLine("ЖОПА!");
-				myConnection.Close();
-				Console.ReadKey();
-				return;
-			}
-			string strSQL = "SELECT title FROM " + TABLE_NAME;
-			MySqlCommand command = new MySqlCommand(strSQL, myConnection);
-			MySqlDataReader reader = command.ExecuteReader();
-			while (reader.Read()) {
-				SendingList temp = new SendingList((string)reader[0]);
-				//temp.GetFromDataBase(myConnection);
-				lists.Add(temp);
-			}
-		}
+		public SendingLists() {	}
 
 		public void addEmptyList(string title) {
 			MySqlConnection myConnection = new MySqlConnection();
@@ -43,13 +27,10 @@ namespace EnterpriseMICApplicationDemo {
 				myConnection = new MySqlConnection(connectionString);
 				myConnection.Open();
 			} catch {
-				Console.WriteLine("ЖОПА!");
 				myConnection.Close();
-				Console.ReadKey();
 				return;
 			}
 			SendingList temp = new SendingList(title);
-			temp.createNew(myConnection);
 		}
 
 		public void deleteList(string title) {
@@ -70,13 +51,19 @@ namespace EnterpriseMICApplicationDemo {
 			}
 		}
 
-		public List<string> getTitles() {
-			List<string> res = new List<string>();
-			for (int i = 0; i < lists.Count; i++) {
-				res.Add(lists[i].title);
+		public List<string> GetSendListsTitles() {
+			DBHelper db = new DBHelper();
+			MySqlConnection connection = db.CreateConnection();
+			connection.Open();
+			MySqlCommand command = new MySqlCommand(db.SelectSQLQuery(TITLE_COLUMN, TABLE_NAME), connection);
+			MySqlDataReader reader = command.ExecuteReader();
+			List<string> res = new List<string>();			
+			while (reader.Read()) {
+				res.Add(reader.GetString(0));
 			}
 			return res;
 		}
+
 		public List<string> getEmails(string title) {
 			List<string> res = new List<string>();
 			for (int i = 0; i < lists.Count; i++) {
