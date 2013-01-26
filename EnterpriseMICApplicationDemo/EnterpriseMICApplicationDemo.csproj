@@ -10,12 +10,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EnterpriseMICApplicationDemo</RootNamespace>
     <AssemblyName>EnterpriseMICApplicationDemo</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ManifestCertificateThumbprint>54EF196C532ED4D095FDF629A66881AD51D4986C</ManifestCertificateThumbprint>
     <ManifestKeyFile>EnterpriseMICApplicationDemo_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -38,6 +38,7 @@
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <BootstrapperComponentsLocation>Relative</BootstrapperComponentsLocation>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -66,11 +67,11 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="agsXMPP">
-      <HintPath>C:\Users\Павел\Desktop\serializ2\serializ2\bin\Debug\agsXMPP.dll</HintPath>
+      <HintPath>..\MIC_Enterprise_DLLs\agsXMPP.dll</HintPath>
     </Reference>
     <Reference Include="CG.FontCombo, Version=1.0.1889.23263, Culture=neutral, PublicKeyToken=64111b7f946faace">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Павел\Desktop\WindowsFormsPressRelease\WindowsFormsPressRelease\WindowsFormsApplication\MyPressReleaseControl_Class\MyPressReleaseControl_Class\bin\Debug\CG.FontCombo.dll</HintPath>
+      <HintPath>..\MIC_Enterprise_DLLs\CG.FontCombo.dll</HintPath>
     </Reference>
     <Reference Include="CustomMarshalers" />
     <Reference Include="Microsoft.CSharp">
@@ -82,7 +83,11 @@
     </Reference>
     <Reference Include="MySql.Data, Version=5.2.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Павел\Desktop\Confined Space\MySql.Data.dll</HintPath>
+      <HintPath>..\MIC_Enterprise_DLLs\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\MIC_Enterprise_DLLs\NLog.dll</HintPath>
     </Reference>
     <Reference Include="serializ2">
       <HintPath>C:\Users\Павел\Desktop\Корпоративное приложение Back-Ups\serializ2\serializ2\bin\Debug\serializ2.dll</HintPath>
@@ -104,7 +109,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="YO_APP_FULL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\YO_APP_FULL\YO_APP_FULL\bin\Debug\YO_APP_FULL.dll</HintPath>
+      <HintPath>..\MIC_Enterprise_DLLs\YO_APP_FULL.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -266,6 +271,10 @@
     <EmbeddedResource Include="Controls\TableOption.resx">
       <DependentUpon>TableOption.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

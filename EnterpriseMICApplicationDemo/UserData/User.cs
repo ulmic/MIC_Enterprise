@@ -3,12 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using NLog;
 
 namespace EnterpriseMICApplicationDemo {
 	/// <summary>
 	/// Application User class
 	/// </summary>
 	public class User {
+
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+        public delegate void inlineCode();
+        public static void logTryCatch(inlineCode code){
+            try{
+                code();
+            }
+            catch (Exception ex){
+                logger.ErrorException("Got exception.", ex);
+            }
+        }
+
 		/// <summary>
 		/// User Attributes
 		/// </summary>
@@ -53,6 +66,8 @@ namespace EnterpriseMICApplicationDemo {
 
 		private void getUserByIndex(int index) {
 			Index = index;
+            logTryCatch(delegate()
+            {
 			Login = AnyCatches.TryReadAllLines("login.txt", System.Text.Encoding.Default)[index];
 			Password = AnyCatches.TryReadAllLines("password.txt", System.Text.Encoding.Default)[index];
 			Email = AnyCatches.TryReadAllLines("email.txt", System.Text.Encoding.Default)[index];
@@ -68,6 +83,7 @@ namespace EnterpriseMICApplicationDemo {
 			}
 			Distribution.SetLevel(ref userLevel, Int32.Parse(AnyCatches.TryReadAllLines("level.txt", System.Text.Encoding.Default)[index]));
 			Distribution.SetFunctions(userLevel, ref Functions);
+            });
 		}
 
 		private int getIndexByParam(string param, int paramType) {
