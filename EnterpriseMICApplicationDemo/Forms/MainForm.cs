@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using YO_APP_FULL;
-using serializ2;
+using System.Data.SQLite;
 
 namespace EnterpriseMICApplicationDemo {
 	public partial class MainForm : Form {
@@ -768,7 +768,10 @@ namespace EnterpriseMICApplicationDemo {
 		}
 
 		private void initializeOnlineConferenceInterface() {
-			(new Form1()).Show();
+             		FormJabberStart f = new FormJabberStart();
+			//установить в Settings nickname, jid, и вообще все, что можно
+			//хотя не обязательно здесь, а просто до вызова формы
+			f.Show(); 	
 		}
 
 		#endregion
