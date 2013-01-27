@@ -67,6 +67,8 @@ namespace EnterpriseMICApplicationDemo {
 			Id = userId;
 			Login = Login_DB.GetUserById(userId).Login;
 			Password = Login_DB.GetUserById(userId).Password;
+			Functions = new bool[Const.FUNCTIONS_COUNT];
+			giveFunctions();
 			getMemberByUserId();
 		}
 
@@ -77,12 +79,6 @@ namespace EnterpriseMICApplicationDemo {
 			Functions = new bool[Const.FUNCTIONS_COUNT];
 			giveFunctions();
 			getMemberByUserId();
-		}
-		
-		public override string ToString() {
-			return Family + " " + FirstName + " " + LastName + "\n" + BDate + "\n" + Number + "\n" + Local + "\n" + Education
-			  + "\n" + Job + "\n" + EnterDate + "\n" + Index_Adress + State + City + Area + Home_Adress + "\n" +
-			  Contacts + "\n" + Enter_Mark + "\n" + Change_Date + "\n" + God_Father + "\n" + Post + "\n" + Email;
 		}
 
 		private void giveFunctions() {
