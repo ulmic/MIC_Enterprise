@@ -15,7 +15,7 @@ using agsXMPP.protocol.x.muc.iq;
 using agsXMPP.protocol.x.data;
 
 namespace EnterpriseMICApplicationDemo {
-    public partial class FormConferention : Form {
+    public partial class FormConferention : EnterpriseMICApplicationMiniForm {
         private Jid roomJid;
         private string mainJid;
         private string nickname;
@@ -36,12 +36,12 @@ namespace EnterpriseMICApplicationDemo {
             setInfoOfTheRoom();
             roomJid = new Jid(_roomJid);
             //   roomJid.Resource = roomName;
-            mainJid = Settings.jid;
+            mainJid = Settings.Jid;
             this.Text = roomName;
-            nickname = Settings.nickname;
+            nickname = Settings.NickName;
             xmpp = Settings.xmpp;
             muc = new MucManager(xmpp);
-            muc.JoinRoom(roomJid, "as"/*nickname*/, password);
+            muc.JoinRoom(roomJid, "as"/*NickName*/, password);
             xmpp.MesagageGrabber.Add(roomJid, new BareJidComparer(), new MessageCB(MessageCallback), null);
             xmpp.PresenceGrabber.Add(roomJid, new BareJidComparer(), new PresenceCB(PresenceCallback), null);
         }
@@ -60,11 +60,11 @@ namespace EnterpriseMICApplicationDemo {
             InitializeComponent();
             roomJid = new Jid(_roomJid);
             // roomJid.Resource = _roomName;
-            mainJid = Settings.jid;
+            mainJid = Settings.Jid;
             roomName = _roomName;
             roomDesc = _roomDesc;
             this.Text = _roomName;
-            nickname = Settings.nickname;
+            nickname = Settings.NickName;
             xmpp = Settings.xmpp;
             muc = new MucManager(xmpp);
             savingHistory = _savingHistory ? "1" : "0";
@@ -180,7 +180,7 @@ namespace EnterpriseMICApplicationDemo {
         }
 
         /// <summary>
-        /// Ловит сообщения от заданного Jid(в этом случае используется jid комнаты)
+        /// Ловит сообщения от заданного Jid(в этом случае используется Jid комнаты)
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="msg"></param>
@@ -195,7 +195,7 @@ namespace EnterpriseMICApplicationDemo {
         }
 
         /// <summary>
-        /// Ловит присутствия от заданного Jid(в этос случае от jid комнаты)
+        /// Ловит присутствия от заданного Jid(в этос случае от Jid комнаты)
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="pres"></param>
@@ -253,7 +253,7 @@ namespace EnterpriseMICApplicationDemo {
             } else {
                 if (msg.Body == null)
                     return;
-                rtfChat.SelectionColor = Color.Blue;//(msg.Nickname.InnerXml == nickname) ? Color.Green : Color.Red;
+                rtfChat.SelectionColor = Color.Blue;//(msg.Nickname.InnerXml == NickName) ? Color.Green : Color.Red;
                 // The Nickname of the sender is in GroupChat in the Resource of the Jid
                 rtfChat.AppendText(msg.From.Resource + " : ");
                 rtfChat.SelectionColor = Color.Black;

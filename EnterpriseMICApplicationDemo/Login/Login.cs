@@ -14,7 +14,7 @@ namespace EnterpriseMICApplicationDemo {
 			int userId;
 			try {
 				userId = Int32.Parse(File.ReadAllText(@Const.adressRememberUserFile, System.Text.Encoding.Default));
-				Program.Data.MainUser = Login_DB.GetUserById(userId);
+				Program.Data.SetMainUser(userId);
 			} catch {
 				File.WriteAllText(@Const.adressRememberUserFile, Const.THEREISNOT.ToString());
 				return Const.THEREISNOT;
@@ -33,7 +33,7 @@ namespace EnterpriseMICApplicationDemo {
 				if (remember) {
 					File.WriteAllText(@Const.adressRememberUserFile, userId.ToString());
 				}
-				Program.Data.SetMainUser(userId, login, password);
+				Program.Data.SetMainUser(userId);
 				return true;
 			}
 			return false;

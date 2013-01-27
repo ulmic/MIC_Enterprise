@@ -6,9 +6,7 @@ using MySql.Data.MySqlClient;
 
 namespace EnterpriseMICApplicationDemo {
 	public class DBHelper {
-		private string getGroupsQuery = "SELECT local FROM newMIC_9 GROUP BY local";
-		private string getGroupShortsQuery = "SELECT Family, firstName, lastName, number, email FROM newMIC_9 WHERE local = ";
-		private string connectionString = "server=localhost;database=ENTERMIC;uid=root";
+		private string connectionString = "Server=localhost;database=ENTERMIC;uid=root";
 		private string getMemberQuery = "SELECT * FROM newMIC_9 WHERE number = ";
 
 		private const string SELECT_LOCALS = "SELECT DISTINCT value FROM uservalues INNER JOIN attributes ON uservalues.id_attr = attributes.id_attr WHERE attributes.name = 'local' ORDER BY uservalues.value";
@@ -40,7 +38,8 @@ namespace EnterpriseMICApplicationDemo {
 			int familyAttrId = GetAttrIdByName(Const.FAMILY);
 			int firstNameAttrId = GetAttrIdByName(Const.FIRST_NAME);
 			int lastNameAttrId = GetAttrIdByName(Const.LAST_NAME);
-			return "SELECT id_user FROM uservalues INNER JOIN attributes ON attributes.id_attr = uservalues.id_attr WHERE uservalues.value = '" + local + "' and attributes.name = 'local'";
+			
+			return "SELECT id_user FROM use  rvalues INNER JOIN attributes ON attributes.id_attr = uservalues.id_attr WHERE uservalues.value = '" + local + "' and attributes.name = 'local'";
 		}
 
 		/// <summary>

@@ -26,16 +26,16 @@ namespace EnterpriseMICApplicationDemo {
 
 		public User() { }
 
-        private string getValue(string filepath, int index) {
-            string[] tempVal = AnyCatches.TryReadAllLines(filepath, System.Text.Encoding.Default);
-            if ( tempVal == null ) {
-                return null;
-            }
-            if ( index >= tempVal.Length ) {
-                return null;
-            }
-            return tempVal[index];
-        }
+		private string getValue(string filepath, int index) {
+			string[] tempVal = AnyCatches.TryReadAllLines(filepath, System.Text.Encoding.Default);
+			if ( tempVal == null ) {
+				return null;
+			}
+			if ( index >= tempVal.Length ) {
+				return null;
+			}
+			return tempVal[index];
+		}
 
 		private void getUserByIndex(int index) {
 			Id = index;

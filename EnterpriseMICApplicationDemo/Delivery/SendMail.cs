@@ -4,7 +4,7 @@ using System.Net.Mime;
 
 namespace EnterpriseMICApplicationDemo {
 	/// <summary>
-	/// Class which is organize connection to send server
+	/// Class which is organize connection to send Server
 	/// </summary>
 	public class SendMail {
 		private SmtpClient client;

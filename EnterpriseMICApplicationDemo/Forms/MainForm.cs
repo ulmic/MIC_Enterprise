@@ -389,7 +389,7 @@ namespace EnterpriseMICApplicationDemo {
 
 			memberList = new ListBox[2];
 			initOptions(ref memberList);
-			memberList[Const.LOCALS].Click += new EventHandler(MainForm_Click);
+			memberList[Const.LOCALS].Click += new EventHandler(MemberList_Click);
 			memberList[Const.LOCALS].MouseLeave += MainForm_MouseLeave;
 			memberList[Const.MEMBERS].Click += new EventHandler(GetMemberClick);
 			memberList[Const.MEMBERS].MouseLeave += MainForm_MouseLeave;
@@ -434,7 +434,7 @@ namespace EnterpriseMICApplicationDemo {
 			}
 		}
 
-		private void MainForm_Click(object sender, EventArgs e) {
+		private void MemberList_Click(object sender, EventArgs e) {
 			workSpaceTableLayoutPanel.needPaint = false; // становиться true в событии mouseleave
 			PutInMemberListBox(memberList[Const.LOCALS].SelectedIndex);
 		}
@@ -768,8 +768,8 @@ namespace EnterpriseMICApplicationDemo {
 		}
 
 		private void initializeOnlineConferenceInterface() {
-             		FormJabberStart f = new FormJabberStart();
-			//установить в Settings nickname, jid, и вообще все, что можно
+			FormJabberStart f = new FormJabberStart();
+			//установить в Settings NickName, Jid, и вообще все, что можно
 			//хотя не обязательно здесь, а просто до вызова формы
 			f.Show(); 	
 		}

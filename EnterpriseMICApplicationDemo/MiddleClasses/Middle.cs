@@ -88,8 +88,15 @@ namespace EnterpriseMICApplicationDemo {
 
 		#region Corporate Functions
 
-		public void SetMainUser(int userIndex, string userLogin, string userPassword) {
-			MainUser = new Member(userIndex, userLogin, userPassword);
+		public void SetMainUser(int userIndex) {
+			MainUser = new Member(userIndex);
+			setJabberSetting();
+		}
+
+		private void setJabberSetting() {
+			Settings.NickName = MainUser.Appeal;
+			Settings.Jid = MainUser.Login + "@" + Settings.Server;
+			Settings.Password = MainUser.Password;
 		}
 
 		public string[] GetMICLocals() {
