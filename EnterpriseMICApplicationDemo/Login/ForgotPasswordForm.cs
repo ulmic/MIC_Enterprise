@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace EnterpriseMICApplicationDemo {
@@ -23,7 +20,7 @@ namespace EnterpriseMICApplicationDemo {
 
 		private void sendButton_Click(object sender, EventArgs e) {
 			ForgotPassword f = new ForgotPassword();
-			ForgotPassword.SendReminder(mailTextBox.Text);
+			f.SendReminder(mailTextBox.Text);
 			Program.LoginForm.Visible = true;
 			Program.LoginForm.MessageLabel.PutMessage("Письмо с Вашим логином и паролем уже отправлено на ваш адрес электронной почты.", Const.GOOD_MESSAGE);
 			this.Close();

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using YO_APP_FULL;
-using serializ2;
+using System.Data.SQLite;
 
 namespace EnterpriseMICApplicationDemo {
 	public partial class MainForm : Form {
@@ -48,11 +46,11 @@ namespace EnterpriseMICApplicationDemo {
 		/// </summary>
 		public YO_APP_FULL.YO_class yo;
 
-		#region Initialization controls of main form 
+		#region Initialization controls of main form
 
 		#region Initialization main components
 
-		public MainForm(int userIndex) {
+		public MainForm() {
 			Login login = new Login();
 			if (login.CheckEnter() == Const.THEREISNOT) {
 				Program.LoginForm = new LoginForm();
@@ -76,6 +74,7 @@ namespace EnterpriseMICApplicationDemo {
 			bottomButton.Visible = false;
 		}
 
+
 		private void InitPanels() {
 			functions = new List<FunctionPanel>();
 			for (int i = 0; i < Const.FUNCTIONS_COUNT; i++) {
@@ -89,59 +88,34 @@ namespace EnterpriseMICApplicationDemo {
 			this.leftFunctionPanel.TableBorderStyle = BorderStyle.None;
 			this.leftFunctionPanel.InitializeCellsCount(1, functions.Count);
 			this.leftFunctionPanel.Controls.AddRange(functions.ToArray<FunctionPanel>());
+			this.leftFunctionPanel.RowStyles.Clear();
 		}
 
 		private void InitViewUserDataPanel() {
 			nameLinkLabel.Indent = OpacityLinkLabel.ControlIndent.Small;
 			postLabel.Indent = OpacityLabel.ControlIndent.Small;
 			if (Program.Data.MainUser.Functions[Const.VIEW_USER_DATA]) {
-				/* Быдло */
 				functions[Const.VIEW_USER_DATA].InitializeCellsCount(1, 2);
 				functions[Const.VIEW_USER_DATA].Controls.Add(this.nameLinkLabel, 0, 0);
 				functions[Const.VIEW_USER_DATA].Controls.Add(this.postLabel, 0, 1);
-				functions[Const.VIEW_USER_DATA].Size = new System.Drawing.Size(213, 83);
+				functions[Const.VIEW_USER_DATA].Size = new System.Drawing.Size(200, 83);
 				functions[Const.VIEW_USER_DATA].TabIndex = 0;
 			}
 			functions[Const.VIEW_USER_DATA].ReverseControls();
 		}
 
 		private void InitDeliveryPanel() {
-			//deliveryLinkLabel.EnumControlIndent = OpacityLinkLabel.EnumControlIndent.FirstOfList;
 			deliveryListLinkLabel.Indent = OpacityLinkLabel.ControlIndent.FirstOfList;
-			//deliveryNumberLinkLabel.EnumControlIndent = OpacityLinkLabel.EnumControlIndent.FirstOfList;
 			deliveryNumberListLinkLabel.Indent = OpacityLinkLabel.ControlIndent.FirstOfList;
 			if (Program.Data.MainUser.Functions[Const.CREATE_NEW_DELIVERY]) {
-				/* Быдло */
 				functions[Const.CREATE_NEW_DELIVERY].InitializeCellsCount(2, 3);
-				//functions[Const.CREATE_NEW_DELIVERY].Controls.Add(this.deliveryLinkLabel, 0, 0);
 				functions[Const.CREATE_NEW_DELIVERY].Controls.Add(this.deliveryListLinkLabel, 0, 0);
-				//functions[Const.CREATE_NEW_DELIVERY].Controls.Add(this.deliveryNumberLinkLabel, 1, 0);
 				functions[Const.CREATE_NEW_DELIVERY].Controls.Add(this.deliveryNumberListLinkLabel, 1, 0);
 				functions[Const.CREATE_NEW_DELIVERY].Controls.Add(this.deliveryNewButton, 0, 1);
 				functions[Const.CREATE_NEW_DELIVERY].Size = new System.Drawing.Size(200, 91);
 				functions[Const.CREATE_NEW_DELIVERY].TabIndex = 1;
 			}
 		}
-
-		//private void InitPlannerPanel() {
-		//  if (Program.Data.MainUser.Functions[Const.ONLINE_CONFERENCE]) {
-		//    functions[Const.ONLINE_CONFERENCE].Controls.Add(taskLinkLabel);
-		//    functions[Const.ONLINE_CONFERENCE].Controls.Add(taskListLinkLabel);
-		//    functions[Const.ONLINE_CONFERENCE].Controls.Add(eventLinkLabel);
-		//    functions[Const.ONLINE_CONFERENCE].Controls.Add(eventListLinkLabel);
-		//    functions[Const.ONLINE_CONFERENCE].Controls.Add(ideasLinkLabel);
-		//    functions[Const.ONLINE_CONFERENCE].Controls.Add(ideasListLinkLabel);
-		//    functions[Const.ONLINE_CONFERENCE].Controls.Add(newIdeaButton);
-		//    functions[Const.ONLINE_CONFERENCE].Controls.Add(newIdeaLabel);
-		//    functions[Const.ONLINE_CONFERENCE].Controls.Add(newIdeaTextBox);
-		//    functions[Const.ONLINE_CONFERENCE].Dock = System.Windows.Forms.DockStyle.Top;
-		//    functions[Const.ONLINE_CONFERENCE].Size = new Size(213, 203);
-		//    functions[Const.ONLINE_CONFERENCE].TabIndex = 2;
-		//  }
-		//  Program.Data.InitMinds();
-		//  ideasListLinkLabel.Text = Program.Data.IdeasCount.ToString();
-		//  taskListLinkLabel.Text = Program.Data.TasksCount.ToString();
-		//}
 
 		private void InitOnlineConferencePanel() {
 			OpacityLabel onlineConferenceLabel = new OpacityLabel();
@@ -162,11 +136,10 @@ namespace EnterpriseMICApplicationDemo {
 		}
 
 		public void Initialization(int userIndex) {
-			Program.Data.InitUser(userIndex);
 			InitializeComponent();
 			this.Disposed += new EventHandler(MainForm_Disposed);
 
-			nameLinkLabel.Text = Program.Data.MainUser.Name;
+			nameLinkLabel.Text = Program.Data.MainUser.Appeal;
 			postLabel.Text = Program.Data.MainUser.Post;
 
 			nameLinkLabel.MouseEnter += new EventHandler(nameLinkLabel_MouseEnter);
@@ -233,7 +206,7 @@ namespace EnterpriseMICApplicationDemo {
 		}
 
 		private void newIdeaButton_Click(object sender, EventArgs e) {
-			if (newIdeaTextBox.NotDisText == false) {
+			if (newIdeaTextBox.TextWasChanged == false) {
 				messageLabel.PutMessage("Введите текст новой идеи", Const.BAD_MESSAGE);
 				return;
 			}
@@ -417,11 +390,17 @@ namespace EnterpriseMICApplicationDemo {
 			memberList = new ListBox[2];
 			initOptions(ref memberList);
 			memberList[Const.LOCALS].Click += new EventHandler(MainForm_Click);
+			memberList[Const.LOCALS].MouseLeave += MainForm_MouseLeave;
 			memberList[Const.MEMBERS].Click += new EventHandler(GetMemberClick);
+			memberList[Const.MEMBERS].MouseLeave += MainForm_MouseLeave;
 			this.workSpaceTableLayoutPanel.Controls.Add(memberList[Const.LOCALS], 0, 2);
 			this.workSpaceTableLayoutPanel.Controls.Add(memberList[Const.MEMBERS], 1, 2);
 
 			PutInLocalsListBox();
+		}
+
+		void MainForm_MouseLeave(object sender, EventArgs e) {
+			workSpaceTableLayoutPanel.needPaint = true;
 		}
 
 		private void bottomButtonViewUserData(object sender, EventArgs e) {
@@ -433,30 +412,41 @@ namespace EnterpriseMICApplicationDemo {
 
 		private void PutInLocalsListBox() {
 			string[] locals = Program.Data.GetMICLocals();
+			memberList[Const.LOCALS].BeginUpdate();
 			for (int i = 0; i < locals.Length; i++) {
 				memberList[Const.LOCALS].Items.Add(locals[i]);
 			}
+			memberList[Const.LOCALS].EndUpdate();
 		}
 
 		private void GetMemberClick(object sender, EventArgs e) {
-			this.workSpaceTableLayoutPanel.Controls.Remove(memberCard);
-			memberCard = new MemberCard();
-			Member member = new Member();
-			member = Program.Data.GetMICMember(Int32.Parse(memberList[Const.MEMBERS].SelectedItem.ToString().Split(' ')[0]));
-			memberCard.PutMember(member);
-			this.workSpaceTableLayoutPanel.Controls.Add(memberCard, 2, 2);
+			if (memberList[Const.MEMBERS].SelectedItem != null) {
+				Member member = new Member();
+				member = Program.Data.GetMICMember(Int32.Parse(memberList[Const.MEMBERS].SelectedItem.ToString().Split(' ')[0]));
+				int index = this.workSpaceTableLayoutPanel.Controls.IndexOf(memberCard);
+				if (index == -1) {
+					memberCard = new MemberCard();
+					memberCard.PutMember(member);
+					this.workSpaceTableLayoutPanel.Controls.Add(memberCard, 2, 2);
+				} else {
+					((MemberCard)this.workSpaceTableLayoutPanel.Controls[index]).ChangeMember(member);
+				}
+			}
 		}
 
 		private void MainForm_Click(object sender, EventArgs e) {
+			workSpaceTableLayoutPanel.needPaint = false; // становиться true в событии mouseleave
 			PutInMemberListBox(memberList[Const.LOCALS].SelectedIndex);
 		}
 
 		private void PutInMemberListBox(int index) {
+			memberList[Const.MEMBERS].BeginUpdate();
 			memberList[Const.MEMBERS].Items.Clear();
 			string[] members = Program.Data.GetMICMembersByLocal(memberList[Const.LOCALS].Items[index].ToString());
 			for (int i = 0; i < members.Length; i++) {
 				memberList[Const.MEMBERS].Items.Add(members[i]);
 			}
+			memberList[Const.MEMBERS].EndUpdate();
 		}
 
 		public void PutInMemberListBoxSameCityMembers(List<string> members) {
@@ -670,13 +660,14 @@ namespace EnterpriseMICApplicationDemo {
 			optionLabels[Const.TITLE_LISTBOX_SENDLISTS].Text = "Доступные списки рассылки";
 			optionLabels[Const.TITLE_LISTBOX_MEMBERS_SENDLIST].Text = "Список рассылки";
 
-			this.workSpaceTableLayoutPanel.InitializeCellsCount(3, 4);
+			this.workSpaceTableLayoutPanel.InitializeCellsCount(4, 4);
 			this.workSpaceTableLayoutPanel.ColumnStyles.Insert(0, new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, columnWidth));
 			this.workSpaceTableLayoutPanel.ColumnStyles.Insert(1, new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, columnWidth));
 			this.workSpaceTableLayoutPanel.RowStyles.Insert(0, new RowStyle(SizeType.Absolute, rowHeight));
 			this.workSpaceTableLayoutPanel.RowStyles.Insert(1, new RowStyle(SizeType.Percent, 90F));
 			this.workSpaceTableLayoutPanel.RowStyles.Insert(2, new RowStyle(SizeType.Absolute, rowHeight * 2));
-			this.workSpaceTableLayoutPanel.RowStyles.Insert(3, new RowStyle(SizeType.Absolute, rowHeight * 2));
+			this.workSpaceTableLayoutPanel.RowStyles.Insert(3, new RowStyle(SizeType.Absolute, rowHeight));
+			this.workSpaceTableLayoutPanel.RowStyles.Insert(4, new RowStyle(SizeType.Absolute, rowHeight));
 
 			this.workSpaceTableLayoutPanel.Controls.Add(optionLabels[Const.TITLE_LISTBOX_MEMBERS_SENDLIST], 0, 0);
 			this.workSpaceTableLayoutPanel.Controls.Add(optionLabels[Const.TITLE_LISTBOX_SENDLISTS], 0, 0);
@@ -688,6 +679,7 @@ namespace EnterpriseMICApplicationDemo {
 
 			this.workSpaceTableLayoutPanel.Controls.Add(memberList[Const.LISTS], 0, 1);
 			this.workSpaceTableLayoutPanel.Controls.Add(memberList[Const.MEMBERS_LIST], 1, 1);
+			this.workSpaceTableLayoutPanel.SetColumnSpan(memberList[Const.MEMBERS_LIST], 2);
 
 			AppButton sendListButton = new AppButton();
 			sendListButton.Text = "Сделать рассылку по списку";
@@ -718,7 +710,12 @@ namespace EnterpriseMICApplicationDemo {
 
 		private void createNewSendListButton_Click(object sender, EventArgs e) {
 			CreateNewSendListForm createNewSendListForm = new CreateNewSendListForm();
+			createNewSendListForm.SendListAdded += new CreateNewSendListForm.SendListAddedEventHandler(createNewSendListForm_SendListAdded);
 			createNewSendListForm.Show();
+		}
+
+		private void createNewSendListForm_SendListAdded() {
+			PutInSendListBox();
 		}
 
 		private void sendMemberListButton_Click(object sender, EventArgs e) {
@@ -771,8 +768,10 @@ namespace EnterpriseMICApplicationDemo {
 		}
 
 		private void initializeOnlineConferenceInterface() {
-			serializ2.Form1 form1 = new serializ2.Form1();
-			form1.Show();
+             		FormJabberStart f = new FormJabberStart();
+			//установить в Settings nickname, jid, и вообще все, что можно
+			//хотя не обязательно здесь, а просто до вызова формы
+			f.Show(); 	
 		}
 
 		#endregion

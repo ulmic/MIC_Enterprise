@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Text.RegularExpressions;
@@ -475,13 +473,13 @@ namespace EnterpriseMICApplicationDemo {
 		//этот элемент не включен в контрол
 		/*private void comboBoxFont_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			int index = comboBoxFont.SelectedIndex;
+			int idUser = comboBoxFont.SelectedIndex;
 			try
 			{
 				comboBoxFont.Font = new Font(comboBoxFont.SelectedFontFamily.Name, 8.25F);
 			}
 			catch { }
-			comboBoxFont.SelectedIndex = index;
+			comboBoxFont.SelectedIndex = idUser;
 			comboBoxFont.Focus();
 		}*/
 		//

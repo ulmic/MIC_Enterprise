@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
@@ -11,8 +9,8 @@ namespace EnterpriseMICApplicationDemo {
 	/// Organize the action, if user forget the password
 	/// </summary>
 	public class ForgotPassword {
+
 		public ForgotPassword() { }
-		
 		/// <summary>
 		/// Impose mail text to send to user
 		/// </summary>
@@ -27,16 +25,17 @@ namespace EnterpriseMICApplicationDemo {
 		/// Send Reminder to user
 		/// </summary>
 		/// <param name="email">user email</param>
-		static public void SendReminder(string email) {
-			string[] emails = AnyCatches.TryReadAllLines(@"email.txt", System.Text.Encoding.Default);
-			if (AnyCatches.IfThereIsNot(emails)) {
+		public void SendReminder(string email) {
+			Member sendUser = new Member();
+			SendMail s = new SendMail();
+			try {
+				sendUser = Login_DB.GetUserById(Member_DB.GetMemberIdByEmail(email));
+			} catch {
+				s.Send(email, "Приносим свои извинения, но вы не зарегистрированы в нашей системе. Подробности admin@ulmic.ru.");
 				return;
 			}
-			if (emails.Any(e => e == email)) {
-				User sendUser = new User(emails.Single(e => e == email));
-				SendMail s = new SendMail();
-				s.Send(emails.Single(e => e == email), imposeMailText(sendUser.Login, sendUser.Password));
-			}
+
+			s.Send(email, imposeMailText(sendUser.Login, sendUser.Password));
 		}
 	}
 }

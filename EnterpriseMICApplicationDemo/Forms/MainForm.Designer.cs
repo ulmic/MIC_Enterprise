@@ -115,6 +115,8 @@
 			// workSpaceTableLayoutPanel
 			// 
 			this.workSpaceTableLayoutPanel.AutoScroll = true;
+			this.workSpaceTableLayoutPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("workSpaceTableLayoutPanel.BackgroundImage")));
+			this.workSpaceTableLayoutPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.workSpaceTableLayoutPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.workSpaceTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 585F));
 			this.workSpaceTableLayoutPanel.Controls.Add(this.newLab, 0, 0);
@@ -138,7 +140,8 @@
 			this.newLab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(15)))), ((int)(((byte)(0)))));
 			this.newLab.ForeColor = System.Drawing.Color.Black;
 			this.newLab.Indent = EnterpriseMICApplicationDemo.OpacityLabel.ControlIndent.None;
-			this.newLab.Location = new System.Drawing.Point(3, 0);
+			this.newLab.Location = new System.Drawing.Point(0, 0);
+			this.newLab.Margin = new System.Windows.Forms.Padding(0);
 			this.newLab.Name = "newLab";
 			this.newLab.Size = new System.Drawing.Size(100, 20);
 			this.newLab.TabIndex = 0;
@@ -146,6 +149,8 @@
 			// leftFunctionPanel
 			// 
 			this.leftFunctionPanel.AutoScroll = true;
+			this.leftFunctionPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("leftFunctionPanel.BackgroundImage")));
+			this.leftFunctionPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.leftFunctionPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.leftFunctionPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 220F));
 			this.leftFunctionPanel.Controls.Add(this.onlineConferenceButton, 0, 0);
@@ -177,6 +182,7 @@
 			this.deliveryListLinkLabel.Font = new System.Drawing.Font("PF BeauSans Pro", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.deliveryListLinkLabel.Indent = EnterpriseMICApplicationDemo.OpacityLinkLabel.ControlIndent.None;
 			this.deliveryListLinkLabel.Location = new System.Drawing.Point(12, 30);
+			this.deliveryListLinkLabel.Margin = new System.Windows.Forms.Padding(0);
 			this.deliveryListLinkLabel.Name = "deliveryListLinkLabel";
 			this.deliveryListLinkLabel.Size = new System.Drawing.Size(62, 19);
 			this.deliveryListLinkLabel.TabIndex = 1;
@@ -190,6 +196,7 @@
 			this.deliveryLinkLabel.Font = new System.Drawing.Font("PF BeauSans Pro", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.deliveryLinkLabel.Indent = EnterpriseMICApplicationDemo.OpacityLinkLabel.ControlIndent.None;
 			this.deliveryLinkLabel.Location = new System.Drawing.Point(12, 11);
+			this.deliveryLinkLabel.Margin = new System.Windows.Forms.Padding(0);
 			this.deliveryLinkLabel.Name = "deliveryLinkLabel";
 			this.deliveryLinkLabel.Size = new System.Drawing.Size(80, 19);
 			this.deliveryLinkLabel.TabIndex = 0;
@@ -202,6 +209,7 @@
 			this.postLabel.ForeColor = System.Drawing.Color.Black;
 			this.postLabel.Indent = EnterpriseMICApplicationDemo.OpacityLabel.ControlIndent.None;
 			this.postLabel.Location = new System.Drawing.Point(11, 32);
+			this.postLabel.Margin = new System.Windows.Forms.Padding(0);
 			this.postLabel.Name = "postLabel";
 			this.postLabel.Size = new System.Drawing.Size(197, 40);
 			this.postLabel.TabIndex = 1;
@@ -214,6 +222,7 @@
 			this.nameLinkLabel.Font = new System.Drawing.Font("PF BeauSans Pro", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.nameLinkLabel.Indent = EnterpriseMICApplicationDemo.OpacityLinkLabel.ControlIndent.None;
 			this.nameLinkLabel.Location = new System.Drawing.Point(10, 7);
+			this.nameLinkLabel.Margin = new System.Windows.Forms.Padding(0);
 			this.nameLinkLabel.Name = "nameLinkLabel";
 			this.nameLinkLabel.Size = new System.Drawing.Size(50, 19);
 			this.nameLinkLabel.TabIndex = 0;
@@ -228,6 +237,7 @@
 			this.deliveryNumberLinkLabel.Font = new System.Drawing.Font("PF BeauSans Pro", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.deliveryNumberLinkLabel.Indent = EnterpriseMICApplicationDemo.OpacityLinkLabel.ControlIndent.None;
 			this.deliveryNumberLinkLabel.Location = new System.Drawing.Point(172, 11);
+			this.deliveryNumberLinkLabel.Margin = new System.Windows.Forms.Padding(0);
 			this.deliveryNumberLinkLabel.Name = "deliveryNumberLinkLabel";
 			this.deliveryNumberLinkLabel.Size = new System.Drawing.Size(19, 19);
 			this.deliveryNumberLinkLabel.TabIndex = 3;
@@ -241,6 +251,7 @@
 			this.deliveryNumberListLinkLabel.Font = new System.Drawing.Font("PF BeauSans Pro", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.deliveryNumberListLinkLabel.Indent = EnterpriseMICApplicationDemo.OpacityLinkLabel.ControlIndent.None;
 			this.deliveryNumberListLinkLabel.Location = new System.Drawing.Point(172, 30);
+			this.deliveryNumberListLinkLabel.Margin = new System.Windows.Forms.Padding(0);
 			this.deliveryNumberListLinkLabel.Name = "deliveryNumberListLinkLabel";
 			this.deliveryNumberListLinkLabel.Size = new System.Drawing.Size(19, 19);
 			this.deliveryNumberListLinkLabel.TabIndex = 4;
@@ -254,6 +265,7 @@
 			this.ideasLinkLabel.Font = new System.Drawing.Font("PF BeauSans Pro", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.ideasLinkLabel.Indent = EnterpriseMICApplicationDemo.OpacityLinkLabel.ControlIndent.None;
 			this.ideasLinkLabel.Location = new System.Drawing.Point(15, 53);
+			this.ideasLinkLabel.Margin = new System.Windows.Forms.Padding(0);
 			this.ideasLinkLabel.Name = "ideasLinkLabel";
 			this.ideasLinkLabel.Size = new System.Drawing.Size(46, 19);
 			this.ideasLinkLabel.TabIndex = 0;
@@ -267,6 +279,7 @@
 			this.taskLinkLabel.Font = new System.Drawing.Font("PF BeauSans Pro", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.taskLinkLabel.Indent = EnterpriseMICApplicationDemo.OpacityLinkLabel.ControlIndent.None;
 			this.taskLinkLabel.Location = new System.Drawing.Point(15, 9);
+			this.taskLinkLabel.Margin = new System.Windows.Forms.Padding(0);
 			this.taskLinkLabel.Name = "taskLinkLabel";
 			this.taskLinkLabel.Size = new System.Drawing.Size(60, 19);
 			this.taskLinkLabel.TabIndex = 1;
@@ -280,6 +293,7 @@
 			this.taskListLinkLabel.Font = new System.Drawing.Font("PF BeauSans Pro", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.taskListLinkLabel.Indent = EnterpriseMICApplicationDemo.OpacityLinkLabel.ControlIndent.None;
 			this.taskListLinkLabel.Location = new System.Drawing.Point(167, 9);
+			this.taskListLinkLabel.Margin = new System.Windows.Forms.Padding(0);
 			this.taskListLinkLabel.Name = "taskListLinkLabel";
 			this.taskListLinkLabel.Size = new System.Drawing.Size(19, 19);
 			this.taskListLinkLabel.TabIndex = 2;
@@ -293,6 +307,7 @@
 			this.eventLinkLabel.Font = new System.Drawing.Font("PF BeauSans Pro", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.eventLinkLabel.Indent = EnterpriseMICApplicationDemo.OpacityLinkLabel.ControlIndent.None;
 			this.eventLinkLabel.Location = new System.Drawing.Point(15, 31);
+			this.eventLinkLabel.Margin = new System.Windows.Forms.Padding(0);
 			this.eventLinkLabel.Name = "eventLinkLabel";
 			this.eventLinkLabel.Size = new System.Drawing.Size(107, 19);
 			this.eventLinkLabel.TabIndex = 3;
@@ -306,6 +321,7 @@
 			this.eventListLinkLabel.Font = new System.Drawing.Font("PF BeauSans Pro", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.eventListLinkLabel.Indent = EnterpriseMICApplicationDemo.OpacityLinkLabel.ControlIndent.None;
 			this.eventListLinkLabel.Location = new System.Drawing.Point(167, 31);
+			this.eventListLinkLabel.Margin = new System.Windows.Forms.Padding(0);
 			this.eventListLinkLabel.Name = "eventListLinkLabel";
 			this.eventListLinkLabel.Size = new System.Drawing.Size(19, 19);
 			this.eventListLinkLabel.TabIndex = 4;
@@ -319,6 +335,7 @@
 			this.ideasListLinkLabel.Font = new System.Drawing.Font("PF BeauSans Pro", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.ideasListLinkLabel.Indent = EnterpriseMICApplicationDemo.OpacityLinkLabel.ControlIndent.None;
 			this.ideasListLinkLabel.Location = new System.Drawing.Point(167, 53);
+			this.ideasListLinkLabel.Margin = new System.Windows.Forms.Padding(0);
 			this.ideasListLinkLabel.Name = "ideasListLinkLabel";
 			this.ideasListLinkLabel.Size = new System.Drawing.Size(19, 19);
 			this.ideasListLinkLabel.TabIndex = 5;
@@ -345,6 +362,7 @@
 			this.newIdeaLabel.ForeColor = System.Drawing.Color.Black;
 			this.newIdeaLabel.Indent = EnterpriseMICApplicationDemo.OpacityLabel.ControlIndent.None;
 			this.newIdeaLabel.Location = new System.Drawing.Point(19, 78);
+			this.newIdeaLabel.Margin = new System.Windows.Forms.Padding(0);
 			this.newIdeaLabel.Name = "newIdeaLabel";
 			this.newIdeaLabel.Size = new System.Drawing.Size(92, 13);
 			this.newIdeaLabel.TabIndex = 7;
@@ -353,7 +371,7 @@
 			// rightFunctionPanel
 			// 
 			this.rightFunctionPanel.ColumnCount = 1;
-			this.rightFunctionPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.rightFunctionPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 589F));
 			this.rightFunctionPanel.Controls.Add(this.workSpaceTableLayoutPanel, 0, 0);
 			this.rightFunctionPanel.Controls.Add(this.bottomTableLayoutPanel, 0, 1);
 			this.rightFunctionPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -367,6 +385,8 @@
 			// 
 			// fillFunctionPanel
 			// 
+			this.fillFunctionPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("fillFunctionPanel.BackgroundImage")));
+			this.fillFunctionPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.fillFunctionPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.fillFunctionPanel.ColumnCount = 2;
 			this.fillFunctionPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 230F));
