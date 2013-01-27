@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
 using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
