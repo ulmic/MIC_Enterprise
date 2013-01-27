@@ -19,6 +19,7 @@ namespace EnterpriseMICApplicationDemo {
 		/// <summary>
 		/// Get all lists from base
 		/// </summary>
+
 		public SendingLists() {	}
 
 		public void addEmptyList(string title) {

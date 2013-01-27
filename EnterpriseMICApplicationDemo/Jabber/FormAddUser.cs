@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace serializ2
+namespace EnterpriseMICApplicationDemo
 {
-    public partial class Form3 : Form
+    public partial class FormAddUser : Form
     {
-        public Form3()
+        public FormAddUser()
         {
             InitializeComponent();
         }
