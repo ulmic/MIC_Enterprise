@@ -24,12 +24,10 @@ namespace EnterpriseMICApplicationDemo {
 			MailMessage message = new MailMessage(FromAddr, to, "", mess);
 			AlternateView alternate = AlternateView.CreateAlternateViewFromString(mess, mimeType);
 			message.AlternateViews.Add(alternate);
-			try {
+			Log.LogTryCatch(delegate() {
 				this.client.Send(message);
-				return "Completed!";
-			} catch (SmtpException ex) {
-				return ("Error! " + ex.InnerException.Message.ToString());
-			}
+			});
+			return "Complete!";
 		}
 	}
 }

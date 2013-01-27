@@ -19,8 +19,6 @@ namespace EnterpriseMICApplicationDemo {
 		private IndentionControlTextBox mailAdressDisTextBox;
 		private DisTextBox[] inputText = new DisTextBox[0];
 		private MyPressReleaseControl HTMLWorkSpace = new MyPressReleaseControl();
-		private Card[] ideasCards;
-		private Card[] tasksCards;
 		private ListBox[] memberList;
 		private MemberCard memberCard;
 		private Button addToSendListButton;
@@ -137,7 +135,6 @@ namespace EnterpriseMICApplicationDemo {
 
 		public void Initialization(int userIndex) {
 			InitializeComponent();
-			this.Disposed += new EventHandler(MainForm_Disposed);
 
 			nameLinkLabel.Text = Program.Data.MainUser.Appeal;
 			postLabel.Text = Program.Data.MainUser.Post;
@@ -177,7 +174,6 @@ namespace EnterpriseMICApplicationDemo {
 		}
 
 		private void taskLinkLabel_Click(object sender, EventArgs e) {
-			viewTasks();
 		}
 
 		private void newIdeaTextBox_MouseEnter(object sender, EventArgs e) {
@@ -202,39 +198,9 @@ namespace EnterpriseMICApplicationDemo {
 		#region ClickEvents
 
 		private void ideasLinkLabel_Click(object sender, EventArgs e) {
-			viewIdeas();
 		}
 
 		private void newIdeaButton_Click(object sender, EventArgs e) {
-			if (newIdeaTextBox.TextWasChanged == false) {
-				messageLabel.PutMessage("Введите текст новой идеи", Const.BAD_MESSAGE);
-				return;
-			}
-			if (Program.Data.AnyMindEqual(newIdeaTextBox.Text, Const.IDEA)) {
-				messageLabel.PutMessage("Такая идея уже есть", Const.BAD_MESSAGE);
-				return;
-			}
-			Program.Data.AddMind(newIdeaTextBox.Text, Const.IDEA);
-			viewIdeas();
-		}
-
-		private void bottomButtonAddTask(object sender, EventArgs e) {
-			addNewCardsToBoard(ref tasksCards, new Card[] { new Card() });
-		}
-
-		private void addNewCardsToBoard(ref Card[] cards, Card[] newCards) {
-			for (int i = 0; i < newCards.Length; i++) {
-				newCards[i].Font = new Font(newCards[i].Font.FontFamily, 12F);
-				newCards[i].Status = Card.Action.Edit;
-			}
-			List<Card> temp = tasksCards.ToList<Card>();
-			temp.AddRange(newCards);
-			tasksCards = temp.ToArray();
-			cards = cards.Reverse<Card>().ToArray<Card>();
-			for (int i = 0; i < cards.Length; i++) {
-				//cards[i].Location = addaptLocation(cards[i], i);
-			}
-			this.workSpaceTableLayoutPanel.Controls.AddRange(cards);
 		}
 
 		#endregion
@@ -280,15 +246,6 @@ namespace EnterpriseMICApplicationDemo {
 		#region CreateWorkSpaceControls
 
 		#region Initialization Controls Functions
-
-		private void initOptions(ref Card[] con) {
-			for (int i = 0; i < con.Length; i++) {
-				con[i] = new Card();
-				//con[i].Location = addaptLocation(con[i], i);
-				con[i].Font = new Font(this.Font.FontFamily, 12F);
-				con[i].Visible = true;
-			}
-		}
 
 		private void initOptions(ref OpacityLabel[] con) {
 			for (int i = 0; i < con.Length; i++) {
@@ -339,10 +296,6 @@ namespace EnterpriseMICApplicationDemo {
 		}
 
 		#endregion
-
-		private int cardsCountInForm(Card card) {
-			return (this.Width / (card.Width + indentX));
-		}
 
 		#endregion
 
@@ -469,94 +422,6 @@ namespace EnterpriseMICApplicationDemo {
 			memberCard = new MemberCard();
 			memberCard.PutMember(godFather);
 			this.workSpaceTableLayoutPanel.Controls.Add(memberCard, 2, 2);
-		}
-
-		#endregion
-
-		#region Cards Functions
-
-		private void viewIdeas() {
-			bottomButton.Visible = false;
-			workSpaceTableLayoutPanel.Controls.Clear();
-			Program.Data.InitIdeas();
-			ideasCards = new Card[Program.Data.IdeasCount];
-			initOptions(ref ideasCards);
-			ideasCards = ideasCards.Reverse<Card>().ToArray<Card>();
-			for (int i = 0; i < Program.Data.IdeasCount; i++) {
-				ideasCards[i].Text = Program.Data.IdeaTextAt(i);
-				ideasCards[i].HaveDate = Const.NO;
-				ideasCards[i].CloseCard += new EventHandler(AnyCardClosed);
-				ideasCards[i].HaveTitle = Const.NO;
-				ideasCards[i].SaveText += new EventHandler(IdeasCards_SaveText);
-			}
-			workSpaceTableLayoutPanel.Controls.AddRange(ideasCards);
-		}
-
-		private void IdeasCards_SaveText(object sender, EventArgs e) {
-			exportIdeas();
-		}
-
-		private void viewTasks() {
-			Button addTaskButton = bottomButton;
-			addTaskButton.Visible = true;
-			addTaskButton.Text = Const.BOTTOM_BUTTON_ADD_TASK;
-			addTaskButton.Click += new EventHandler(bottomButtonAddTask);
-			this.bottomTableLayoutPanel.Controls.Add(addTaskButton);
-			workSpaceTableLayoutPanel.Controls.Clear();
-			Program.Data.InitTasks();
-			tasksCards = new Card[Program.Data.TasksCount];
-			initOptions(ref tasksCards);
-			tasksCards = tasksCards.Reverse<Card>().ToArray<Card>();
-			for (int i = 0; i < tasksCards.Length; i++) {
-				tasksCards[i].Text = Program.Data.TasksTextAt(i);
-				tasksCards[i].HaveDate = Const.YES;
-				tasksCards[i].CloseCard += new EventHandler(AnyCardClosed);
-				tasksCards[i].SaveText += new EventHandler(TasksCards_SaveText);
-			}
-			workSpaceTableLayoutPanel.Controls.AddRange(tasksCards);
-		}
-
-		private void TasksCards_SaveText(object sender, EventArgs e) {
-			exportTasks();
-		}
-
-		private void AnyCardClosed(object sender, EventArgs e) {
-			for (int i = 0; i < ideasCards.Length; i++) {
-				if (ideasCards[i].Close) {
-					List<Card> temp = ideasCards.ToList<Card>();
-					temp.RemoveAt(i);
-					ideasCards = temp.ToArray();
-					Program.Data.RemoveIdeaAt(i);
-					break;
-				}
-			}
-			for (int i = 0; i < ideasCards.Length; i++) {
-				//ideasCards[i].Location = addaptLocation(ideasCards[i], i);
-			}
-		}
-
-		private string[] getMindsFromCards(Card[] cards) {
-			if (cards == null) {
-				return null;
-			}
-			string[] export = new string[cards.Length];
-			for (int i = 0; i < cards.Length; i++) {
-				export[i] = cards[i].Text;
-			}
-			return export;
-		}
-
-		private void exportTasks() {
-			Program.Data.SaveTasks(getMindsFromCards(tasksCards));
-		}
-
-		private void exportIdeas() {
-			Program.Data.SaveIdeas(getMindsFromCards(ideasCards));
-		}
-
-		private void MainForm_Disposed(object sender, EventArgs e) {
-			exportIdeas();
-			exportTasks();
 		}
 
 		#endregion
@@ -763,15 +628,16 @@ namespace EnterpriseMICApplicationDemo {
 		#region OnlineConference
 
 		private void button1_Click_1(object sender, EventArgs e) {
-			this.workSpaceTableLayoutPanel.Controls.Clear();
 			initializeOnlineConferenceInterface();
 		}
 
 		private void initializeOnlineConferenceInterface() {
-			FormJabberStart f = new FormJabberStart();
-			//установить в Settings NickName, Jid, и вообще все, что можно
-			//хотя не обязательно здесь, а просто до вызова формы
-			f.Show(); 	
+			Log.LogTryCatch(delegate() {
+				FormJabberStart f = new FormJabberStart();
+				//установить в Settings NickName, Jid, и вообще все, что можно
+				//хотя не обязательно здесь, а просто до вызова формы
+				f.Show();
+			});
 		}
 
 		#endregion

@@ -23,7 +23,10 @@ namespace EnterpriseMICApplicationDemo {
 		}
 
 		private int getUserId(string login, string password) {
-			int userId = Login_DB.GetUserIndexByLoginPassword(login, password);
+			int userId = 0;
+			Log.LogTryCatch(delegate() {
+				userId = Login_DB.GetUserIndexByLoginPassword(login, password);
+			});
 			return userId;
 		}
 

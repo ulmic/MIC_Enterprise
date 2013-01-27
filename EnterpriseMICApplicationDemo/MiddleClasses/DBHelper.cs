@@ -39,7 +39,7 @@ namespace EnterpriseMICApplicationDemo {
 			int firstNameAttrId = GetAttrIdByName(Const.FIRST_NAME);
 			int lastNameAttrId = GetAttrIdByName(Const.LAST_NAME);
 			
-			return "SELECT id_user FROM use  rvalues INNER JOIN attributes ON attributes.id_attr = uservalues.id_attr WHERE uservalues.value = '" + local + "' and attributes.name = 'local'";
+			return "SELECT id_user FROM uservalues INNER JOIN attributes ON attributes.id_attr = uservalues.id_attr WHERE uservalues.value = '" + local + "' and attributes.name = 'local'";
 		}
 
 		/// <summary>

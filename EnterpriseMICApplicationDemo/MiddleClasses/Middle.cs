@@ -9,82 +9,11 @@ namespace EnterpriseMICApplicationDemo {
 	/// </summary>
 	public class Middle {
 		public Member MainUser;
-		private Idea ideas;
-		private Task tasks;
 		private DBHelper help;
 		private SendingLists lists;
 
 		public Middle() {
 		}
-
-		#region Idea and Tasks Functions
-
-		public void InitIdeas() {
-			ideas = new Idea();
-		}
-
-		public void InitTasks() {
-			tasks = new Task();
-		}
-
-		public void InitMinds() {
-			InitIdeas();
-			InitTasks();
-		}
-
-		public bool AnyMindEqual(string mind, int type) {
-			if (type == Const.IDEA) {
-				return ideas.AnyEqual(mind);
-			}
-			return false;
-		}
-		/*
-		 * Написать защиту от Enter '\n'
-		 */
-		public void AddMind(string mind, int type) {
-			if (type == Const.IDEA) {
-				ideas = new Idea();
-				ideas.AddIdea(ideas.ParseIdeaToWrite(mind));
-			}
-			if (type == Const.TASK) {
-				tasks = new Task();
-				tasks.AddTask(tasks.ParseTaskToWrite(mind));
-			}
-		}
-
-		public int IdeasCount {
-			get {
-				return ideas.Length;
-			}
-		}
-
-		public int TasksCount {
-			get {
-				return tasks.Length;
-			}
-		}
-
-		public string IdeaTextAt(int index) {
-			return ideas[index];
-		}
-
-		public string TasksTextAt(int index) {
-			return tasks[index];
-		}
-
-		public void RemoveIdeaAt(int index) {
-			ideas.RemoveIdea(index);
-		}
-
-		public void SaveTasks(string[] cardsText) {
-			//tasks.SaveTasks(cardsText);
-		}
-
-		public void SaveIdeas(string[] cardsText) {
-			//ideas.SaveIdeas(cardsText);
-		}
-
-		#endregion
 
 		#region Corporate Functions
 

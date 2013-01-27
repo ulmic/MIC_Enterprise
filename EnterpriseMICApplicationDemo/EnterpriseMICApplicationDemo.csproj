@@ -165,14 +165,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Jabber\Settings.cs" />
+    <Compile Include="MiddleClasses\Log.cs" />
     <Compile Include="SetMembersToList.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SetMembersToList.Designer.cs">
       <DependentUpon>SetMembersToList.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Tickets\Card.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="MiddleClasses\Const.cs" />
     <Compile Include="MiddleClasses\AnyCatches.cs" />
@@ -269,10 +267,6 @@
     <EmbeddedResource Include="SetMembersToList.resx">
       <DependentUpon>SetMembersToList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tickets\Card.resx">
-      <DependentUpon>Card.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Delivery\CreateNewSendList.resx">
       <DependentUpon>CreateNewSendList.cs</DependentUpon>
     </EmbeddedResource>
@@ -333,7 +327,6 @@
       <DependentUpon>SelectImage.cs</DependentUpon>
     </Compile>
     <Compile Include="Delivery\SendMail.cs" />
-    <Compile Include="Tickets\Mind.cs" />
     <Compile Include="Controls\TableOption.cs">
       <SubType>Form</SubType>
     </Compile>
