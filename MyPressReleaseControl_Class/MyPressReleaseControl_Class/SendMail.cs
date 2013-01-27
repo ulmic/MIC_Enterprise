@@ -8,9 +8,9 @@ namespace EnterpriseMICApplicationDemo {
     SmtpClient client;
     string smtpHost = "smtp.mail.ru";
     int smtpPort = 25;
-    string smtpUserName = "khelek@bk.ru";
-    string smtpUserPass = "oy123321";
-    string FromAddr = "khelek@bk.ru";
+    string smtpUserName = "logger.mic@mail.ru";
+    string smtpUserPass = "ilovemic2012it";
+    string FromAddr = "logger.mic@mail.ru";
 
     public SendMail() {
       this.client = new SmtpClient(smtpHost, smtpPort);
