@@ -84,6 +84,10 @@
     <Reference Include="MyPressReleaseControl_Class">
       <HintPath>..\MyPressReleaseControl_Class\MyPressReleaseControl_Class\bin\Debug\MyPressReleaseControl_Class.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\MIC_Enterprise_DLLs\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -309,6 +313,9 @@
     </None>
     <None Include="Jabber\FormHistoryView.resx">
       <DependentUpon>FormHistoryView.cs</DependentUpon>
+    </None>
+    <None Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
