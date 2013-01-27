@@ -15,6 +15,15 @@ namespace EnterpriseMICApplicationDemo {
         public FormDialog() {
             InitializeComponent();
         }
+
+		public FormJabberStart FormJabberStart {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+	
         protected override void OnClosing(CancelEventArgs e) {
             e.Cancel = true;
             Hide();

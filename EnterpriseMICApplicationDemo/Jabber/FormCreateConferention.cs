@@ -24,6 +24,14 @@ namespace EnterpriseMICApplicationDemo {
             }
         }
 
+		public FormJabberStart FormJabberStart {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
         private void buttonCreate_Click(object sender, EventArgs e) {
             List<string> selectedUsers = new List<string>();
             for (int i = 0; i < listViewUsers.Items.Count; i++) {

@@ -32,7 +32,31 @@ namespace EnterpriseMICApplicationDemo {
 			title = _title;
 		}
 
-		public static List<string> GetFromDataBase(string sendListTitle) {
+		public SendingLists SendingLists {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
+		public AddToSendListNewItem AddToSendListNewItem {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
+		public CreateNewSendListForm CreateNewSendListForm {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
+		public static List<string> GetEmailsFromList(string sendListTitle) {
 			DBHelper db = new DBHelper();
 			string connectionString = db.SelectSQLQuery(ID_SENDLIST_COLUMN, TABLE_NAME, "title = '" + sendListTitle + "'");
 			MySqlConnection newConnection = db.CreateConnection();

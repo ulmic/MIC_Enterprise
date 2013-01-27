@@ -13,6 +13,14 @@ namespace EnterpriseMICApplicationDemo {
             InitializeComponent();
         }
 
+		public FormJabberStart FormJabberStart {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
         private void applySettings() {
             Settings.serverIp = textBoxIP.Text;
         }

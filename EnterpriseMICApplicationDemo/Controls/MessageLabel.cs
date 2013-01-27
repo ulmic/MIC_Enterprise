@@ -11,6 +11,14 @@ namespace EnterpriseMICApplicationDemo {
 		public MessageLabel() {
 			this.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 		}
+
+		public MainForm messageLabel {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
 		
 		#region Obsolete attributes
 

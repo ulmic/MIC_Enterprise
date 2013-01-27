@@ -16,6 +16,14 @@ namespace EnterpriseMICApplicationDemo {
 			InitializeComponent();
 		}
 
+		public MyPressReleaseControl MyPressReleaseControl {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
 		private void button1_Click(object sender, EventArgs e) {
 
 			try {

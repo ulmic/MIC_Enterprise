@@ -37,6 +37,14 @@ namespace EnterpriseMICApplicationDemo {
             roomjid = roomJid;
         }
 
+		public FormJabberStart FormJabberStart {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
         public void addItems() {
             for (int i = 1; i < 32; i++) {
                 comboBoxDay.Items.Add(i);

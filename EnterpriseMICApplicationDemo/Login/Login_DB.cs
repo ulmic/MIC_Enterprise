@@ -10,6 +10,22 @@ namespace EnterpriseMICApplicationDemo {
 		public const string LOGIN_ATTR = "login";
 		public const string PASSWORD_ATTR = "password";
 
+		public static Login Login {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
+		public static DBHelper DBHelper {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
 		public static int GetUserIndexByLoginPassword(string login, string password) {
 			openConnection();
 			string condition = "login = '" + login + "' and password = '" + password + "'";

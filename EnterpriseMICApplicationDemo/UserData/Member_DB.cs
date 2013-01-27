@@ -16,6 +16,22 @@ namespace EnterpriseMICApplicationDemo{
 		#endregion
 
 		private const string SELECT_MEMBER_ATTRS_QUERY = "SELECT " + ID_ATTR_COLUMN + ", " + VALUE_COLUMN + " FROM " + Const.USER_VALUES_TABLE + " WHERE " + Const.ID_USER_COLUMN + " = '";
+
+		public static Member Member {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
+		public static SendingList SendingList {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
 		#region GetMemberAttributes
 
 		public static string GetFamily(int idUser) {

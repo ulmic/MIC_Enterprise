@@ -78,6 +78,22 @@ namespace EnterpriseMICApplicationDemo {
             muc.Invite(users.ConvertAll<Jid>(deleg).ToArray(), roomJid, "Вы приглашены в конференцию " + roomName);
         }
 
+		public FormJoinConferention FormJoinConferention {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
+		public FormCreateConferention FormCreateConferention {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
         private Jid deleg(string jid) {
             return new Jid(jid);
         }

@@ -16,6 +16,14 @@ namespace EnterpriseMICApplicationDemo {
 			textBox1.DisText = "Название нового списка";
 		}
 
+		public MainForm MainForm {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
 		private void button1_Click(object sender, EventArgs e) {
 			if (textBox1.TextWasChanged == false) {
 				MessageBox.Show("Введите название нового списка рассылки");

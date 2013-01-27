@@ -16,6 +16,14 @@ namespace EnterpriseMICApplicationDemo {
             InitializeComponent();
         }
 
+		public FormJabberStart FormJabberStart {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
         private void buttonCreate_Click(object sender, EventArgs e) {
             (new FormConferention(textBoxConfName.Text.Trim() + "@conference." + Settings.Server)).Show();
             this.Close();

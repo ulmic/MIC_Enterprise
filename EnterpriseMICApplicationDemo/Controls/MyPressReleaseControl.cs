@@ -630,5 +630,13 @@ namespace EnterpriseMICApplicationDemo {
 			}
 		}
 		#endregion
+
+		public MainForm pressRelease {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
 	}
 }

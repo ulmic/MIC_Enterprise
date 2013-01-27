@@ -403,7 +403,7 @@
 			this.fillFunctionPanel.TabIndex = 0;
 			this.fillFunctionPanel.TableBorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			// 
-			// MainForm
+			// messageLabel
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -412,7 +412,7 @@
 			this.Font = new System.Drawing.Font("PF BeauSans Pro", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MinimumSize = new System.Drawing.Size(763, 444);
-			this.Name = "MainForm";
+			this.Name = "messageLabel";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Корпорация МИЦ";
 			this.bottomTableLayoutPanel.ResumeLayout(false);

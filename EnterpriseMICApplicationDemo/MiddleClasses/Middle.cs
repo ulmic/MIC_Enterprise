@@ -115,7 +115,7 @@ namespace EnterpriseMICApplicationDemo {
 		}
 
 		public string[] PutInMembersLists(string title) {
-			return SendingList.GetFromDataBase(title).ToArray<string>();
+			return SendingList.GetEmailsFromList(title).ToArray<string>();
 		}
 
 		#endregion

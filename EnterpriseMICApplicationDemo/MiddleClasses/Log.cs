@@ -7,6 +7,15 @@ using NLog;
 namespace EnterpriseMICApplicationDemo {
 	public static class Log {
 		private static Logger logger = LogManager.GetCurrentClassLogger();
+
+		public static MainForm MainForm {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+	
 		public delegate void inlineCode();
 		public static void LogTryCatch(inlineCode code) {
 			try {

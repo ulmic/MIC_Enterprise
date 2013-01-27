@@ -52,5 +52,13 @@ namespace EnterpriseMICApplicationDemo {
 				return (Text != disText);
 			}
 		}
+
+		public MainForm array {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
 	}
 }
