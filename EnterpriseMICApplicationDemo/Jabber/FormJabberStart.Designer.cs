@@ -28,199 +28,171 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBoxStatus = new System.Windows.Forms.TextBox();
-            this.checkBoxConnected = new System.Windows.Forms.CheckBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.loginBox = new System.Windows.Forms.TextBox();
-            this.passwordBox = new System.Windows.Forms.TextBox();
-            this.buttonLogin = new System.Windows.Forms.Button();
-            this.Exit = new System.Windows.Forms.Button();
-            this.buttonCreateConf = new System.Windows.Forms.Button();
-            this.buttonJoinConf = new System.Windows.Forms.Button();
-            this.listUsers = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.buttonShowHideContacts = new System.Windows.Forms.Button();
-            this.buttonSettings = new System.Windows.Forms.Button();
-            this.opacityLabel1 = new System.Windows.Forms.Label();
-            this.SuspendLayout();
-            // 
-            // textBoxStatus
-            // 
-            this.textBoxStatus.Location = new System.Drawing.Point(59, 12);
-            this.textBoxStatus.Name = "textBoxStatus";
-            this.textBoxStatus.Size = new System.Drawing.Size(114, 20);
-            this.textBoxStatus.TabIndex = 3;
-            // 
-            // checkBoxConnected
-            // 
-            this.checkBoxConnected.AutoSize = true;
-            this.checkBoxConnected.Enabled = false;
-            this.checkBoxConnected.Location = new System.Drawing.Point(12, 38);
-            this.checkBoxConnected.Name = "checkBoxConnected";
-            this.checkBoxConnected.Size = new System.Drawing.Size(59, 17);
-            this.checkBoxConnected.TabIndex = 9;
-            this.checkBoxConnected.Text = "В сети";
-            this.checkBoxConnected.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(77, 38);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(96, 23);
-            this.button4.TabIndex = 13;
-            this.button4.Text = "Поставить";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // loginBox
-            // 
-            this.loginBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.loginBox.Location = new System.Drawing.Point(182, 263);
-            this.loginBox.Name = "loginBox";
-            this.loginBox.Size = new System.Drawing.Size(106, 20);
-            this.loginBox.TabIndex = 14;
-            this.loginBox.Text = "Логин";
-            this.loginBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.login_MouseClick);
-            // 
-            // passwordBox
-            // 
-            this.passwordBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.passwordBox.Location = new System.Drawing.Point(182, 289);
-            this.passwordBox.Name = "passwordBox";
-            this.passwordBox.PasswordChar = '*';
-            this.passwordBox.Size = new System.Drawing.Size(106, 20);
-            this.passwordBox.TabIndex = 15;
-            this.passwordBox.Text = "Пароль";
-            this.passwordBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.password_MouseClick);
-            // 
-            // buttonLogin
-            // 
-            this.buttonLogin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonLogin.Location = new System.Drawing.Point(182, 315);
-            this.buttonLogin.Name = "buttonLogin";
-            this.buttonLogin.Size = new System.Drawing.Size(106, 34);
-            this.buttonLogin.TabIndex = 16;
-            this.buttonLogin.Text = "Войти";
-            this.buttonLogin.UseVisualStyleBackColor = true;
-            this.buttonLogin.Click += new System.EventHandler(this.buttonLogin_Click);
-            // 
-            // Exit
-            // 
-            this.Exit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Exit.Location = new System.Drawing.Point(182, 315);
-            this.Exit.Name = "Exit";
-            this.Exit.Size = new System.Drawing.Size(107, 33);
-            this.Exit.TabIndex = 18;
-            this.Exit.Text = "Выйти";
-            this.Exit.UseVisualStyleBackColor = true;
-            this.Exit.Visible = false;
-            this.Exit.Click += new System.EventHandler(this.Exit_Click);
-            // 
-            // buttonCreateConf
-            // 
-            this.buttonCreateConf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCreateConf.Location = new System.Drawing.Point(182, 66);
-            this.buttonCreateConf.Name = "buttonCreateConf";
-            this.buttonCreateConf.Size = new System.Drawing.Size(106, 39);
-            this.buttonCreateConf.TabIndex = 19;
-            this.buttonCreateConf.Text = "Создать конференцию";
-            this.buttonCreateConf.UseVisualStyleBackColor = true;
-            this.buttonCreateConf.Visible = false;
-            this.buttonCreateConf.Click += new System.EventHandler(this.createConference_Click);
-            // 
-            // buttonJoinConf
-            // 
-            this.buttonJoinConf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonJoinConf.Location = new System.Drawing.Point(182, 111);
-            this.buttonJoinConf.Name = "buttonJoinConf";
-            this.buttonJoinConf.Size = new System.Drawing.Size(106, 39);
-            this.buttonJoinConf.TabIndex = 20;
-            this.buttonJoinConf.Text = "Присоединиться к конференции";
-            this.buttonJoinConf.UseVisualStyleBackColor = true;
-            this.buttonJoinConf.Visible = false;
-            this.buttonJoinConf.Click += new System.EventHandler(this.buttonJoinConf_Click);
-            // 
-            // listUsers
-            // 
-            this.listUsers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.listUsers.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+			this.textBoxStatus = new System.Windows.Forms.TextBox();
+			this.checkBoxConnected = new System.Windows.Forms.CheckBox();
+			this.button4 = new System.Windows.Forms.Button();
+			this.Exit = new System.Windows.Forms.Button();
+			this.buttonCreateConf = new System.Windows.Forms.Button();
+			this.buttonJoinConf = new System.Windows.Forms.Button();
+			this.listUsers = new System.Windows.Forms.ListView();
+			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.buttonShowHideContacts = new System.Windows.Forms.Button();
+			this.buttonSettings = new System.Windows.Forms.Button();
+			this.opacityLabel1 = new System.Windows.Forms.Label();
+			this.SuspendLayout();
+			// 
+			// textBoxStatus
+			// 
+			this.textBoxStatus.Location = new System.Drawing.Point(108, 22);
+			this.textBoxStatus.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.textBoxStatus.Name = "textBoxStatus";
+			this.textBoxStatus.Size = new System.Drawing.Size(206, 31);
+			this.textBoxStatus.TabIndex = 3;
+			// 
+			// checkBoxConnected
+			// 
+			this.checkBoxConnected.AutoSize = true;
+			this.checkBoxConnected.Enabled = false;
+			this.checkBoxConnected.Location = new System.Drawing.Point(22, 70);
+			this.checkBoxConnected.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.checkBoxConnected.Name = "checkBoxConnected";
+			this.checkBoxConnected.Size = new System.Drawing.Size(88, 28);
+			this.checkBoxConnected.TabIndex = 9;
+			this.checkBoxConnected.Text = "В сети";
+			this.checkBoxConnected.UseVisualStyleBackColor = true;
+			// 
+			// button4
+			// 
+			this.button4.Location = new System.Drawing.Point(141, 70);
+			this.button4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.button4.Name = "button4";
+			this.button4.Size = new System.Drawing.Size(176, 42);
+			this.button4.TabIndex = 13;
+			this.button4.Text = "Поставить";
+			this.button4.UseVisualStyleBackColor = true;
+			this.button4.Click += new System.EventHandler(this.button4_Click);
+			// 
+			// Exit
+			// 
+			this.Exit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.Exit.Location = new System.Drawing.Point(354, 367);
+			this.Exit.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.Exit.Name = "Exit";
+			this.Exit.Size = new System.Drawing.Size(196, 61);
+			this.Exit.TabIndex = 18;
+			this.Exit.Text = "Выйти";
+			this.Exit.UseVisualStyleBackColor = true;
+			this.Exit.Visible = false;
+			this.Exit.Click += new System.EventHandler(this.Exit_Click);
+			// 
+			// buttonCreateConf
+			// 
+			this.buttonCreateConf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonCreateConf.Location = new System.Drawing.Point(354, 122);
+			this.buttonCreateConf.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.buttonCreateConf.Name = "buttonCreateConf";
+			this.buttonCreateConf.Size = new System.Drawing.Size(194, 72);
+			this.buttonCreateConf.TabIndex = 19;
+			this.buttonCreateConf.Text = "Создать конференцию";
+			this.buttonCreateConf.UseVisualStyleBackColor = true;
+			this.buttonCreateConf.Visible = false;
+			this.buttonCreateConf.Click += new System.EventHandler(this.createConference_Click);
+			// 
+			// buttonJoinConf
+			// 
+			this.buttonJoinConf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonJoinConf.Location = new System.Drawing.Point(354, 205);
+			this.buttonJoinConf.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.buttonJoinConf.Name = "buttonJoinConf";
+			this.buttonJoinConf.Size = new System.Drawing.Size(194, 72);
+			this.buttonJoinConf.TabIndex = 20;
+			this.buttonJoinConf.Text = "Присоединиться к конференции";
+			this.buttonJoinConf.UseVisualStyleBackColor = true;
+			this.buttonJoinConf.Visible = false;
+			this.buttonJoinConf.Click += new System.EventHandler(this.buttonJoinConf_Click);
+			// 
+			// listUsers
+			// 
+			this.listUsers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.listUsers.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
-            this.listUsers.FullRowSelect = true;
-            this.listUsers.Location = new System.Drawing.Point(12, 66);
-            this.listUsers.MultiSelect = false;
-            this.listUsers.Name = "listUsers";
-            this.listUsers.Size = new System.Drawing.Size(160, 282);
-            this.listUsers.TabIndex = 21;
-            this.listUsers.UseCompatibleStateImageBehavior = false;
-            this.listUsers.View = System.Windows.Forms.View.Tile;
-            this.listUsers.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listUsers_KeyDown);
-            this.listUsers.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listUsers_MouseDoubleClick);
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Width = 172;
-            // 
-            // buttonShowHideContacts
-            // 
-            this.buttonShowHideContacts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonShowHideContacts.Location = new System.Drawing.Point(182, 156);
-            this.buttonShowHideContacts.Name = "buttonShowHideContacts";
-            this.buttonShowHideContacts.Size = new System.Drawing.Size(107, 36);
-            this.buttonShowHideContacts.TabIndex = 22;
-            this.buttonShowHideContacts.Text = "Показать/скрыть оффлайн контакты";
-            this.buttonShowHideContacts.UseVisualStyleBackColor = true;
-            this.buttonShowHideContacts.Visible = false;
-            this.buttonShowHideContacts.Click += new System.EventHandler(this.buttonShowHideContacts_Click);
-            // 
-            // buttonSettings
-            // 
-            this.buttonSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSettings.Location = new System.Drawing.Point(182, 12);
-            this.buttonSettings.Name = "buttonSettings";
-            this.buttonSettings.Size = new System.Drawing.Size(103, 49);
-            this.buttonSettings.TabIndex = 23;
-            this.buttonSettings.Text = "Настройки";
-            this.buttonSettings.UseVisualStyleBackColor = true;
-            this.buttonSettings.Click += new System.EventHandler(this.buttonSettings_Click);
-            // 
-            // opacityLabel1
-            // 
-            this.opacityLabel1.AutoSize = true;
-            this.opacityLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(15)))), ((int)(((byte)(0)))));
-            this.opacityLabel1.ForeColor = System.Drawing.Color.Black;
-            this.opacityLabel1.Location = new System.Drawing.Point(15, 15);
-            this.opacityLabel1.Margin = new System.Windows.Forms.Padding(0);
-            this.opacityLabel1.Name = "opacityLabel1";
-            this.opacityLabel1.Size = new System.Drawing.Size(41, 13);
-            this.opacityLabel1.TabIndex = 24;
-            this.opacityLabel1.Text = "Статус";
-            // 
-            // FormJabberStart
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(297, 366);
-            this.Controls.Add(this.opacityLabel1);
-            this.Controls.Add(this.buttonSettings);
-            this.Controls.Add(this.buttonShowHideContacts);
-            this.Controls.Add(this.listUsers);
-            this.Controls.Add(this.buttonJoinConf);
-            this.Controls.Add(this.buttonCreateConf);
-            this.Controls.Add(this.buttonLogin);
-            this.Controls.Add(this.passwordBox);
-            this.Controls.Add(this.loginBox);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.checkBoxConnected);
-            this.Controls.Add(this.textBoxStatus);
-            this.Controls.Add(this.Exit);
-            this.Name = "FormJabberStart";
-            this.Text = "FormJabberStart";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormJabberStart_FormClosing);
-            this.Load += new System.EventHandler(this.FormJabberStart_Load);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+			this.listUsers.FullRowSelect = true;
+			this.listUsers.Location = new System.Drawing.Point(22, 122);
+			this.listUsers.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.listUsers.MultiSelect = false;
+			this.listUsers.Name = "listUsers";
+			this.listUsers.Size = new System.Drawing.Size(310, 306);
+			this.listUsers.TabIndex = 21;
+			this.listUsers.UseCompatibleStateImageBehavior = false;
+			this.listUsers.View = System.Windows.Forms.View.Tile;
+			this.listUsers.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listUsers_KeyDown);
+			this.listUsers.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listUsers_MouseDoubleClick);
+			// 
+			// columnHeader1
+			// 
+			this.columnHeader1.Width = 172;
+			// 
+			// buttonShowHideContacts
+			// 
+			this.buttonShowHideContacts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonShowHideContacts.Location = new System.Drawing.Point(354, 288);
+			this.buttonShowHideContacts.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.buttonShowHideContacts.Name = "buttonShowHideContacts";
+			this.buttonShowHideContacts.Size = new System.Drawing.Size(196, 66);
+			this.buttonShowHideContacts.TabIndex = 22;
+			this.buttonShowHideContacts.Text = "Показать/скрыть оффлайн контакты";
+			this.buttonShowHideContacts.UseVisualStyleBackColor = true;
+			this.buttonShowHideContacts.Visible = false;
+			this.buttonShowHideContacts.Click += new System.EventHandler(this.buttonShowHideContacts_Click);
+			// 
+			// buttonSettings
+			// 
+			this.buttonSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonSettings.Location = new System.Drawing.Point(354, 22);
+			this.buttonSettings.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.buttonSettings.Name = "buttonSettings";
+			this.buttonSettings.Size = new System.Drawing.Size(189, 90);
+			this.buttonSettings.TabIndex = 23;
+			this.buttonSettings.Text = "Настройки";
+			this.buttonSettings.UseVisualStyleBackColor = true;
+			this.buttonSettings.Click += new System.EventHandler(this.buttonSettings_Click);
+			// 
+			// opacityLabel1
+			// 
+			this.opacityLabel1.AutoSize = true;
+			this.opacityLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(15)))), ((int)(((byte)(0)))));
+			this.opacityLabel1.ForeColor = System.Drawing.Color.Black;
+			this.opacityLabel1.Location = new System.Drawing.Point(28, 28);
+			this.opacityLabel1.Margin = new System.Windows.Forms.Padding(0);
+			this.opacityLabel1.Name = "opacityLabel1";
+			this.opacityLabel1.Size = new System.Drawing.Size(71, 24);
+			this.opacityLabel1.TabIndex = 24;
+			this.opacityLabel1.Text = "Статус";
+			// 
+			// FormJabberStart
+			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.ClientSize = new System.Drawing.Size(565, 443);
+			this.Controls.Add(this.opacityLabel1);
+			this.Controls.Add(this.buttonSettings);
+			this.Controls.Add(this.buttonShowHideContacts);
+			this.Controls.Add(this.listUsers);
+			this.Controls.Add(this.buttonJoinConf);
+			this.Controls.Add(this.buttonCreateConf);
+			this.Controls.Add(this.button4);
+			this.Controls.Add(this.checkBoxConnected);
+			this.Controls.Add(this.textBoxStatus);
+			this.Controls.Add(this.Exit);
+			this.Margin = new System.Windows.Forms.Padding(9, 9, 9, 9);
+			this.Name = "FormJabberStart";
+			this.Text = "FormJabberStart";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormJabberStart_FormClosing);
+			this.Load += new System.EventHandler(this.FormJabberStart_Load);
+			this.ResumeLayout(false);
+			this.PerformLayout();
 
         }
 
@@ -228,10 +200,7 @@
 
         private System.Windows.Forms.TextBox textBoxStatus;
         private System.Windows.Forms.CheckBox checkBoxConnected;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.TextBox loginBox;
-        private System.Windows.Forms.TextBox passwordBox;
-        private System.Windows.Forms.Button buttonLogin;
+		private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button Exit;
         private System.Windows.Forms.Button buttonCreateConf;
         private System.Windows.Forms.Button buttonJoinConf;

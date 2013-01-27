@@ -17,7 +17,7 @@ namespace EnterpriseMICApplicationDemo {
         }
 
         private void buttonCreate_Click(object sender, EventArgs e) {
-            (new FormConferention(textBoxConfName.Text.Trim() + "@conference." + Settings.server)).Show();
+            (new FormConferention(textBoxConfName.Text.Trim() + "@conference." + Settings.Server)).Show();
             this.Close();
         }
 

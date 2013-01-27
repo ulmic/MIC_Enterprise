@@ -107,6 +107,7 @@ namespace EnterpriseMICApplicationDemo{
 		#endregion
 
 		public static Member GetMemberAttrWithOneQuery(int userId) {
+			
 			openConnection();
 			MySqlCommand command = new MySqlCommand(SELECT_MEMBER_ATTRS_QUERY + userId.ToString() + "'", connection);
 			MySqlDataReader reader = command.ExecuteReader();

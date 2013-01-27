@@ -31,7 +31,7 @@ namespace EnterpriseMICApplicationDemo {
                     selectedUsers.Add(users.Keys.ElementAt(i));
                 }
             }
-            (new FormConferention(textBoxConfIdent.Text.Trim() + "@conference." + Settings.server, textBoxConfName.Text,
+            (new FormConferention(textBoxConfIdent.Text.Trim() + "@conference." + Settings.Server, textBoxConfName.Text,
                                     checkBoxHistory.Checked, checkBoxPersistentRoom.Checked, selectedUsers, textBoxDescription.Text)).Show();
             this.Close();
         }
