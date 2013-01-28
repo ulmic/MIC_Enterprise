@@ -12,6 +12,22 @@ namespace EnterpriseMICApplicationDemo {
 
 		private const string SELECT_LOCALS = "SELECT DISTINCT value FROM uservalues INNER JOIN attributes ON uservalues.id_attr = attributes.id_attr WHERE attributes.name = 'local' ORDER BY uservalues.value";
 		public const string EMPTY_CONDITION = "";
+
+		public SendingList SendingList {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
+		public Member Member {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
 		/// <summary>
 		/// Returns a list strings
 		/// </summary>

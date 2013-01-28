@@ -16,6 +16,23 @@ namespace EnterpriseMICApplicationDemo{
 		#endregion
 
 		private const string SELECT_MEMBER_ATTRS_QUERY = "SELECT " + ID_ATTR_COLUMN + ", " + VALUE_COLUMN + " FROM " + Const.USER_VALUES_TABLE + " WHERE " + Const.ID_USER_COLUMN + " = '";
+
+		public static Member Member {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
+		public static SendingList SendingList {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
 		#region GetMemberAttributes
 
 		public static string GetFamily(int idUser) {
@@ -107,7 +124,6 @@ namespace EnterpriseMICApplicationDemo{
 		#endregion
 
 		public static Member GetMemberAttrWithOneQuery(int userId) {
-			
 			openConnection();
 			MySqlCommand command = new MySqlCommand(SELECT_MEMBER_ATTRS_QUERY + userId.ToString() + "'", connection);
 			MySqlDataReader reader = command.ExecuteReader();
@@ -116,6 +132,8 @@ namespace EnterpriseMICApplicationDemo{
 			m.EnterDate = new DateTime();
 			while (reader.Read()) {
 				string attrName = db.GetAttrNameById(reader.GetInt32(ID_ATTR_COLUMN));
+				
+				#region Don't touch!!!
 				if (attrName == "b_day") {
 					m.BDate = new DateTime(m.BDate.Year, m.BDate.Month, reader.GetInt32(VALUE_COLUMN));
 					continue;
@@ -153,7 +171,8 @@ namespace EnterpriseMICApplicationDemo{
 						m.GetType().GetField(f.Name).SetValue(m, reader.GetString(VALUE_COLUMN));
 					}
 				}
-				
+
+				#endregion
 			}
 			return m;
 		}

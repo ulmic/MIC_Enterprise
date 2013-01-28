@@ -31,6 +31,14 @@ namespace EnterpriseMICApplicationDemo {
 			}
 		}
 
+		public MainForm MainForm {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
 		public AddToSendListNewItem() {
 			InitializeComponent();
 			NameTextBox.DisText = "ФИО";

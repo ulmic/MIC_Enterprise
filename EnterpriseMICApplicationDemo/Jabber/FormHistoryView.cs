@@ -11,7 +11,7 @@ using System.Net;
 
 
 namespace EnterpriseMICApplicationDemo {
-    public partial class FormHistoryView : Form {
+    public partial class FormHistoryView : EnterpriseMICApplicationMiniForm {
         private string roomjid;
 
         public FormHistoryView(string history) {
@@ -83,6 +83,10 @@ namespace EnterpriseMICApplicationDemo {
         private void buttonSee_Click(object sender, EventArgs e) {
             loadSimpleForm(roomjid);
         }
+
+		private void label2_Click(object sender, EventArgs e) {
+
+		}
 
     }
 }

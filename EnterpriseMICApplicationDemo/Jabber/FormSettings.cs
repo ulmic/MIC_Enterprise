@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace EnterpriseMICApplicationDemo {
-    public partial class FormSettings : Form {
+    public partial class FormSettings : EnterpriseMICApplicationMiniForm {
         public FormSettings() {
             InitializeComponent();
         }

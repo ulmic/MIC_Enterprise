@@ -485,15 +485,17 @@ namespace EnterpriseMICApplicationDemo {
 			SendMail sendMail = new SendMail();
 			if (this.workSpaceTableLayoutPanel.Controls.Contains(chooseComboBox)) {
 				SendingLists sendLists = new SendingLists();
-				List<string> emails = sendLists.getEmails(chooseComboBox.SelectedItem.ToString());
+				List<string> emails = SendingList.GetEmailsFromList(chooseComboBox.SelectedItem.ToString());
 				foreach (string email in emails) {
 					//sendMail.Send(email, HTMLWorkSpace.Text, Program.Data.MainUser.Email, Program.Data.MainUser.EmailPassword);
+					sendMail.Send(email, HTMLWorkSpace.Text);
 				}
+				return;
 			}
 			if (this.workSpaceTableLayoutPanel.Controls.Contains(mailAdressDisTextBox)) {
 				//sendMail.Send(mailAdressDisTextBox.Text, HTMLWorkSpace.Text, Program.Data.MainUser.Email, Program.Data.MainUser.EmailPassword);
+				sendMail.Send(mailAdressDisTextBox.Text, HTMLWorkSpace.Text);
 			}
-			throw new NotImplementedException();
 		}
 
 		private void yo_ThereIsExceptions(object sender, EventArgs e) {

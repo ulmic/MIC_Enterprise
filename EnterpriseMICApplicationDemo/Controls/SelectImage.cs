@@ -27,6 +27,14 @@ namespace EnterpriseMICApplicationDemo {
 			set { }
 		}
 
+		public MyPressReleaseControl MyPressReleaseControl {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
 		public SelectImage() {
 			InitializeComponent();
 		}

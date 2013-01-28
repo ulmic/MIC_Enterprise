@@ -20,7 +20,15 @@ namespace EnterpriseMICApplicationDemo {
 		/// Get all lists from base
 		/// </summary>
 
-		public SendingLists() {	}
+		public SendingLists() { }
+
+		public Middle Middle {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
 
 		public void addEmptyList(string title) {
 			MySqlConnection myConnection = new MySqlConnection();

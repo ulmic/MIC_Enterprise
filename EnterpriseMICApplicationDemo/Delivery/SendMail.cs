@@ -19,6 +19,14 @@ namespace EnterpriseMICApplicationDemo {
 			this.client.Credentials = new System.Net.NetworkCredential(smtpUserName, smtpUserPass);
 		}
 
+		public Middle Middle {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
 		public string Send(string to, string mess) {
 			ContentType mimeType = new System.Net.Mime.ContentType("text/html");
 			MailMessage message = new MailMessage(FromAddr, to, "", mess);

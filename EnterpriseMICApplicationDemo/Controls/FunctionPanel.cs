@@ -114,5 +114,13 @@ namespace EnterpriseMICApplicationDemo {
 		}
 
 		#endregion
+
+		public MainForm array {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
 	}
 }

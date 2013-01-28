@@ -11,6 +11,14 @@ namespace EnterpriseMICApplicationDemo {
 	public class ForgotPassword {
 
 		public ForgotPassword() { }
+
+		public ForgotPasswordForm ForgotPasswordForm {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
 		/// <summary>
 		/// Impose mail text to send to user
 		/// </summary>
