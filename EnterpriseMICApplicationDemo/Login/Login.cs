@@ -10,6 +10,14 @@ namespace EnterpriseMICApplicationDemo {
 
 		public Login() { }
 
+		public LoginForm LoginForm {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
 		public int CheckEnter() {
 			int userId;
 			try {

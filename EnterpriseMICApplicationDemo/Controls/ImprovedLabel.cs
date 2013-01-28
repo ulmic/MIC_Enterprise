@@ -287,5 +287,13 @@ namespace EnterpriseMICApplicationDemo {
 		public void SaveText(EventHandler newEvent) {
 			Textbox.TextChanged += newEvent;
 		}
+
+		public MainForm array {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
 	}
 }

@@ -10,5 +10,13 @@ namespace EnterpriseMICApplicationDemo {
 		public AppButton() {
 			this.Dock = DockStyle.Fill;
 		}
+
+		public MainForm array {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
 	}
 }

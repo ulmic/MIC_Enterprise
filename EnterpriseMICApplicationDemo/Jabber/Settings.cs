@@ -20,5 +20,53 @@ namespace EnterpriseMICApplicationDemo {
 		public static System.Drawing.Color myColor = System.Drawing.Color.Green;
 		public static System.Drawing.Color youColor = System.Drawing.Color.Red;
 		public static int requestId = 0;
+
+		public static FormConferention FormConferention {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
+		public static FormHistoryView FormHistoryView {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
+		public static FormJoinConferention FormJoinConferention {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
+		public static FormCreateConferention FormCreateConferention {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
+		public static FormSettings FormSettings {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
+		public static FormJabberStart FormJabberStart {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
 	}
 }

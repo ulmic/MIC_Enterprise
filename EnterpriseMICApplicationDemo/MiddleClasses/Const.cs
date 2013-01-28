@@ -175,5 +175,13 @@ namespace EnterpriseMICApplicationDemo {
 		public const string ID_USER_COLUMN = "id_user";
 
 		#endregion
+
+		public static MainForm MainForm {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
 	}
 }

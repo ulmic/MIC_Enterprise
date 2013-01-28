@@ -33,6 +33,7 @@ namespace EnterpriseMICApplicationDemo {
 			InitializeComponent();
 			this.Paint += new PaintEventHandler(FormJabberStart_Paint);
 		}
+	
 		private void initSettings(string ip, string nickname, string jid) {
 			Settings.serverIp = ip;
 			Settings.NickName = nickname;

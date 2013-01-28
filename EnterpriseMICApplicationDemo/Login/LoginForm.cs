@@ -31,6 +31,14 @@ namespace EnterpriseMICApplicationDemo {
 
 		}
 
+		public MainForm MainForm {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
 		private void loginTextBox_TextChanged(object sender, EventArgs e) {
 			enterButton.Enabled = (loginTextBox.Text.Length > 0) && (passwordTextBox.Text.Length > 0);
 		}

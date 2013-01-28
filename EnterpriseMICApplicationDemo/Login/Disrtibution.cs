@@ -8,6 +8,14 @@ namespace EnterpriseMICApplicationDemo {
 	/// This class produces a functional separation
 	/// </summary>
 	static public class Distribution {
+		public static Member Member {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+	
 		public enum Level { President, Presidium, RegionalProgramsHead, DepartamentHead, Curator, Insider };
 
 		/// <summary>

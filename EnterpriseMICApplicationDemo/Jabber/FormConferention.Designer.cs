@@ -24,8 +24,8 @@
         /// </summary>
         private void InitializeComponent() {
             this.txtSubject = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new EnterpriseMICApplicationDemo.OpacityLabel();
+            this.label2 = new EnterpriseMICApplicationDemo.OpacityLabel();
             this.listBoxConfUsers = new System.Windows.Forms.ListBox();
             this.buttonSend = new System.Windows.Forms.Button();
             this.checkIfEnter = new System.Windows.Forms.CheckBox();
@@ -157,8 +157,8 @@
         #endregion
 
         private System.Windows.Forms.TextBox txtSubject;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private EnterpriseMICApplicationDemo.OpacityLabel label1;
+        private EnterpriseMICApplicationDemo.OpacityLabel label2;
         private System.Windows.Forms.ListBox listBoxConfUsers;
         private System.Windows.Forms.Button buttonSend;
         private System.Windows.Forms.CheckBox checkIfEnter;

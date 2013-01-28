@@ -10,6 +10,22 @@ namespace EnterpriseMICApplicationDemo {
 	/// Class has functions, which work wihh try catch
 	/// </summary>
 	public static class AnyCatches {
+		public static Middle Middle {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
+		public static Member Member {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+	
 		public static string[] TryReadAllLines(string adress, System.Text.Encoding enc) {
 			string[] lines;
 			try {

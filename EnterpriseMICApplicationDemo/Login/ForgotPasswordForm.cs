@@ -14,6 +14,14 @@ namespace EnterpriseMICApplicationDemo {
 			sendButton.Enabled = false;
 		}
 
+		public LoginForm LoginForm {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
 		private void rememberCheckBox_CheckedChanged(object sender, EventArgs e) {
 			sendButton.Enabled = iWillNeverCheckBox.Checked;
 		}

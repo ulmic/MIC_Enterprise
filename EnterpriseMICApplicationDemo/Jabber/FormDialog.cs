@@ -15,6 +15,7 @@ namespace EnterpriseMICApplicationDemo {
         public FormDialog() {
             InitializeComponent();
         }
+	
         protected override void OnClosing(CancelEventArgs e) {
             e.Cancel = true;
             Hide();
