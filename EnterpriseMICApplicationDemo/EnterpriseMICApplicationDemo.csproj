@@ -78,6 +78,9 @@
       <HintPath>C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\Microsoft.CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="ModelEditControl">
+      <HintPath>..\MIC_Enterprise_DLLs\ModelEditControl.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data">
       <HintPath>..\MIC_Enterprise_DLLs\MySql.Data.dll</HintPath>
     </Reference>

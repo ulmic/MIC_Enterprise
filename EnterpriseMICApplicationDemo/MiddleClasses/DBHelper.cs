@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using MySql.Data.MySqlClient;
 
 namespace EnterpriseMICApplicationDemo {
@@ -38,25 +39,50 @@ namespace EnterpriseMICApplicationDemo {
 			connection.Open();
 			MySqlCommand command = new MySqlCommand(SelectMembersByLocals(local), connection);
 			MySqlDataReader reader = command.ExecuteReader();
-			while (reader.Read()) {
-				members.Add(reader.GetString(0));
-			}
+            while( true ) {
+                string firstName = "";
+                string family = "";
+                string lastName = "";
+                bool stop = true;
+                for (int i = 0; i < 3 && reader.Read(); i++) {
+                    switch (reader.GetUInt32(1)) {
+                        case 2:
+                            family = reader.GetString(2);
+                            break;
+                        case 3:
+                            firstName = reader.GetString(2);
+                            break;
+                        case 4:
+                            lastName = reader.GetString(2);
+                            break;
+                    };
+                    stop = false;
+                }
+                if (stop) {
+                    break;
+                }
+                members.Add(reader.GetString(0) + " " + family + " " + firstName + " " + lastName);               
+            }
 			connection.Close();
-			for (int i = 0; i < members.Count; i++) {
-				int id_user = Int32.Parse(members[i]);
-				members[i] += " " + Member_DB.GetFamily(id_user) + " " + Member_DB.GetFirstName(id_user) + " " + Member_DB.GetLastName(id_user);
-			}
-			members.Remove("");
+			members.RemoveAll(item => item == "");
 			return members;
 		}
 
-		private string SelectMembersByLocals(string local) {
-			int familyAttrId = GetAttrIdByName(Const.FAMILY);
-			int firstNameAttrId = GetAttrIdByName(Const.FIRST_NAME);
-			int lastNameAttrId = GetAttrIdByName(Const.LAST_NAME);
-			
-			return "SELECT id_user FROM uservalues INNER JOIN attributes ON attributes.id_attr = uservalues.id_attr WHERE uservalues.value = '" + local + "' and attributes.name = 'local'";
-		}
+        private string SelectMembersByLocals(string local) {
+            int familyAttrId = GetAttrIdByName(Const.FAMILY);
+            int firstNameAttrId = GetAttrIdByName(Const.FIRST_NAME);
+            int lastNameAttrId = GetAttrIdByName(Const.LAST_NAME);
+
+            return @"SELECT t1.id_user, t1.id_attr, t1.value 
+                FROM uservalues AS t1
+                INNER JOIN attributes AS ta1 
+                ON t1.id_attr = ta1.id_attr
+                INNER JOIN uservalues AS t2 
+                ON t1.id_user = t2.id_user
+                INNER JOIN attributes AS ta2 
+                ON t2.id_attr = ta2.id_attr
+                WHERE (t2.value = '" + local + "' and ta2.name = 'local') AND (ta1.name = 'family' OR ta1.name = 'firstName' or ta1.name = 'lastName') ORDER BY id_user";
+        }
 
 		/// <summary>
 		/// Returns a list of places (local from the DB)
