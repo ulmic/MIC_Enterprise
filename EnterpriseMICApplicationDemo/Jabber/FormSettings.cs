@@ -8,18 +8,10 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace EnterpriseMICApplicationDemo {
-    public partial class FormSettings : Form {
+    public partial class FormSettings : EnterpriseMICApplicationMiniForm {
         public FormSettings() {
             InitializeComponent();
         }
-
-		public FormJabberStart FormJabberStart {
-			get {
-				throw new System.NotImplementedException();
-			}
-			set {
-			}
-		}
 
         private void applySettings() {
             Settings.serverIp = textBoxIP.Text;

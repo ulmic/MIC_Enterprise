@@ -23,6 +23,7 @@ namespace EnterpriseMICApplicationDemo {
         private string roomDesc;//описание комнаты
         private string savingHistory;
         private string persistRoom;
+        private string usingPassword;
         private XmppClientConnection xmpp;
         private MucManager muc;
 
@@ -31,7 +32,7 @@ namespace EnterpriseMICApplicationDemo {
         /// </summary>
         /// <param name="_roomJid"></param>
         /// <param name="password"></param>
-        public FormConferention(string _roomJid, string password = null) {
+        public FormConferention(string _roomJid, string password = "") {
             InitializeComponent();
             setInfoOfTheRoom();
             roomJid = new Jid(_roomJid);
@@ -41,7 +42,7 @@ namespace EnterpriseMICApplicationDemo {
             nickname = Settings.NickName;
             xmpp = Settings.xmpp;
             muc = new MucManager(xmpp);
-            muc.JoinRoom(roomJid, "as"/*NickName*/, password);
+            muc.JoinRoom(roomJid, nickname, password);
             xmpp.MesagageGrabber.Add(roomJid, new BareJidComparer(), new MessageCB(MessageCallback), null);
             xmpp.PresenceGrabber.Add(roomJid, new BareJidComparer(), new PresenceCB(PresenceCallback), null);
         }
@@ -56,7 +57,7 @@ namespace EnterpriseMICApplicationDemo {
         /// <param name="users">Приглашенные юзеры</param>
         /// <param name="_roomDesc">Описание комнаты</param>
         /// <param name="password"></param>
-        public FormConferention(string _roomJid, string _roomName, bool _savingHistory, bool _persistRoom, List<string> users = null, string _roomDesc = "", string password = null) {
+        public FormConferention(string _roomJid, string _roomName, bool _savingHistory, bool _persistRoom, List<string> users = null, string _roomDesc = "", string password = "") {
             InitializeComponent();
             roomJid = new Jid(_roomJid);
             // roomJid.Resource = _roomName;
@@ -69,34 +70,17 @@ namespace EnterpriseMICApplicationDemo {
             muc = new MucManager(xmpp);
             savingHistory = _savingHistory ? "1" : "0";
             persistRoom = _persistRoom ? "1" : "0";
+			usingPassword = password != "" ? "1" : "0";
             muc.CreateReservedRoom(roomJid);
             muc.GrantOwnershipPrivileges(roomJid, new Jid(mainJid));
             muc.JoinRoom(roomJid, nickname, password);
             initMucConfig();
             xmpp.MesagageGrabber.Add(roomJid, new BareJidComparer(), new MessageCB(MessageCallback), null);
             xmpp.PresenceGrabber.Add(roomJid, new BareJidComparer(), new PresenceCB(PresenceCallback), null);
-            muc.Invite(users.ConvertAll<Jid>(deleg).ToArray(), roomJid, "Вы приглашены в конференцию " + roomName);
-        }
-
-		public FormJoinConferention FormJoinConferention {
-			get {
-				throw new System.NotImplementedException();
-			}
-			set {
-			}
-		}
-
-		public FormCreateConferention FormCreateConferention {
-			get {
-				throw new System.NotImplementedException();
-			}
-			set {
-			}
-		}
-
-        private Jid deleg(string jid) {
-            return new Jid(jid);
-        }
+			muc.Invite(users.ConvertAll<Jid>(delegate(string jid) {
+				return new Jid(jid);
+			}).ToArray(), roomJid, "Вы приглашены в конференцию " + roomName);
+        }        
 
         private void initMucConfig() {
             muc.RequestConfigurationForm(roomJid, new IqCB(ReceiveFormConfiguration));
@@ -141,7 +125,7 @@ namespace EnterpriseMICApplicationDemo {
             addFieldInDataIQ(data, "muc#roomconfig_persistentroom", persistRoom);
             addFieldInDataIQ(data, "muc#roomconfig_publicroom", "1");
             addFieldInDataIQ(data, "public_list", "1");
-            addFieldInDataIQ(data, "muc#roomconfig_passwordprotectedroom", "0");//(password == "") ? "0" : "1");//сложно сказать
+            addFieldInDataIQ(data, "muc#roomconfig_passwordprotectedroom", usingPassword);//сложно сказать
             addFieldInDataIQ(data, "muc#roomconfig_roomsecret", "");
             addFieldInDataIQ(data, "muc#roomconfig_maxusers", "1000");
             addFieldInDataIQ(data, "muc#roomconfig_whois", "moderators");

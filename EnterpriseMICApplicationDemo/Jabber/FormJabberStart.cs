@@ -33,14 +33,6 @@ namespace EnterpriseMICApplicationDemo {
 			InitializeComponent();
 			this.Paint += new PaintEventHandler(FormJabberStart_Paint);
 		}
-
-		public MainForm MainForm {
-			get {
-				throw new System.NotImplementedException();
-			}
-			set {
-			}
-		}
 	
 		private void initSettings(string ip, string nickname, string jid) {
 			Settings.serverIp = ip;

@@ -10,7 +10,7 @@ using agsXMPP;
 using agsXMPP.protocol.client;
 
 namespace EnterpriseMICApplicationDemo {
-    public partial class FormCreateConferention : Form {
+    public partial class FormCreateConferention : EnterpriseMICApplicationMiniForm {
         Dictionary<string, string> users;
 
         public FormCreateConferention(Dictionary<string, string> _users) {
@@ -24,14 +24,6 @@ namespace EnterpriseMICApplicationDemo {
             }
         }
 
-		public FormJabberStart FormJabberStart {
-			get {
-				throw new System.NotImplementedException();
-			}
-			set {
-			}
-		}
-
         private void buttonCreate_Click(object sender, EventArgs e) {
             List<string> selectedUsers = new List<string>();
             for (int i = 0; i < listViewUsers.Items.Count; i++) {
@@ -40,7 +32,7 @@ namespace EnterpriseMICApplicationDemo {
                 }
             }
             (new FormConferention(textBoxConfIdent.Text.Trim() + "@conference." + Settings.Server, textBoxConfName.Text,
-                                    checkBoxHistory.Checked, checkBoxPersistentRoom.Checked, selectedUsers, textBoxDescription.Text)).Show();
+                                    checkBoxHistory.Checked, checkBoxPersistentRoom.Checked, selectedUsers, textBoxDescription.Text, textBoxPassword.Text)).Show();
             this.Close();
         }
 

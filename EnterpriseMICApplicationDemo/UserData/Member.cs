@@ -65,8 +65,9 @@ namespace EnterpriseMICApplicationDemo {
 
 		public Member(int userId) {
 			Id = userId;
-			Login = Login_DB.GetUserById(userId).Login;
-			Password = Login_DB.GetUserById(userId).Password;
+			User user = Login_DB.GetUserById(userId);
+			Login = user.Login;
+			Password = user.Password;
 			Functions = new bool[Const.FUNCTIONS_COUNT];
 			giveFunctions();
 			getMemberByUserId();
@@ -85,7 +86,7 @@ namespace EnterpriseMICApplicationDemo {
 			for (int i = 0; i < Functions.Length; i++) {
 				Functions[i] = false;
 			}
-			Distribution.SetLevel(ref userLevel, Member_DB.GetUserLevel(Id));
+			Distribution.SetLevel(ref userLevel, 5);
 			Distribution.SetFunctions(userLevel, ref Functions);
 		}
 

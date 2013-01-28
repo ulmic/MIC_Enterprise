@@ -10,22 +10,14 @@ using agsXMPP;
 using agsXMPP.protocol.client;
 
 namespace EnterpriseMICApplicationDemo {
-    public partial class FormJoinConferention : Form {
+    public partial class FormJoinConferention : EnterpriseMICApplicationMiniForm {
 
         public FormJoinConferention() {
             InitializeComponent();
         }
 
-		public FormJabberStart FormJabberStart {
-			get {
-				throw new System.NotImplementedException();
-			}
-			set {
-			}
-		}
-
         private void buttonCreate_Click(object sender, EventArgs e) {
-            (new FormConferention(textBoxConfName.Text.Trim() + "@conference." + Settings.Server)).Show();
+            (new FormConferention(textBoxConfName.Text.Trim() + "@conference." + Settings.Server, textBoxPassword.Text)).Show();
             this.Close();
         }
 
