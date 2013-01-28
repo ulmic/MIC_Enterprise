@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
 namespace EnterpriseMICApplicationDemo {
@@ -12,11 +10,19 @@ namespace EnterpriseMICApplicationDemo {
 
 		public Login() { }
 
+		public LoginForm LoginForm {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
 		public int CheckEnter() {
 			int userId;
 			try {
 				userId = Int32.Parse(File.ReadAllText(@Const.adressRememberUserFile, System.Text.Encoding.Default));
-				Program.Data.MainUser = Login_DB.GetUserById(userId);
+				Program.Data.SetMainUser(userId);
 			} catch {
 				File.WriteAllText(@Const.adressRememberUserFile, Const.THEREISNOT.ToString());
 				return Const.THEREISNOT;
@@ -25,7 +31,10 @@ namespace EnterpriseMICApplicationDemo {
 		}
 
 		private int getUserId(string login, string password) {
-			int userId = Login_DB.GetUserIndexByLoginPassword(login, password);
+			int userId = 0;
+			Log.LogTryCatch(delegate() {
+				userId = Login_DB.GetUserIndexByLoginPassword(login, password);
+			});
 			return userId;
 		}
 
@@ -35,7 +44,7 @@ namespace EnterpriseMICApplicationDemo {
 				if (remember) {
 					File.WriteAllText(@Const.adressRememberUserFile, userId.ToString());
 				}
-				Program.Data.SetMainUser(userId, login, password);
+				Program.Data.SetMainUser(userId);
 				return true;
 			}
 			return false;

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 
@@ -288,6 +286,14 @@ namespace EnterpriseMICApplicationDemo {
 		/// <param name="newEvent"></param>
 		public void SaveText(EventHandler newEvent) {
 			Textbox.TextChanged += newEvent;
+		}
+
+		public MainForm array {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
 		}
 	}
 }

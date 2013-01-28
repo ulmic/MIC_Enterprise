@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace EnterpriseMICApplicationDemo {
 	public class Short : User {
@@ -67,8 +65,11 @@ namespace EnterpriseMICApplicationDemo {
 
 		public Member(int userId) {
 			Id = userId;
-			Login = Login_DB.GetUserById(userId).Login;
-			Password = Login_DB.GetUserById(userId).Password;
+			User user = Login_DB.GetUserById(userId);
+			Login = user.Login;
+			Password = user.Password;
+			Functions = new bool[Const.FUNCTIONS_COUNT];
+			giveFunctions();
 			getMemberByUserId();
 		}
 
@@ -80,18 +81,12 @@ namespace EnterpriseMICApplicationDemo {
 			giveFunctions();
 			getMemberByUserId();
 		}
-		
-		public override string ToString() {
-			return Family + " " + FirstName + " " + LastName + "\n" + BDate + "\n" + Number + "\n" + Local + "\n" + Education
-			  + "\n" + Job + "\n" + EnterDate + "\n" + Index_Adress + State + City + Area + Home_Adress + "\n" +
-			  Contacts + "\n" + Enter_Mark + "\n" + Change_Date + "\n" + God_Father + "\n" + Post + "\n" + Email;
-		}
 
 		private void giveFunctions() {
 			for (int i = 0; i < Functions.Length; i++) {
 				Functions[i] = false;
 			}
-			Distribution.SetLevel(ref userLevel, Member_DB.GetUserLevel(Id));
+			Distribution.SetLevel(ref userLevel, 5);
 			Distribution.SetFunctions(userLevel, ref Functions);
 		}
 

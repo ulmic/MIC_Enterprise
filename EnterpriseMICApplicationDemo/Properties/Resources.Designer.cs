@@ -91,7 +91,7 @@ namespace EnterpriseMICApplicationDemo.Properties {
         ///аблезговскому 3
         ///абраменковские 5
         ///абраменковский 5
-        ///абраменковским 5
+        ///абраменковским вс
         ///абраменковскими 5
         ///абраменковских 5
         ///абраменковского 5
@@ -106,7 +106,7 @@ namespace EnterpriseMICApplicationDemo.Properties {
         ///автогидроподъемники 13
         ///автогидроподъемников 13
         ///автогидроподъемником 13
-        ///автогидроподъ [rest of string was truncated]&quot;;.
+        ///автогидропод [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string dictionary {
             get {
@@ -118,6 +118,7 @@ namespace EnterpriseMICApplicationDemo.Properties {
         ///   Looks up a localized string similar to все 2
         ///всем 2
         ///черт 1
+        ///черта 1
         ///лет 1.
         /// </summary>
         internal static string exceptions {

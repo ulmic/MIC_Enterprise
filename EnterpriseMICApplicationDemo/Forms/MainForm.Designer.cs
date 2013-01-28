@@ -158,6 +158,7 @@
 			this.leftFunctionPanel.Location = new System.Drawing.Point(3, 3);
 			this.leftFunctionPanel.Name = "leftFunctionPanel";
 			this.leftFunctionPanel.ReverseGradient = false;
+			this.leftFunctionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.leftFunctionPanel.Size = new System.Drawing.Size(224, 396);
 			this.leftFunctionPanel.TabIndex = 0;
 			this.leftFunctionPanel.TableBorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -397,11 +398,12 @@
 			this.fillFunctionPanel.Name = "fillFunctionPanel";
 			this.fillFunctionPanel.ReverseGradient = false;
 			this.fillFunctionPanel.RowCount = 1;
+			this.fillFunctionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.fillFunctionPanel.Size = new System.Drawing.Size(800, 406);
 			this.fillFunctionPanel.TabIndex = 0;
 			this.fillFunctionPanel.TableBorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			// 
-			// MainForm
+			// messageLabel
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -410,7 +412,7 @@
 			this.Font = new System.Drawing.Font("PF BeauSans Pro", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MinimumSize = new System.Drawing.Size(763, 444);
-			this.Name = "MainForm";
+			this.Name = "messageLabel";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Корпорация МИЦ";
 			this.bottomTableLayoutPanel.ResumeLayout(false);

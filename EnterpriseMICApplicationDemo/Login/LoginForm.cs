@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using serializ2;
 
 namespace EnterpriseMICApplicationDemo {
 
@@ -32,6 +29,14 @@ namespace EnterpriseMICApplicationDemo {
 
 			InputLanguage.CurrentInputLanguage = InputLanguage.InstalledInputLanguages[1];
 
+		}
+
+		public MainForm MainForm {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
 		}
 
 		private void loginTextBox_TextChanged(object sender, EventArgs e) {

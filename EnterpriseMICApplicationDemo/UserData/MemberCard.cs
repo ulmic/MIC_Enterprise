@@ -37,6 +37,14 @@ namespace EnterpriseMICApplicationDemo {
 			this.BackColor = System.Drawing.Color.White;
 		}
 
+		public MainForm MainForm {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
 		public void ReturnSize() {
 			this.Size = new System.Drawing.Size(size, size);
 		}

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace EnterpriseMICApplicationDemo {
 	/// <summary>
@@ -174,6 +172,16 @@ namespace EnterpriseMICApplicationDemo {
 		public const string USER_LEVEL = "userId";
 		public const string EMAIL = "email";
 
+		public const string ID_USER_COLUMN = "id_user";
+
 		#endregion
+
+		public static MainForm MainForm {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
 	}
 }

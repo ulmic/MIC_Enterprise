@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace EnterpriseMICApplicationDemo {
@@ -17,6 +14,14 @@ namespace EnterpriseMICApplicationDemo {
 		private decimal border;
 		public TableOption() {
 			InitializeComponent();
+		}
+
+		public MyPressReleaseControl MyPressReleaseControl {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
 		}
 
 		private void button1_Click(object sender, EventArgs e) {

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
@@ -13,6 +11,14 @@ namespace EnterpriseMICApplicationDemo {
 	public class ForgotPassword {
 
 		public ForgotPassword() { }
+
+		public ForgotPasswordForm ForgotPasswordForm {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
 		/// <summary>
 		/// Impose mail text to send to user
 		/// </summary>

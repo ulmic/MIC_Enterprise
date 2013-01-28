@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
 namespace EnterpriseMICApplicationDemo {
@@ -28,6 +26,17 @@ namespace EnterpriseMICApplicationDemo {
 
 		public User() { }
 
+		private string getValue(string filepath, int index) {
+			string[] tempVal = AnyCatches.TryReadAllLines(filepath, System.Text.Encoding.Default);
+			if ( tempVal == null ) {
+				return null;
+			}
+			if ( index >= tempVal.Length ) {
+				return null;
+			}
+			return tempVal[index];
+		}
+
 		private void getUserByIndex(int index) {
 			Id = index;
 			Login = 
@@ -35,7 +44,6 @@ namespace EnterpriseMICApplicationDemo {
 			if ((AnyCatches.IfThereIsNot(Login)) || (AnyCatches.IfThereIsNot(Password))) {
 				return;
 			}
-			
 		}
 	}
 }

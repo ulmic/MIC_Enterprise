@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace EnterpriseMICApplicationDemo {
@@ -12,6 +10,14 @@ namespace EnterpriseMICApplicationDemo {
 
 		public MessageLabel() {
 			this.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+		}
+
+		public MainForm messageLabel {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
 		}
 		
 		#region Obsolete attributes

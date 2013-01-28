@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace EnterpriseMICApplicationDemo {
@@ -15,6 +12,14 @@ namespace EnterpriseMICApplicationDemo {
 		public ForgotPasswordForm() {
 			InitializeComponent();
 			sendButton.Enabled = false;
+		}
+
+		public LoginForm LoginForm {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
 		}
 
 		private void rememberCheckBox_CheckedChanged(object sender, EventArgs e) {

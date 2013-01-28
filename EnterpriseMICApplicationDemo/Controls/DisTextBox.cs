@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace EnterpriseMICApplicationDemo {
@@ -49,9 +47,17 @@ namespace EnterpriseMICApplicationDemo {
 		/// <summary>
 		/// Check whether the text was changed in textbox
 		/// </summary>
-		public bool NotDisText {
+		public bool TextWasChanged {
 			get {
 				return (Text != disText);
+			}
+		}
+
+		public MainForm array {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
 			}
 		}
 	}

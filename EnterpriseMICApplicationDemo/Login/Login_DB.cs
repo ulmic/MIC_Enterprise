@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using MySql.Data.MySqlClient;
 
@@ -10,6 +9,22 @@ namespace EnterpriseMICApplicationDemo {
 		private static DBHelper db;
 		public const string LOGIN_ATTR = "login";
 		public const string PASSWORD_ATTR = "password";
+
+		public static Login Login {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
+
+		public static DBHelper DBHelper {
+			get {
+				throw new System.NotImplementedException();
+			}
+			set {
+			}
+		}
 
 		public static int GetUserIndexByLoginPassword(string login, string password) {
 			openConnection();
