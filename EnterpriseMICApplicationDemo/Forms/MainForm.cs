@@ -373,23 +373,29 @@ namespace EnterpriseMICApplicationDemo {
 		}
 
 		private void GetMemberClick(object sender, EventArgs e) {
-			if (memberList[Const.MEMBERS].SelectedItem != null) {
-				Member member = new Member();
-				member = Program.Data.GetMICMember(Int32.Parse(memberList[Const.MEMBERS].SelectedItem.ToString().Split(' ')[0]));
-				int index = this.workSpaceTableLayoutPanel.Controls.IndexOf(memberCard);
-				if (index == -1) {
-					memberCard = new MemberCard();
-					memberCard.PutMember(member);
-					this.workSpaceTableLayoutPanel.Controls.Add(memberCard, 2, 2);
-				} else {
-					((MemberCard)this.workSpaceTableLayoutPanel.Controls[index]).ChangeMember(member);
-				}
-			}
+            try {
+                if (memberList[Const.MEMBERS].SelectedItem != null) {
+                    Member member = new Member();
+                    member = Program.Data.GetMICMember(Int32.Parse(memberList[Const.MEMBERS].SelectedItem.ToString().Split(' ')[0]));
+                    int index = this.workSpaceTableLayoutPanel.Controls.IndexOf(memberCard);
+                    if (index == -1) {
+                        memberCard = new MemberCard();
+                        memberCard.PutMember(member);
+                        this.workSpaceTableLayoutPanel.Controls.Add(memberCard, 2, 2);
+                    } else {
+                        ((MemberCard)this.workSpaceTableLayoutPanel.Controls[index]).ChangeMember(member);
+                    }
+                }
+            } catch {
+            }
 		}
 
 		private void MemberList_Click(object sender, EventArgs e) {
-			workSpaceTableLayoutPanel.needPaint = false; // становиться true в событии mouseleave
-			PutInMemberListBox(memberList[Const.LOCALS].SelectedIndex);
+            try {
+                workSpaceTableLayoutPanel.needPaint = false; // становиться true в событии mouseleave
+                PutInMemberListBox(memberList[Const.LOCALS].SelectedIndex);
+            } catch {
+            }
 		}
 
 		private void PutInMemberListBox(int index) {
@@ -479,21 +485,24 @@ namespace EnterpriseMICApplicationDemo {
 
 
 		private void bottomButtonSendDelivery(object sender, EventArgs e) {
-			yo = new YO_class();
-			yo.ThereIsExceptions += new YO_class.EventHandler(yo_ThereIsExceptions);
-			HTMLWorkSpace.setTextNoTags(yo.pasteLetter(HTMLWorkSpace.getTextNoTags().Split(' ')));
-			SendMail sendMail = new SendMail();
-			if (this.workSpaceTableLayoutPanel.Controls.Contains(chooseComboBox)) {
-				SendingLists sendLists = new SendingLists();
-				List<string> emails = sendLists.getEmails(chooseComboBox.SelectedItem.ToString());
-				foreach (string email in emails) {
-					//sendMail.Send(email, HTMLWorkSpace.Text, Program.Data.MainUser.Email, Program.Data.MainUser.EmailPassword);
-				}
-			}
-			if (this.workSpaceTableLayoutPanel.Controls.Contains(mailAdressDisTextBox)) {
-				//sendMail.Send(mailAdressDisTextBox.Text, HTMLWorkSpace.Text, Program.Data.MainUser.Email, Program.Data.MainUser.EmailPassword);
-			}
-			throw new NotImplementedException();
+            try {
+                yo = new YO_class();
+                yo.ThereIsExceptions += new YO_class.EventHandler(yo_ThereIsExceptions);
+                HTMLWorkSpace.setTextNoTags(yo.pasteLetter(HTMLWorkSpace.getTextNoTags().Split(' ')));
+                SendMail sendMail = new SendMail();
+                if (this.workSpaceTableLayoutPanel.Controls.Contains(chooseComboBox)) {
+                    SendingLists sendLists = new SendingLists();
+                    List<string> emails = sendLists.getEmails(chooseComboBox.SelectedItem.ToString());
+                    foreach (string email in emails) {
+                        //sendMail.Send(email, HTMLWorkSpace.Text, Program.Data.MainUser.Email, Program.Data.MainUser.EmailPassword);
+                    }
+                }
+                if (this.workSpaceTableLayoutPanel.Controls.Contains(mailAdressDisTextBox)) {
+                    //sendMail.Send(mailAdressDisTextBox.Text, HTMLWorkSpace.Text, Program.Data.MainUser.Email, Program.Data.MainUser.EmailPassword);
+                }
+            } catch {
+            }
+			//throw new NotImplementedException();
 		}
 
 		private void yo_ThereIsExceptions(object sender, EventArgs e) {
@@ -584,22 +593,32 @@ namespace EnterpriseMICApplicationDemo {
 		}
 
 		private void sendMemberListButton_Click(object sender, EventArgs e) {
-			string value = memberList[Const.MEMBERS_LIST].SelectedItem.ToString();
-			value = value.Substring(value.LastIndexOf(' '));
-			workSpaceTableLayoutPanel.Controls.Clear();
-			createNewDelivery(Const.ONCE_MAIL);
-			mailAdressDisTextBox.Text = value;
+            try {
+                string value = memberList[Const.MEMBERS_LIST].SelectedItem.ToString();
+                value = value.Substring(value.LastIndexOf(' '));
+                workSpaceTableLayoutPanel.Controls.Clear();
+                createNewDelivery(Const.ONCE_MAIL);
+                mailAdressDisTextBox.Text = value;
+            } catch {
+                
+            }
 		}
 
 		private void sendListButton_Click(object sender, EventArgs e) {
-			int index = memberList[Const.LISTS].SelectedIndex;
-			workSpaceTableLayoutPanel.Controls.Clear();
-			createNewDelivery(Const.LIST_DELIVERY);
-			chooseComboBox.SelectedIndex = index;
+            try {
+                int index = memberList[Const.LISTS].SelectedIndex;
+                workSpaceTableLayoutPanel.Controls.Clear();
+                createNewDelivery(Const.LIST_DELIVERY);
+                chooseComboBox.SelectedIndex = index;
+            } catch {
+            }
 		}
 
 		private void SendList_Click(object sender, EventArgs e) {
-			PutInMemberListListBox(memberList[Const.LISTS].SelectedItem.ToString());
+            try {
+                PutInMemberListListBox(memberList[Const.LISTS].SelectedItem.ToString());
+            } catch {
+            }
 		}
 
 		private void MemberSendList_Click(object sender, EventArgs e) {

@@ -152,8 +152,7 @@ namespace EnterpriseMICApplicationDemo{
 						}
 						m.GetType().GetField(f.Name).SetValue(m, reader.GetString(VALUE_COLUMN));
 					}
-				}
-				
+				}				
 			}
 			return m;
 		}

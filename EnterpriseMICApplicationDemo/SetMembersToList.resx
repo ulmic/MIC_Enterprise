@@ -112,9 +112,50 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="fillPanel.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAjgAAABoCAYAAAD8ZIooAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAfuSURBVHhe7dblllBVAAZQ38vu7u7u7u7u7u7uVqTElhBU
+        WkkBFUEUi5m5nln3zJxv+QruH/sd9nrrxqzf9TZoPtgwbBQ2bsZuEjYNmzXjNg9bhC2b8VuFrattmgnb
+        hu3C9tUO3bqJI3YcNTBxp7BzN/DhsF3CrmG33qTdwx5hz95Hw/YKezcf7xP2Dft1A5+M2D8c0Pt02IHh
+        oHBwN/DZiEPCob3PDwuHhyOaL44MR4Wjmy+PCceG45rJx4cTwonNlJPCyeGUZuqp4bRwejPtjHBmOKv5
+        6uxwTnVuM/28cH64oLqwG5gx4qJRgzMuDpd0g18PuzRcFi7vfXNFuDJc1Xx7dbgmXNvMvC5cH25oZt0Y
+        bgo3N7NvCbeG23pzbg93hDu7wbkj7gp39+YNuyfc28y/L9wfHugGvxvxYHio+f7h8Eh4tFnwWHg8PNEs
+        fDI8FZ5uFj0Tnq2eaxY/H14IL1YvdYNLRrw8amjJK+HVbmjpsNfC6+GN3g9vhrfC282yd8K74b1m+fth
+        TPigWTE2jAvjmx8nhInhw95Pk/7jo+rj5udPwqfhs2bl5+GL8GXzy+QwJUxtVk0LX4XpzeoZ4evwTfPr
+        t2FmmNWsmR3mVHOb3+aF+eG7buj3Yd+HBaO6tQvDompx749hS8LS5s8fqmVhefPXivBj+Kn5++ewMvzS
+        /LMqrA6/NuvWhN/C772Btf/xR/VnM/hX+Dv80wytCwNhsOmGQtcJjuCUwAiO4AiO4AiO4AhOT3D62AhO
+        IziF4AiO4AiO4AiO4JTECI7gCI7gCI7gCI7gCE4hOIIjOIIjOIIjOIIjOJXgCI7gCI7gjOZGcCrBKQRH
+        cARHcARHcARHcAQnCI7gCI7gCI7gCI7gCE5PcCrBERzBERzBERzBERzB6QlOITiCIziCIziCIziV4AiO
+        4AiO4AiO4AiO4ATBERzBERzBERzBERzBCYIjOIIjOIIjOIIjOIJTCY7gCI7gCM5obgSnEhzBEZxKcARH
+        cARHcARHcCrBERzBERzBERzBERzBaQSnEBzBERzBERzBERzBEZye4FSCIziCIziCIziCUwmO4AiO4AiO
+        4AiO4AhOiYzgCI7gCI7gCI7gCI7gFIIjOIIjOIIjOIIjOIITBEdwBEdwBEdwBEdwBKcSHMERHMERHMER
+        HMERnCA4giM4giM4giM4leAIjuAIjuAIjuAIjuA0glMIjuAIjuAIjuAIjuAITk9wKsERHMERHMERHMGp
+        BEdwBEdwBEdwBEdwBKdERnAER3AER3AER3AER3AKwREcwREcwREcwREcwQmCIziCIziCIziCIziCUwmO
+        4AiO4AiO4AiO4AhOEBzBERzBERzBEZxKcARHcARHcARHcARHcBrBKQRHcARHcARHcARHcASnJziV4AiO
+        4AiO4AiO4FSCIziCIziCIziCIziCUyIjOIIjOIIjOIIjOIIjOIXgCI7gCI7gCI7gCI7gBMERHMERHMER
+        HMERHMGpBEdwBEdwBEdwBEdwBCcIjuAIjuAIjuAITiU4giM4giM4giM4giM4jeAUgiM4giM4giM4giM4
+        gtMTnEpwBEdwBEdwBEdwKsERHMERHMERHMERHMEpkREcwREcwREcwREcwRGcQnAER3AER3AER3AER3CC
+        4AiO4AiO4AiO4AiO4FSCIziCIziCIziCIziCEwRHcARHcARHcASnEhzBERzBERzBERzBEZxGcArBERzB
+        ERzBERzBERzB6QlOJTiCIziCIziCIziV4AiO4AiO4AiO4AiO4JTICI7gCI7gCI7gCI7gCE4hOIIjOIIj
+        OIIjOIIjOEFwBEdwBEdwBEdwBEdwKsERHMERHMERHMERHMEJgiM4giM4giM4glMJjuAIjuAIjuAIjuAI
+        TiM4heAIjuAIjuAIjuAIjuD0BKcSHMERHMERHMERnEpwBEdwBEdwBEdwBEdwSmQER3AER3AER3AER3AE
+        pxAcwREcwREcwREcwRGcIDiCIziCIziCIziCIziV4AiO4AiO4AiO4AiO4ATBERzBERzBERzBqQRHcARH
+        cARHcARHcASnEZxCcARHcARHcARHcARHcHqCUwmO4AiO4AiO4AhOJTiCIziCIziCIziCIzglMoIjOIIj
+        OIIjOIIjOIJTCI7gCI7gCI7gCI7gCE4QHMERHMERHMERHMERnEpwBEdwBEdwBEdwBEdwguAIjuAIjuAI
+        juBUgiM4giM4giM4giM4gtMITiE4giM4giM4giM4giM4PcGpBEdwBEdwBEdwBKcSHMERHMERHMERHMER
+        nBIZwREcwREcwREcwREcwSkER3AER3AER3AER3AEJwiO4AiO4AiO4AiO4AhOJTiCIziCIziCIziCIzhB
+        cARHcARHcARHcCrBERzBERzBERzBERzBaQSnEBzBERzBERzBERzBEZye4FSCIziCIziCIziCUwmO4AiO
+        4AiO4AiO4AhOiYzgCI7gCI7gCI7gCI7gFIIjOIIjOIIjOIIjOIITBEdwBEdwBEdwBEdwBKcSHMERHMER
+        HMERHMERnCA4giM4giM4giM4leAIjuAIjuAIjuAIjuA0glMIjuAIjuAIjuAIjuAITk9wKsERHMERHMER
+        HMGpBEdwBEdwBEdwBEdwBKdERnAER3AER3AER3AER3AKwREcwREcwREcwREcwQmCIziCIziCIziCIziC
+        UwmO4AiO4AiO4Pyfg9N1/wLwdj+Cl5RiKgAAAABJRU5ErkJggg==
+</value>
+  </data>
 </root>
