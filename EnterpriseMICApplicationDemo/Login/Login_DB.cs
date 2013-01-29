@@ -23,17 +23,17 @@ namespace EnterpriseMICApplicationDemo {
 			return userIndex;
 		}
 
-		public static Member GetUserById(int idUser) {
+		public static void SetLoginAndPasswordById(int idUser, ref string login, ref string password) {
 			openConnection();
 			string condition = "id_user = '" + idUser + "'";
 			MySqlCommand command = new MySqlCommand(db.SelectSQLQuery(new string[] { LOGIN_ATTR, PASSWORD_ATTR }, Const.USERS_TABLE, condition), connection);
 			MySqlDataReader reader = command.ExecuteReader();
 			if (reader.Read() == false) {
-				return null;
+				return;
 			}
-			Member m = new Member(idUser, reader.GetString(LOGIN_ATTR), reader.GetString(PASSWORD_ATTR));
+            login = reader.GetString(LOGIN_ATTR);
+            password = reader.GetString(PASSWORD_ATTR);
 			connection.Close();
-			return m;
 		}
 
 		private static void openConnection() {

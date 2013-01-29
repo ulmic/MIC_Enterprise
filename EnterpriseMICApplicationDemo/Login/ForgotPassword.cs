@@ -29,7 +29,7 @@ namespace EnterpriseMICApplicationDemo {
 			Member sendUser = new Member();
 			SendMail s = new SendMail();
 			try {
-				sendUser = Login_DB.GetUserById(Member_DB.GetMemberIdByEmail(email));
+                sendUser = new Member(Member_DB.GetMemberIdByEmail(email));//Login_DB.GetUserById(Member_DB.GetMemberIdByEmail(email));
 			} catch {
 				s.Send(email, "Приносим свои извинения, но вы не зарегистрированы в нашей системе. Подробности admin@ulmic.ru.");
 				return;

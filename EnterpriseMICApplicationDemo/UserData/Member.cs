@@ -65,17 +65,8 @@ namespace EnterpriseMICApplicationDemo {
 
 		public Member(int userId) {
 			Id = userId;
-			Login = Login_DB.GetUserById(userId).Login;
-			Password = Login_DB.GetUserById(userId).Password;
-			Functions = new bool[Const.FUNCTIONS_COUNT];
-			giveFunctions();
-			getMemberByUserId();
-		}
-
-		public Member(int userId, string userLogin, string userPassword) {
-			Id = userId;
-			Login = userLogin;
-			Password = userPassword;
+            Member temp = new Member();
+            Login_DB.SetLoginAndPasswordById(userId, ref Login, ref Password);
 			Functions = new bool[Const.FUNCTIONS_COUNT];
 			giveFunctions();
 			getMemberByUserId();
