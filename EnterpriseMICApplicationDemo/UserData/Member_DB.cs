@@ -150,17 +150,24 @@ namespace EnterpriseMICApplicationDemo {
                     m.EnterDate = new DateTime(enter_year, enter_month, enter_day);
                     enter_day = enter_month = enter_year = 0;
                 }
+                string value = reader.GetString(VALUE_COLUMN);
                 foreach (FieldInfo f in m.GetType().GetFields()) {
                     if (String.Compare(f.Name, attrName, true) == 0) {
                         if (f.FieldType == typeof(Int32)) {
-                            m.GetType().GetField(f.Name).SetValue(m, reader.GetInt32(VALUE_COLUMN));
+                            try {
+                                m.GetType().GetField(f.Name).SetValue(m, Int32.Parse(value));
+                            } catch {
+                            }
                             continue;
                         }
                         if ((f.FieldType == typeof(DateTime)) && (f.Name != "BDate") && (f.Name != "EnterDate")) {
-                            m.GetType().GetField(f.Name).SetValue(m, DateTime.Parse(reader.GetString(VALUE_COLUMN)));
+                            try {
+                                m.GetType().GetField(f.Name).SetValue(m, DateTime.Parse(value));
+                            } catch {
+                            }
                             continue;
                         }
-                        m.GetType().GetField(f.Name).SetValue(m, reader.GetString(VALUE_COLUMN));
+                        m.GetType().GetField(f.Name).SetValue(m, value);
                     }
                 }
             }
