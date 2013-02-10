@@ -1,0 +1,11 @@
+﻿<Window x:Class="EnterpriseMICApplicationDemo.Controllers.LoginMain"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Name="LoginForm"
+        Title="LoginForm" Height="187" Width="228">
+    <Grid>
+        <Frame Name="mainFrame" Grid.Column="0">
+            
+        </Frame>
+    </Grid>
+</Window>
