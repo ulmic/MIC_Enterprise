@@ -54,7 +54,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Controllers\LoginMain.xaml">
+    <Page Include="Base\BasisMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Base\LoginMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Basis\ThreeLists.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -70,8 +78,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controllers\LoginMain.xaml.cs">
+    <Compile Include="Base\BasisMain.xaml.cs">
+      <DependentUpon>BasisMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Base\LoginMain.xaml.cs">
       <DependentUpon>LoginMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Basis\ThreeLists.xaml.cs">
+      <DependentUpon>ThreeLists.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Login\ForgotPassword.xaml.cs">
       <DependentUpon>ForgotPassword.xaml</DependentUpon>
@@ -107,6 +121,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

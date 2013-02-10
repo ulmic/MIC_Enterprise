@@ -1,0 +1,15 @@
+﻿<Window x:Class="EnterpriseMICApplicationDemo.Base.BasisMain"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="BasisMain" Height="470" Width="729">
+    <StackPanel Orientation="Horizontal">
+        <StackPanel MinWidth="210" Background="AliceBlue">
+            
+        </StackPanel>
+        <StackPanel>
+            <Frame Name="basisFrame">
+                
+            </Frame>
+        </StackPanel>
+    </StackPanel>
+</Window>

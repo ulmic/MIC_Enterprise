@@ -9,10 +9,11 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using EnterpriseMICApplicationDemo.Controllers;
+using EnterpriseMICApplicationDemo.Base;
 
 namespace EnterpriseMICApplicationDemo.View.Login
 {
@@ -20,27 +21,26 @@ namespace EnterpriseMICApplicationDemo.View.Login
     /// <summary>
     /// Логика взаимодействия для Login.xaml
     /// </summary>
-    public class Login : PageFunction<string>
-    {
-    }
-    public partial class LoginPage : Login
+    public partial class Login : Page
     {
         public static event ComeOnFrameHandler ComeOn;
 
-        public LoginPage()
+        public Login()
         {
             InitializeComponent();
-            this.Loaded += LoginPage_Loaded;
+            this.Loaded += Login_Loaded;            
         }
 
-        void LoginPage_Loaded(object sender, RoutedEventArgs e)
+        void Login_Loaded(object sender, RoutedEventArgs e)
         {
-            if (ComeOn != null)
-                ComeOn("login_wait");
+            Storyboard s = (Storyboard)((Window.GetWindow(this)).TryFindResource("storyboardLogin"));
+            s.Begin();
         }
-
+        
         private void Button_OnLogin(object sender, RoutedEventArgs e)
         {
+            (new BasisMain()).Show();
+            Window.GetWindow(this).Close();
             if (ComeOn != null)
                 ComeOn("login");
         }
@@ -48,8 +48,6 @@ namespace EnterpriseMICApplicationDemo.View.Login
         private void Label_MouseUp_1(object sender, MouseButtonEventArgs e)
         {
             ForgotPassword forgot = new ForgotPassword();
-            if (ComeOn != null)
-                ComeOn("forgot");
             this.NavigationService.Navigate(forgot);
         }
     }

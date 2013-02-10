@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -23,6 +24,13 @@ namespace EnterpriseMICApplicationDemo.View.Login
         public ForgotPassword()
         {
             InitializeComponent();
+            this.Loaded += ForgotPassword_Loaded;
+        }
+
+        void ForgotPassword_Loaded(object sender, RoutedEventArgs e)
+        {
+            Storyboard s = (Storyboard)(Window.GetWindow(this).TryFindResource("storyboardForgot"));
+            s.Begin();
         }
 
         private void Button_Close(object sender, RoutedEventArgs e)

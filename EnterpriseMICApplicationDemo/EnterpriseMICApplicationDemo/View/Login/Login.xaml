@@ -1,4 +1,4 @@
-﻿<local:Login x:Class="EnterpriseMICApplicationDemo.View.Login.LoginPage"
+﻿<Page x:Class="EnterpriseMICApplicationDemo.View.Login.Login"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -26,4 +26,4 @@
             </Button>
         </WrapPanel>
     </StackPanel>
-</local:Login>
+</Page>
