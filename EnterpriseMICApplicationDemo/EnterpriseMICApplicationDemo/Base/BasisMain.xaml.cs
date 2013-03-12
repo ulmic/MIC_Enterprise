@@ -9,6 +9,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using EnterpriseMICApplicationDemo.View.Basis;
 
@@ -19,9 +20,11 @@ namespace EnterpriseMICApplicationDemo.Base
     /// </summary>
     public partial class BasisMain : Window
     {
+        public Storyboard stor;
         public BasisMain()
         {
             InitializeComponent();
+            stor = (Storyboard)this.FindResource("storyboardMore");
             this.basisFrame.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
             ThreeLists three = new ThreeLists();
             basisFrame.NavigationService.Navigate(three);

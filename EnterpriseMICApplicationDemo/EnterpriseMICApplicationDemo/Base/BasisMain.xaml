@@ -1,15 +1,52 @@
 ﻿<Window x:Class="EnterpriseMICApplicationDemo.Base.BasisMain"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="BasisMain" Height="470" Width="729">
-    <StackPanel Orientation="Horizontal">
+        x:Name="BasisForm"
+        Title="BasisMainFOrm"
+        Height="470" Width="680">
+    <Window.Resources>
+        <Storyboard x:Key="storyboardMore">
+            <DoubleAnimation Storyboard.TargetName="BasisForm"
+                                                 Storyboard.TargetProperty="Width"
+                                                 To="1000" Duration="0:0:0:1">
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Key="storyboardLess">
+            <DoubleAnimation Storyboard.TargetName="BasisForm"
+                                                 Storyboard.TargetProperty="Width"
+                                                 To="730" Duration="0:0:0:1">
+            </DoubleAnimation>
+        </Storyboard>
+    </Window.Resources>
+    <!--<Window.Triggers>
+        <EventTrigger RoutedEvent="ListBoxItem.MouseUp">
+            <EventTrigger.Actions>
+                <BeginStoryboard Storyboard="{StaticResource storyboardMore}"/>
+        </EventTrigger.Actions>
+        </EventTrigger>
+    </Window.Triggers>-->
+    <DockPanel>
         <StackPanel MinWidth="210" Background="AliceBlue">
-            
+            <Grid Height="70" Background="Beige" Margin="10">
+                <Button>
+                    
+                </Button>
+            </Grid>
+            <Grid Height="70" Background="Beige" Margin="10">
+                <Button Margin="10">
+                        Рассылки
+                </Button>
+            </Grid>
+            <Grid Height="70" Background="Beige" Margin="10">
+                <Button Margin="10">
+                        Конференции
+                </Button>
+            </Grid>
         </StackPanel>
-        <StackPanel>
+        <Grid DockPanel.Dock="Right">
             <Frame Name="basisFrame">
-                
+
             </Frame>
-        </StackPanel>
-    </StackPanel>
+        </Grid>
+    </DockPanel>
 </Window>
