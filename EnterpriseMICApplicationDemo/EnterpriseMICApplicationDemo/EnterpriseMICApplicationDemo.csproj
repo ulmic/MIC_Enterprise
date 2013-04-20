@@ -54,23 +54,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Base\BasisMain.xaml">
+    <Page Include="Views\BaseForms\Main.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Base\LoginMain.xaml">
+    <Page Include="Views\BaseForms\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Basis\ThreeLists.xaml">
+    <Page Include="Views\Frames\Main\UsersListsFrame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Login\ForgotPassword.xaml">
+    <Page Include="Views\Frames\Login\ForgotPasswordFrame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Login\Login.xaml">
+    <Page Include="Views\Frames\Login\LoginFrame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -78,20 +78,24 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Base\BasisMain.xaml.cs">
-      <DependentUpon>BasisMain.xaml</DependentUpon>
+    <Compile Include="Models\Main\UsersLists\Member.cs" />
+    <Compile Include="Models\Main\UsersLists\Organization.cs" />
+    <Compile Include="Models\Main\UsersLists\UsersListsModel.cs" />
+    <Compile Include="Views\BaseForms\Main.xaml.cs">
+      <DependentUpon>Main.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Base\LoginMain.xaml.cs">
-      <DependentUpon>LoginMain.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Basis\ThreeLists.xaml.cs">
-      <DependentUpon>ThreeLists.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Login\ForgotPassword.xaml.cs">
-      <DependentUpon>ForgotPassword.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Login\Login.xaml.cs">
+    <Compile Include="Views\BaseForms\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Global.cs" />
+    <Compile Include="Views\Frames\Main\UsersListsFrame.xaml.cs">
+      <DependentUpon>UsersListsFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Frames\Login\ForgotPasswordFrame.xaml.cs">
+      <DependentUpon>ForgotPasswordFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Frames\Login\LoginFrame.xaml.cs">
+      <DependentUpon>LoginFrame.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -121,7 +125,10 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\BaseForms\Jabber\" />
+    <Folder Include="Views\Frames\Jabber\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
