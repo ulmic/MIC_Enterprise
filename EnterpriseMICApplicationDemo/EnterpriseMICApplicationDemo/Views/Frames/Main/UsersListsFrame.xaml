@@ -7,12 +7,21 @@
       MinHeight="100" MinWidth="430"
 	  Title="ThreeLists"
       Background="OliveDrab">
-	<Page.Resources>
+    <Page.Resources>
         <!--<CollectionViewSource 
               Source="{Binding Source={x:Static Application.Current}, Path=tList}"   
               x:Key="listingDataView" />-->
-        <DataTemplate x:Key="testDataTemplate">
-            <TextBlock Text="{Binding cells[1]}"></TextBlock>
+        <DataTemplate x:Key="orgsDataTemplate">
+            <TextBlock Text="{Binding}" MouseUp="OrgsItem_Click" ></TextBlock>
+
+        </DataTemplate>
+        <DataTemplate x:Key="humansDataTemplate">
+            <TextBlock Text="{Binding Path=FullName}" MouseLeftButtonUp="HumItem_Click" ></TextBlock>
+
+        </DataTemplate>
+        <DataTemplate x:Key="humanInfoTemplate" DataType="TextBox">
+            <TextBlock Text="{Binding Path=FullName}" MouseLeftButtonUp="HumItem_Click" ></TextBlock>
+
         </DataTemplate>
         <Storyboard x:Key="storyboardMore">
             <DoubleAnimation  Storyboard.TargetProperty="(Window.Width)"
@@ -24,17 +33,17 @@
                                                  To="730" Duration="0:0:0:1">
             </DoubleAnimation>
         </Storyboard>
-	</Page.Resources>
-	<!--<Page.Triggers>
+    </Page.Resources>
+    <!--<Page.Triggers>
 		<EventTrigger RoutedEvent="Selector.SelectionChanged" SourceName="listBox">
 			<BeginStoryboard Storyboard="{StaticResource storyboardMore}"/>
 		</EventTrigger>
 	</Page.Triggers>-->
     <StackPanel Orientation="Horizontal">
-                <!--ItemsSource="{Binding Source={StaticResource listingDataView}}"-->
-        <ListBox x:Name="listOrganizations" ItemsSource="{Binding}"  ItemTemplate="{StaticResource testDataTemplate}"  Grid.Column="0" Margin="10" MinWidth="200">
+        <!--ItemsSource="{Binding Source={StaticResource listingDataView}}"-->
+        <ListBox x:Name="listOrganizations" ItemsSource="{Binding}"  ItemTemplate="{DynamicResource orgsDataTemplate}"  Grid.Column="0" Margin="10" MinWidth="200" MaxWidth="300">
         </ListBox>
-        <ListBox x:Name="listHumans" ItemsSource="{Binding}" Grid.Column="1" Margin="10" MinWidth="200">
+        <ListBox x:Name="listHumans" ItemsSource="{Binding}" ItemTemplate="{StaticResource humansDataTemplate}" Grid.Column="1" Margin="10" MinWidth="300" MaxWidth="300">
             <!--<ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Name="txt" Text="{Binding}"></TextBlock>
@@ -52,9 +61,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>-->
         </ListBox>
-        <ListBox x:Name="listHumanInfo" ItemsSource="{Binding}" Grid.Column="1" Margin="10" MinWidth="300">
-            
-            sdf sdf  f
-        </ListBox>
+        <TextBox x:Name="listHumanInfo" DataContext="{Binding}" Template="{StaticResource humanInfoTemplate}" Grid.Column="1" Margin="10" MinWidth="300">
+        </TextBox>
     </StackPanel>
 </Page>

@@ -13,7 +13,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using EnterpriseMICApplicationDemo.Views.BaseForms;
+using EnterpriseMICApplicationDemo.Views.BaseForms.Main;
 
 namespace EnterpriseMICApplicationDemo.Views.Frames.Login
 {
@@ -39,7 +39,7 @@ namespace EnterpriseMICApplicationDemo.Views.Frames.Login
         
         private void Button_OnLogin(object sender, RoutedEventArgs e)
         {
-            (new Views.BaseForms.Main()).Show();
+            (new Views.BaseForms.Main.Main()).Show();
             Window.GetWindow(this).Close();
             if (ComeOn != null)
                 ComeOn("login");
